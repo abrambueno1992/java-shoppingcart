@@ -1,7 +1,7 @@
 package com.abrahambueno.javashoppingcart.repositories;
 
-import org.hibernate.criterion.Order;
+import com.abrahambueno.javashoppingcart.models.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrdersRepository extends JpaRepository<Order, Long> {
+public interface OrdersRepository extends JpaRepository<Orders, Long> {
 }
