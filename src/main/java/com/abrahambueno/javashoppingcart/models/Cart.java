@@ -1,6 +1,9 @@
 package com.abrahambueno.javashoppingcart.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -10,39 +13,37 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartid;
 
-//    List<ProductList> cartItems = new ArrayList<ProductList>();
+    private int quantity = 0;
 
-//    public void addProductList(long pid) {
-//        ProductList product = getProductList(pid);
-//        addToCart(product);
-//    }
+    @OneToMany(mappedBy = "cartidtwo")
+    @JsonIgnoreProperties("cartidtwo")
+    private Set<ProductList> products;
 
-//    private ProductList getProductList(long pid){
-//        ProductList product = null;
-//        List<ProductList> products = new ProductLists().getProductLists(0);
-//        for (ProductList prod: products){
-//            if (prod.getPid() == pid){
-//                product = prod;
-//                break;
-//            }
-//        }
-//        return product;
-//    }
+    public Cart() {
+    }
 
-//    private void addToCart(ProductList product){
-//        cartItems.add(product);
-//    }
-//
-//    public void removeProductList(long pid){
-//        ProductList prod = getProductList(pid);
-//        cartItems.remove(prod);
-//    }
-//
-//    void printCartItems(){
-//        for(ProductList prod: cartItems){
-//            System.out.println(prod.getName());
-//        }
-//    }
+    public Set<ProductList> getProducts() {
+        return products;
+    }
 
+    public void setProducts(Set<ProductList> products) {
+        this.products = products;
+    }
+
+    public long getCartid() {
+        return cartid;
+    }
+
+    public void setCartid(long cartid) {
+        this.cartid = cartid;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
 }
