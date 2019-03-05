@@ -8,17 +8,19 @@ import java.util.List;
 @Entity
 public class Cart {
 
-    List<ProductList> cartItems = new ArrayList<ProductList>();
+    List<Product> cartItems = new ArrayList<Product>();
 
-    public void addProductList(int pid) {
-        ProductList product = getProductList(pid);
+    private int quantity;
+
+    public void addProduct(int pid) {
+        Product product = getProduct(pid);
         addToCart(product);
     }
 
-    private ProductList getProductList(int pid){
-        ProductList product = null;
-        List<ProductList> products = new ProductLists().getProductLists(0);
-        for (ProductList prod: products){
+    private Product getProduct(int pid){
+        Product product = null;
+        List<Product> products = new Product().getProduct();
+        for (Product prod: products){
             if (prod.getPid() == pid){
                 product = prod;
                 break;
@@ -27,17 +29,17 @@ public class Cart {
         return product;
     }
 
-    private void addToCart(ProductList product){
+    private void addToCart(Product product){
         cartItems.add(product);
     }
 
-    public void removeProductList(int pid){
-        ProductList prod = getProductList(pid);
+    public void removeProduct(int pid){
+        Product prod = getProduct(pid);
         cartItems.remove(prod);
     }
 
     void printCartItems(){
-        for(ProductList prod: cartItems){
+        for(Product prod: cartItems){
             System.out.println(prod.getName());
         }
     }
