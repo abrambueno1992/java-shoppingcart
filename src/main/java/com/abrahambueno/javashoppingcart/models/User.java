@@ -1,5 +1,4 @@
 package com.abrahambueno.javashoppingcart.models;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -59,4 +58,3 @@ public class User {
         this.role = role;
     }
 }
-
