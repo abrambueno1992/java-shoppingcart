@@ -1,5 +1,3 @@
-package com.abrahambueno.javashoppingcart.config;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -29,9 +27,9 @@ public class Swagger2Config
     {
         return new ApiInfoBuilder().title("Our Courses")
                 .description("Our Courses")
-                .contact(new Contact("Abraham Bueno", "https://abrahambueno.com/", "abrambueno1992@gmail.com"))
+                .contact(new Contact("John Mitchell", "http://www.lambdaschool.com", "john@lambdaschool.com"))
                 .license("MIT")
-                .licenseUrl("https://github.com/abrambueno1992/java-shoppingcart/blob/master/LICENSE")
+                .licenseUrl("https://github.com/LambdaSchool/java-crudysnacks/blob/master/LICENSE")
                 .version("1.0.0")
                 .build();
     }
