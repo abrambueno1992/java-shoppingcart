@@ -25,6 +25,22 @@ public class SuppliersController
         return supplierrepos.save(newsupplier);
     }
 
+    //change the supplier's information
+    @PutMapping("/supplier/{supplierid}")
+    private Supplier changeSupplierById(@RequestBody Supplier supplier, @PathVariable long cartid) throws URISyntaxException{
+        var updateSupplier = supplierrepos.findById(supplierid);
+        if (updateSupplier.isPresent()){
+            if (updateSupplier.isPresent()){
+                supplier.setSupplierid(supplierid);
+                supplierrepos.save(supplier);
+                return supplier;
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
     @DeleteMapping("/suppliers/{supplierid}")
     Public String deleteSupplierById(@PathVariable long supplierid)
     {
