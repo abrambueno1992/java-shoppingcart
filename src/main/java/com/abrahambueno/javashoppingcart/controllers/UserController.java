@@ -21,7 +21,7 @@ public class UserController
     @PostMapping
     public User addNewUser(@RequestBody User newuser) throws URISyntaxException
     {
-        return userrepos.save(newuser)
+        return userrepos.save(newuser);
     }
 
     @DeleteMapping("/users/{id}")
