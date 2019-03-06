@@ -1,5 +1,7 @@
 package com.abrahambueno.javashoppingcart.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,7 @@ public class ProductList {
 
     @ManyToOne
     @JoinColumn(name = "cartid")
+    @JsonIgnoreProperties("products")
     private Cart cartidtwo;
 
     public ProductList() {
