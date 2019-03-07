@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrdersController {
     @Autowired
@@ -39,18 +40,15 @@ public class OrdersController {
             if (order.getDispatchaddress() == null) {
                 order.setDispatchaddress(updateOrder.get().getDispatchaddress());
             }
-            if (order.getProducts() == null) {
-                order.setProducts(updateOrder.get().getProducts());
+            if (order.getShippedstatus() == null) {
+                order.setShippedstatus(updateOrder.get().getShippedstatus());
+            }
+            if (order.getPaymentdetails() == null) {
+                order.setPaymentdetails(updateOrder.get().getPaymentdetails());
             }
 //            if (order.getQuantity() == null) {
 //
 //            }
-            if (order.getShippedstatus() == null) {
-                order.setShippedstatus(updateOrder.get().getShippedstatus());
-            }
-            if (order.getShopperidtwo() == null) {
-                order.setShopperidtwo(updateOrder.get().getShopperidtwo());
-            }
             order.setOrderid(orderid);
             ordersrepos.save(order);
             return order;

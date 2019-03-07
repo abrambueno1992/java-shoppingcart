@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductListController {
     @Autowired
@@ -39,14 +40,9 @@ public class ProductListController {
             if (product.getName() == null) {
                 product.setName(updateProduct.get().getName());
             }
-            if (product.getCartidtwo() == null) {
-                product.setCartidtwo(updateProduct.get().getCartidtwo());
-            }
 //            if (product.getPrice() == null) {
-//
 //            }
 //            if (product.getQuantity() == null) {
-//
 //            }
             product.setProductid(productid);
             productrepos.save(product);

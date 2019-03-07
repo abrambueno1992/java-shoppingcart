@@ -1,7 +1,5 @@
 package com.abrahambueno.javashoppingcart.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,10 +14,14 @@ public class ProductList {
     private float price;
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "cartid")
-    @JsonIgnoreProperties("products")
-    private Cart cartidtwo;
+//    @ManyToOne
+//    @JoinColumn(name = "cartid")
+//    @JsonIgnoreProperties("products")
+//    private Cart cartidtwo;
+
+//    @ManyToMany(mappedBy = "products")
+//    @JsonIgnoreProperties("products")
+//    private Set<Cart> carts;
 
     public ProductList() {
     }
@@ -64,11 +66,6 @@ public class ProductList {
         this.quantity = quantity;
     }
 
-    public Cart getCartidtwo() {
-        return cartidtwo;
-    }
 
-    public void setCartidtwo(Cart cartidtwo) {
-        this.cartidtwo = cartidtwo;
-    }
+
 }
