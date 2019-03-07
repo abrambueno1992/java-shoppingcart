@@ -3,6 +3,8 @@ export const CREATE_CART = "CREATE_CART";
 export const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 export const DELETE_CART = "DELETE_CART";
 export const NEW_ORDER = "NEW_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
+
 const url = "http://localhost:2019/orders/";
 
 function fetchRequest() {
