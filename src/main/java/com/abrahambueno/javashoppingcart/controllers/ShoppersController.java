@@ -1,4 +1,6 @@
 package com.abrahambueno.javashoppingcart.controllers;
 
-public class ShoppersController {
+public class ShoppersController
+{
+
 }
