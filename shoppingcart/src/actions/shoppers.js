@@ -1,3 +1,9 @@
+export const GET_SHOPPER ="GET_SHOPPER";
+export const NEW_SHOPPER = "NEW_SHOPPER";
+export const UPDATE_SHOPPER = "UPDATE_SHOPPER";
+export const DELETE_SHOPPER = "DELETE_SHOPPER";
+
+
 const url = "http://localhost:2019/shoppers/";
 
 function fetchRequest() {
@@ -63,7 +69,7 @@ function postSuccessUpdateShopper(body){
 export const updateShopper = (shopperObject, id) => {
     return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + "update/" + id, {
+    return fetch(url + id, {
       method: "PUT", // or 'PUT'
       body: JSON.stringify(shopperObject),
       headers: {
@@ -78,7 +84,7 @@ export const updateShopper = (shopperObject, id) => {
 
 function deleteShopperSuccess(body) {
     return {
-        type: DELETE_ORDER,
+        type: DELETE_SHOPPER,
         payload: body
     };
 }
@@ -86,7 +92,7 @@ function deleteShopperSuccess(body) {
 export const deleteShopper = id => {
     return dispatch => {
         dispatch(fetchRequest());
-        return fetch(url + "delete/" + id, {
+        return fetch(url + id, {
             method: "DELETE", // or 'PUT'
             headers: {
               "Content-Type": "application/json"

@@ -66,4 +66,8 @@ public class OrdersController {
             return null;
         }
     }
+
+    public OrdersRepository getOrdersrepos() {
+        return ordersrepos;
+    }
 }
