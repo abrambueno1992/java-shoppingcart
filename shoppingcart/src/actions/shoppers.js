@@ -77,7 +77,7 @@ export const updateShopper = (shopperObject, id) => {
       }
     })
       .then(res => res.json())
-      .then(body => dispatch(postSuccessUpdateOrder(body)))
+      .then(body => dispatch(postSuccessUpdateShopper(body)))
       .catch(ex => dispatch(failedAction(ex)));
     };
 };
