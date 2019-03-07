@@ -3,19 +3,18 @@ package com.abrahambueno.javashoppingcart.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderid;
 
     // product id?
-    @OneToMany(mappedBy = "cartidtwo")
-    @JsonIgnoreProperties("cartidtwo")
-    private Set<ProductList> products;
+//    @OneToMany(mappedBy = "orders")
+//    @JsonIgnoreProperties("orders")
+//    private Set<Cart> carts = new HashSet<>();
 
 
 
@@ -30,7 +29,9 @@ public class Orders {
     // should it be an object with details ?
     @ManyToOne
     @JoinColumn(name = "shopperid")
-    private Shoppers shopperidtwo;
+    @JsonIgnoreProperties("orders")
+    private Shoppers paymentdetails;
+
 //    private String paymentdetails;
 
     private String shippedstatus;
@@ -46,13 +47,6 @@ public class Orders {
         this.orderid = orderid;
     }
 
-    public Set<ProductList> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<ProductList> products) {
-        this.products = products;
-    }
 
     public int getQuantity() {
         return quantity;
@@ -61,6 +55,8 @@ public class Orders {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+
 
     public String getDestinationaddress() {
         return destinationaddress;
@@ -78,19 +74,19 @@ public class Orders {
         this.dispatchaddress = dispatchaddress;
     }
 
-    public Shoppers getShopperidtwo() {
-        return shopperidtwo;
-    }
-
-    public void setShopperidtwo(Shoppers shopperidtwo) {
-        this.shopperidtwo = shopperidtwo;
-    }
-
     public String getShippedstatus() {
         return shippedstatus;
     }
 
     public void setShippedstatus(String shippedstatus) {
         this.shippedstatus = shippedstatus;
+    }
+
+    public Shoppers getPaymentdetails() {
+        return paymentdetails;
+    }
+
+    public void setPaymentdetails(Shoppers paymentdetails) {
+        this.paymentdetails = paymentdetails;
     }
 }

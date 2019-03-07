@@ -1,8 +1,7 @@
 package com.abrahambueno.javashoppingcart.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -13,13 +12,23 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartid;
 
+    //set quantity from controllers
     private int quantity = 0;
 
-    @OneToMany(mappedBy = "cartidtwo")
-    @JsonIgnoreProperties("cartidtwo")
-    private Set<ProductList> products;
 
+    @ManyToMany
+    @JoinTable(name = "cartproducts",
+        joinColumns = {@JoinColumn(name = "cartid")},
+        inverseJoinColumns = {@JoinColumn(name = "productid")})
+//    @JsonIgnoreProperties("carts")
+    private Set<ProductList> products = new HashSet<>();
+    //    @OneToMany(mappedBy = "cartidtwo")
+//    @JsonIgnoreProperties("cartidtwo")
+//    private Set<ProductList> products;
     public Cart() {
+        if (products != null) {
+            this.quantity = products.size();
+        }
     }
 
     public Set<ProductList> getProducts() {
@@ -45,5 +54,7 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+
 
 }

@@ -6,29 +6,29 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "shopper")
+@Table(name = "shoppers")
 public class Shoppers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String shopperid;
+    private long shopperid;
 
     private String billingaddress;
     private String shippingaddress;
     private String phonenumber;
     private String paymentmethod;
 
-    @OneToMany(mappedBy = "shopperidtwo")
-    @JsonIgnoreProperties("shopperidtwo")
+    @OneToMany(mappedBy = "paymentdetails")
+    @JsonIgnoreProperties("carts")
     private Set<Orders> orders;
 
     public Shoppers() {
     }
 
-    public String getShopperid() {
+    public long getShopperid() {
         return shopperid;
     }
 
-    public void setShopperid(String shopperid) {
+    public void setShopperid(long shopperid) {
         this.shopperid = shopperid;
     }
 
