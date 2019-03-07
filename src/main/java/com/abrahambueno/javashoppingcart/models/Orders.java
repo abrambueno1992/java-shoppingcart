@@ -24,7 +24,7 @@ public class Orders {
     private String destinationaddress;
     // dispatch address
 
-    private String dispatchaddress;
+    private String dispatchaddress = "123 Business Street";
 
     // should it be an object with details ?
     @ManyToOne
@@ -34,7 +34,7 @@ public class Orders {
 
 //    private String paymentdetails;
 
-    private String shippedstatus;
+    private String shippedstatus = "processing";
 
     public Orders() {
     }

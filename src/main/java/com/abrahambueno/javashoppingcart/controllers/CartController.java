@@ -27,8 +27,8 @@ public class CartController {
         return cartrepos.findById(cartid).get();
     }
     @PostMapping("/createcart")
-    private Cart createCart(@RequestBody Cart cart) {
-        return cartrepos.save(cart);
+    private Cart createCart() {
+        return cartrepos.save(new Cart());
     }
     @PostMapping("/add/{cartid}")
     private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid) {
