@@ -1,8 +1,9 @@
-import { GET_PRODUCTS } from "../actions/productList";
+import { GET_PRODUCTS, NEW_PRODUCT } from "../actions/productList";
 
 const initialState = {
   nothing: true,
-  product_list: null
+  product_list: null,
+  new_product: null
 };
 
 const cartItems = (state = initialState, actions) => {
@@ -10,6 +11,10 @@ const cartItems = (state = initialState, actions) => {
     case GET_PRODUCTS:
       return Object.assign({}, state, {
         product_list: actions.payload
+      });
+    case NEW_PRODUCT:
+      return Object.assign({}, state, {
+        new_product: actions.payload
       });
     default:
       return state;
