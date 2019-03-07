@@ -1,3 +1,8 @@
+export const GET_SUPPLIER = "GET_SUPPLIER";
+export const NEW_SUPPLIER = "NEW_SUPPLIER";
+export const UPDATE_SUPPLIER = "UPDATE_SUPPLIER" ;
+export const DELETE_SUPPLIER = "DELETE_SUPPLIER";
+
 const url = "http://localhost:2019/suppliers/";
 
 function fetchRequest() {
