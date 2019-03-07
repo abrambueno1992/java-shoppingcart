@@ -42,7 +42,7 @@ function postSuccessNewSupplier(body) {
     };
 }
 
-export const addShopper = shopperObject => {
+export const addSupplier = supplierObject => {
     return dispatch => {
         dispatch(fetchRequest());
         return fetch(url + "add", {
