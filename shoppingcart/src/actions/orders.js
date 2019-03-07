@@ -93,7 +93,7 @@ export const deleteOrder = id => {
       }
     })
       .then(res => res.json())
-      .then(body => dispatch(deleteOrderScuccess(body)))
+      .then(body => dispatch(deleteOrderScuccess(body))) //deleteOrderSuccess?
       .catch(ex => dispatch(failedAction(ex)));
   };
 };
