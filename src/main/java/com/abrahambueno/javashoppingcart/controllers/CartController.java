@@ -1,7 +1,9 @@
 package com.abrahambueno.javashoppingcart.controllers;
 
 import com.abrahambueno.javashoppingcart.models.Cart;
+import com.abrahambueno.javashoppingcart.models.CartItems;
 import com.abrahambueno.javashoppingcart.models.ProductList;
+import com.abrahambueno.javashoppingcart.repositories.CartItemsRepository;
 import com.abrahambueno.javashoppingcart.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,6 +18,8 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartRepository cartrepos;
+    @Autowired
+    private CartItemsRepository cartitems;
 
     // might not allow it
     @GetMapping("/items")
@@ -31,11 +35,30 @@ public class CartController {
         return cartrepos.save(new Cart());
     }
     @PostMapping("/add/{cartid}")
-    private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid) {
+    private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid) throws URISyntaxException {
         var addToCart = cartrepos.findById(cartid);
         if (addToCart.isPresent()) {
+            var productPresent = cartitems.checkValuePair(product.getProductid());
+            if (productPresent != null) {
+                long productidTwo = cartitems.returnCartItem(product.getProductid()).getCartitemsid();
+                var updateCartItems = cartitems.findById(productidTwo);
+                updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + 1);
+                cartitems.save(updateCartItems.get());
+            } else {
+                CartItems newCartItem = new CartItems();
+                newCartItem.setQuantity(1);
+                newCartItem.setProductid(product.getProductid());
+                newCartItem.setCartidinsert(cartid);
+//                newCartItem.setAsdf(addToCart);
+//                cartitems.addProductToCartItems(newCartItem.getCartitemsid(), cartid);
+                cartitems.save(newCartItem);
+            }
             addToCart.get().setQuantity(addToCart.get().getQuantity() + 1);
-            cartrepos.addProductToCart(cartid, product.getProductid());
+            Object productInCart = cartrepos.checkValue(cartid, product.getProductid());
+            System.out.println("THIS is the product in cart" + productInCart);
+            if (productInCart == null) {
+                cartrepos.addProductToCart(cartid, product.getProductid());
+            }
             return product;
         } else {
             return null;

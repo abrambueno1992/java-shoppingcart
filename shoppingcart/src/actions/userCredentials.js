@@ -1,5 +1,5 @@
 const url = "http://localhost:2019/users/";
-const authURL = "http://localhost:2019/oauth/token";
+const authURL = "http://localhost:2019/oauth/token/";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 function fetchRequest() {
@@ -11,7 +11,7 @@ function fetchRequest() {
 function failedAction(ex) {
   return {
     type: "FAILURE",
-    ex
+    paylod: ex
   };
 }
 function postUserSuccess(body) {
@@ -48,13 +48,14 @@ export const loginUser = userObject => {
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(authURL, {
-      method: "POST", // or 'PUT'
-      body: JSON.stringify(userObject),
+      method: "POST",
+      body: `grant_type=password&username=${userObject.username}&password=${
+        userObject.password
+      }`,
       headers: {
-        "Content-Type": "application/json",
-        clientId: "lambda-client",
-        secret: "lambda-secret",
-        authorizedGrantTypes: "password"
+        Authorization: "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

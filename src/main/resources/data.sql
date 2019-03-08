@@ -9,6 +9,7 @@ values (1, 1),
         (1, 5),
         (1, 3),
         (1, 4);
+-- insert into shoppingcartapp.cartitems()
 
 insert into shoppingcartapp.cart(cartid, quantity)
 values (1, 0);
@@ -30,5 +31,5 @@ values (1, 1),
         (3, 2),
         (4, 2);
 insert into shoppingcartapp.user(id, password, role, username)
-values (1, "potato", "shopper", "bob"),
+values (1, "newuser", "user", "bob"),
         (2, "tomato", "admin", "tom");

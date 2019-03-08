@@ -5,7 +5,8 @@ const initialState = {
   product_list: null,
   new_product: null,
   user_token: null,
-  new_user: null
+  new_user: null,
+  error: null
 };
 
 const cartItems = (state = initialState, actions) => {
@@ -25,6 +26,10 @@ const cartItems = (state = initialState, actions) => {
     case CREATE_USER:
       return Object.assign({}, state, {
         new_user: actions.payload
+      });
+    case "FAILURE":
+      return Object.assign({}, state, {
+        error: actions.payload
       });
     default:
       return state;

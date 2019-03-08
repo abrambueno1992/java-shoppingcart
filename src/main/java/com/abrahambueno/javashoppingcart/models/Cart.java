@@ -1,5 +1,8 @@
 package com.abrahambueno.javashoppingcart.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.Api;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cart")
+@Api(value = "Cart Application", description = "The Cart Application in CRUD")
+
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +27,12 @@ public class Cart {
         inverseJoinColumns = {@JoinColumn(name = "productid")})
 //    @JsonIgnoreProperties("carts")
     private Set<ProductList> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "asdf")
+    @JsonIgnoreProperties("asdf")
+    private Set<CartItems> cartitemquantity = new HashSet<>();
+
+
     //    @OneToMany(mappedBy = "cartidtwo")
 //    @JsonIgnoreProperties("cartidtwo")
 //    private Set<ProductList> products;
@@ -29,6 +40,15 @@ public class Cart {
         if (products != null) {
             this.quantity = products.size();
         }
+    }
+
+
+    public Set<CartItems> getCartitemquantity() {
+        return cartitemquantity;
+    }
+
+    public void setCartitemquantity(Set<CartItems> cartitemquantity) {
+        this.cartitemquantity = cartitemquantity;
     }
 
     public Set<ProductList> getProducts() {
