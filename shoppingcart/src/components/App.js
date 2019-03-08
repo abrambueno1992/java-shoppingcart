@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Subtotal from './Subtotal';
+import Subtotal from "./Subtotal";
 import ProductList from "./ProductList";
-import ItemDetails from './ItemDetails';
+import TestLogin from "./TestLogin";
+import ItemDetails from "./ItemDetails";
 
 const App = () => {
   // constructor(props) {
@@ -19,7 +20,8 @@ const App = () => {
     <Router className="App">
       <div>
         <Route exact path="/" component={ProductList} />
-        <Subtotal price={this.state.total.toFixed(2)} />
+        <Route exact path="/login" component={TestLogin} />
+        {/* <Subtotal price={this.state.total.toFixed(2)} /> */}
       </div>
     </Router>
   );

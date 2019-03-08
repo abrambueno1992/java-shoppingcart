@@ -1,4 +1,4 @@
-import com.abrahambueno.javashoppingcart.config.NoOpPasswordEncoder;
+package com.abrahambueno.javashoppingcart.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                .antMatchers("http://localhost:2019/users/**").permitAll()
+                .antMatchers("/users/**").permitAll().anyRequest().authenticated()
                 .antMatchers("/api-docs/**").permitAll()
         ;
     }
