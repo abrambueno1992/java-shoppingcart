@@ -18,7 +18,8 @@ insert into shoppingcartapp.orders(orderid, destinationaddress, dispatchaddress,
 values (1, "1235 N Destination", "2352 N Dispatch Avenue", 3, "pending", 1);
 
 insert into shoppingcartapp.shoppers(shopperid, billingaddress, paymentmethod, phonenumber, shippingaddress)
-values (1, "123 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address");
+values (1, "123 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address"),
+       (2, "456 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address");
 
 insert into shoppingcartapp.supplier(supplierid, suppliername)
 values (1, "office supplies"),
@@ -30,6 +31,6 @@ values (1, 1),
         (2, 1),
         (3, 2),
         (4, 2);
-insert into shoppingcartapp.user(id, password, role, username)
-values (1, "newuser", "user", "bob"),
-        (2, "tomato", "admin", "tom");
+insert into shoppingcartapp.user(id, password, role, username, shopperid)
+values (1, "newuser", "user", "bob", 1),
+        (2, "tomato", "admin", "tom", 2);
