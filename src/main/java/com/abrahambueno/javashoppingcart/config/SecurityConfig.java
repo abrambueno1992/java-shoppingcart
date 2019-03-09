@@ -3,7 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -41,15 +40,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .anonymous().disable()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                .antMatchers("http://localhost:2019/users/**").permitAll().anyRequest().authenticated()
+//                .antMatchers("/users/**").permitAll()
+//                .antMatchers("/api-docs/**").permitAll()
+//        ;
         http
-                .csrf().disable()
-                .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-//                .antMatchers("http://localhost:2019/users/**").permitAll()
-                .antMatchers("/users/**").permitAll().anyRequest().authenticated()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/api-docs/**").permitAll()
-        ;
+                .antMatchers("/users/**").permitAll();
+//                .antMatchers("/console/**").permitAll()
+//                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+//                .antMatchers(HttpMethod.GET, SHOP_URL).permitAll();
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
     @Bean

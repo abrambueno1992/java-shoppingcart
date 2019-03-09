@@ -74,7 +74,7 @@ class TestLogin extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button>Login User</button>
+        <button onClick={this.loginUser}>Login User</button>
       </div>
     );
   }

@@ -3,13 +3,15 @@ package com.abrahambueno.javashoppingcart.controllers;
 import com.abrahambueno.javashoppingcart.models.User;
 import com.abrahambueno.javashoppingcart.repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController
 {
 
