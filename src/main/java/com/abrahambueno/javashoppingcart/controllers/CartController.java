@@ -34,8 +34,8 @@ public class CartController {
     private Cart createCart() {
         return cartrepos.save(new Cart());
     }
-    @PostMapping("/add/{cartid}")
-    private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid) throws URISyntaxException {
+    @PostMapping("/add/{cartid}/{shopperid}")
+    private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid, @PathVariable long shopperid) throws URISyntaxException {
         var addToCart = cartrepos.findById(cartid);
         if (addToCart.isPresent()) {
             var productPresent = cartitems.checkValuePair(product.getProductid());
@@ -49,7 +49,8 @@ public class CartController {
                 newCartItem.setQuantity(1);
                 newCartItem.setProductid(product.getProductid());
                 newCartItem.setCartidinsert(cartid);
-//                newCartItem.setAsdf(addToCart);
+                newCartItem.setAsdf(addToCart.get());
+                newCartItem.setShopperid(shopperid);
 //                cartitems.addProductToCartItems(newCartItem.getCartitemsid(), cartid);
                 cartitems.save(newCartItem);
             }

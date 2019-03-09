@@ -14,6 +14,7 @@ public class CartItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartitemsid;
 
+    private long shopperid;
     private long cartidinsert;
     private long productid;
     private int quantity;
@@ -25,6 +26,14 @@ public class CartItems {
 
 
     public CartItems() {
+    }
+
+    public long getShopperid() {
+        return shopperid;
+    }
+
+    public void setShopperid(long shopperid) {
+        this.shopperid = shopperid;
     }
 
     public long getCartitemsid() {
