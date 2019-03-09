@@ -17,11 +17,24 @@ public class Shoppers {
     private String phonenumber;
     private String paymentmethod;
 
+    @OneToOne(mappedBy = "shopperxyz", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("shopperxyz")
+    private User userxyz;
+
+
     @OneToMany(mappedBy = "paymentdetails")
     @JsonIgnoreProperties("carts")
     private Set<Orders> orders;
 
     public Shoppers() {
+    }
+
+    public User getUserxyz() {
+        return userxyz;
+    }
+
+    public void setUserxyz(User userxyz) {
+        this.userxyz = userxyz;
     }
 
     public long getShopperid() {

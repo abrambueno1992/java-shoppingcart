@@ -1,4 +1,5 @@
 package com.abrahambueno.javashoppingcart.models;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -22,6 +23,19 @@ public class User {
     public List<SimpleGrantedAuthority> getAuthority() {
         String myRole = "ROLE_" + this.role.toUpperCase();
         return Arrays.asList(new SimpleGrantedAuthority(myRole));
+    }
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shopperid")
+    @JsonIgnoreProperties({"userxyz", "orders"})
+    private Shoppers shopperxyz;
+
+
+    public Shoppers getShopperxyz() {
+        return shopperxyz;
+    }
+
+    public void setShopperxyz(Shoppers shopperxyz) {
+        this.shopperxyz = shopperxyz;
     }
 
     public long getId() {

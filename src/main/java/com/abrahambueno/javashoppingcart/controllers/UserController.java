@@ -25,6 +25,11 @@ public class UserController
         return userrepos.findAll();
     }
 
+    @GetMapping("/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        return userrepos.findByUsername(username);
+    }
+
     @PostMapping("/newuser")
     public User addNewUser(@RequestBody User newuser) throws URISyntaxException
     {
