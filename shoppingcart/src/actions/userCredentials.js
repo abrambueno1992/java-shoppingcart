@@ -2,6 +2,7 @@ const url = "http://localhost:2019/users/";
 const authURL = "http://localhost:2019/oauth/token";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
+export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -15,6 +16,7 @@ function failedAction(ex) {
   };
 }
 function postUserSuccess(body) {
+  localStorage.setItem("userid", body.id);
   return {
     type: CREATE_USER,
     payload: body
@@ -38,6 +40,7 @@ export const createNewUser = userObject => {
 };
 
 function postLoginSuccess(body) {
+  localStorage.setItem("token", body.access_token);
   return {
     type: LOGIN_USER,
     payload: body
@@ -51,14 +54,9 @@ export const loginUser = userObject => {
     dispatch(fetchRequest());
     return fetch(authURL, {
       method: "POST",
-      // withCredentials: true,
-      // credentials: "include",
       body: `grant_type=password&username=${userObject.username}&password=${
         userObject.password
       }`,
-      // body: JSON.stringify(
-      //   "client_id=lambda-client&client_secret=lambda-secret&grant_type_password=password&username=bob&password=newuser"
-      // ),
       headers: {
         Authorization: "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0",
         "Access-Control-Allow-Origin": "*",
@@ -67,6 +65,33 @@ export const loginUser = userObject => {
     })
       .then(res => res.json())
       .then(body => dispatch(postLoginSuccess(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+
+function postSetShopperIdSuccess(body) {
+  return {
+    type: SET_SHOPPER_ID,
+    payload: body
+  };
+}
+
+export const setShopperId = () => {
+  const shopperid = localStorage.getItem("shopperid");
+  const userid = localStorage.getItem("userid");
+  const authToken = localStorage.getItem("token");
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(`${url}shopperid/${shopperid}/${userid}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(postSetShopperIdSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };
