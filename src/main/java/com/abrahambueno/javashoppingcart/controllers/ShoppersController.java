@@ -14,26 +14,26 @@ import java.util.List;
 @RequestMapping(value = "/shoppers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ShoppersController {
     @Autowired
-    private ShopperRepository shoppersrepo;
+    public ShopperRepository shoppersrepo;
 
     // not sure if it's a good idea
     @GetMapping("/all")
-    private List<Shoppers> getAllShoppers() {
+    public List<Shoppers> getAllShoppers() {
         return shoppersrepo.findAll();
     }
 
     @GetMapping("/{shopperid}")
-    private Shoppers getShopperById(@PathVariable long shopperid) throws URISyntaxException {
+    public Shoppers getShopperById(@PathVariable long shopperid) throws URISyntaxException {
         return shoppersrepo.findById(shopperid).get();
     }
 
     @PostMapping("/add")
-    private Shoppers addShopper(@RequestBody Shoppers shopper) throws URISyntaxException {
+    public Shoppers addShopper(@RequestBody Shoppers shopper) throws URISyntaxException {
         return shoppersrepo.save(shopper);
     }
 
     @PutMapping("/{shopperid}")
-    private Shoppers changeShopper(@RequestBody Shoppers shopper, @PathVariable long shopperid) throws URISyntaxException {
+    public Shoppers changeShopper(@RequestBody Shoppers shopper, @PathVariable long shopperid) throws URISyntaxException {
         var updateShopper = shoppersrepo.findById(shopperid);
         if (updateShopper.isPresent()) {
             if (shopper.getBillingaddress() == null) {
@@ -60,7 +60,7 @@ public class ShoppersController {
     }
 
     @DeleteMapping("/{shopperid}")
-    private String deleteShopper(@PathVariable long shopperid) throws URISyntaxException {
+    public String deleteShopper(@PathVariable long shopperid) throws URISyntaxException {
         var deleteShopper = shoppersrepo.findById(shopperid);
         if (deleteShopper.isPresent()) {
             shoppersrepo.deleteById(shopperid);

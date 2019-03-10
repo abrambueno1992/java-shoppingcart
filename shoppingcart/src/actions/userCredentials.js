@@ -1,5 +1,5 @@
 const url = "http://localhost:2019/users/";
-const authURL = "http://localhost:2019/oauth/token/";
+const authURL = "http://localhost:2019/oauth/token";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 function fetchRequest() {
@@ -43,15 +43,22 @@ function postLoginSuccess(body) {
     payload: body
   };
 }
+
 // username and password in object
 export const loginUser = userObject => {
+  console.log("Userobject", userObject.username, userObject.password);
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(authURL, {
       method: "POST",
+      // withCredentials: true,
+      // credentials: "include",
       body: `grant_type=password&username=${userObject.username}&password=${
         userObject.password
       }`,
+      // body: JSON.stringify(
+      //   "client_id=lambda-client&client_secret=lambda-secret&grant_type_password=password&username=bob&password=newuser"
+      // ),
       headers: {
         Authorization: "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0",
         "Access-Control-Allow-Origin": "*",

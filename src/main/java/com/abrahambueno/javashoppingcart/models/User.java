@@ -1,7 +1,9 @@
 package com.abrahambueno.javashoppingcart.models;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -29,6 +31,12 @@ public class User {
     @JsonIgnoreProperties({"userxyz", "orders"})
     private Shoppers shopperxyz;
 
+    public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+    public User() {
+    }
 
     public Shoppers getShopperxyz() {
         return shopperxyz;
@@ -39,7 +47,7 @@ public class User {
     }
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(long id) {
@@ -47,7 +55,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -55,18 +63,21 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+
+//    public List<SimpleGrantedAuthority> getAuthority() {
+//        String myRole = this.role.toUpperCase();
+//        return Arrays.asList(new SimpleGrantedAuthority(myRole));
+//    }
 }
