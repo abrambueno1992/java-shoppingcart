@@ -2,6 +2,7 @@ package com.abrahambueno.javashoppingcart.controllers;
 
 import com.abrahambueno.javashoppingcart.models.User;
 import com.abrahambueno.javashoppingcart.repositories.UserDao;
+import com.abrahambueno.javashoppingcart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -17,41 +18,33 @@ public class UserController
 
     @Autowired
     // private UserService userService;
-    private UserDao userrepos;
+    private UserService userService;
 
-    @GetMapping("/all")
-    public List<User> listAllUsers()
-    {
-        return userrepos.findAll();
-    }
+    @Autowired
+    private UserDao userrepo;
 
     @GetMapping("/{username}")
     public User getUserByUsername(@PathVariable String username) {
-        return userrepos.findByUsername(username);
+        return this.userrepo.findByUsername(username);
     }
 
-    @PostMapping("/newuser")
-    public User addNewUser(@RequestBody User newuser) throws URISyntaxException
-    {
-        return userrepos.save(newuser);
+    public UserController() {
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteUserById(@PathVariable long id)
-    {
-        var foundUser = userrepos.findById(id);
-        if (foundUser.isPresent())
-        {
-            userrepos.deleteById(id);
+    @GetMapping({"/users"})
+    public List<User> listAllUsers() {
+        return this.userService.findAll();
+    }
 
-            return "{" + "\"id\":"   + foundUser.get().getId() +
-                    ",\"usename\":" + "\"" + foundUser.get().getUsername() + "\"" +
-                    ",\"role\":" + foundUser.get().getAuthority() + "}";
-        }
-        else
-        {
-            return null;
-        }
+    @PostMapping({"/newuser"})
+    public User addNewUser(@RequestBody User newuser) throws URISyntaxException {
+        return this.userService.save(newuser);
+    }
+
+    @DeleteMapping({"/delete/{id}"})
+    public String deleteUserById(@PathVariable long id) {
+        this.userService.delete(id);
+        return "success";
     }
 
 }

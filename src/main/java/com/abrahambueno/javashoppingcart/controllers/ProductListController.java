@@ -14,24 +14,24 @@ import java.util.List;
 @RequestMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductListController {
     @Autowired
-    private ProductListRepository productrepos;
+    public ProductListRepository productrepos;
 
     @GetMapping("/all")
-    private List<ProductList> getAllProducts() {
+    public List<ProductList> getAllProducts() {
         return productrepos.findAll();
     }
 
     @GetMapping("/{productid}")
-    private ProductList getProductById(@PathVariable long productid) {
+    public ProductList getProductById(@PathVariable long productid) {
         return productrepos.findById(productid).get();
     }
 
     @PostMapping("/add")
-    private ProductList addProduct(@RequestBody ProductList product) throws URISyntaxException {
+    public ProductList addProduct(@RequestBody ProductList product) throws URISyntaxException {
         return productrepos.save(product);
     }
     @PutMapping("/update/{productid}")
-    private ProductList changeProduct(@RequestBody ProductList product, @PathVariable long productid) {
+    public ProductList changeProduct(@RequestBody ProductList product, @PathVariable long productid) {
         var updateProduct = productrepos.findById(productid);
         if (updateProduct.isPresent()) {
             if (product.getDescription() == null) {
@@ -52,7 +52,7 @@ public class ProductListController {
         }
     }
     @DeleteMapping("/delete/{productid}")
-    private ProductList deleteProductById(@PathVariable long productid) throws URISyntaxException {
+    public ProductList deleteProductById(@PathVariable long productid) throws URISyntaxException {
         var deleteProduct = productrepos.findById(productid);
         if (deleteProduct.isPresent()) {
             productrepos.deleteById(productid);

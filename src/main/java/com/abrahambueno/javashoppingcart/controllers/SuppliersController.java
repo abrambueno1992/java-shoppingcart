@@ -15,28 +15,28 @@ import java.util.List;
 public class SuppliersController
 {
     @Autowired
-    private SuppliersRepository supplierrepos;
+    public SuppliersRepository supplierrepos;
 
     @GetMapping("/all")
-    private List<Suppliers> listAllSuppliers()
+    public List<Suppliers> listAllSuppliers()
     {
         return supplierrepos.findAll();
     }
 
     @GetMapping("/{supplierid}")
-    private Suppliers getSupplierById(@PathVariable long supplierid) throws URISyntaxException {
+    public Suppliers getSupplierById(@PathVariable long supplierid) throws URISyntaxException {
         return supplierrepos.findById(supplierid).get();
     }
 
     @PostMapping("/add")
-    private Suppliers addNewSupplier (@RequestBody Suppliers newsupplier) throws URISyntaxException
+    public Suppliers addNewSupplier (@RequestBody Suppliers newsupplier) throws URISyntaxException
     {
         return supplierrepos.save(newsupplier);
     }
 
     //change the supplier's information
     @PutMapping("/{supplierid}")
-    private Suppliers changeSupplierById(@RequestBody Suppliers supplier, @PathVariable long supplierid) throws URISyntaxException{
+    public Suppliers changeSupplierById(@RequestBody Suppliers supplier, @PathVariable long supplierid) throws URISyntaxException{
         var updateSupplier = supplierrepos.findById(supplierid);
         if (updateSupplier.isPresent()){
                 if (supplier.getSuppliername() == null) {
@@ -54,7 +54,7 @@ public class SuppliersController
     }
 
     @DeleteMapping("/suppliers/{supplierid}")
-    private String deleteSupplierById(@PathVariable long supplierid)
+    public String deleteSupplierById(@PathVariable long supplierid)
     {
         var foundsupplier = supplierrepos.findById(supplierid);
         if (foundsupplier.isPresent())

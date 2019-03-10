@@ -14,24 +14,24 @@ import java.util.List;
 @RequestMapping(value = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrdersController {
     @Autowired
-    private OrdersRepository ordersrepos;
+    public OrdersRepository ordersrepos;
     // not sure if it should be allowed
     @GetMapping("/all")
-    private List<Orders> getAllOrders() {
+    public List<Orders> getAllOrders() {
         return ordersrepos.findAll();
     }
 
     @GetMapping("/{orderid}")
-    private Orders getOrdersById(@PathVariable long orderid) throws URISyntaxException {
+    public Orders getOrdersById(@PathVariable long orderid) throws URISyntaxException {
         return ordersrepos.findById(orderid).get();
     }
 
     @PostMapping("/add")
-    private Orders createOrder(@RequestBody Orders order) throws URISyntaxException {
+    public Orders createOrder(@RequestBody Orders order) throws URISyntaxException {
         return ordersrepos.save(order);
     }
     @PutMapping("/update/{orderid}")
-    private Orders changeOrder(@RequestBody Orders order, @PathVariable long orderid) throws URISyntaxException {
+    public Orders changeOrder(@RequestBody Orders order, @PathVariable long orderid) throws URISyntaxException {
         var updateOrder = ordersrepos.findById(orderid);
         if (updateOrder.isPresent()) {
             if (order.getDestinationaddress() == null) {
@@ -57,7 +57,7 @@ public class OrdersController {
         }
     }
     @DeleteMapping("/delete/{orderid}")
-    private Orders deleteOrderById(@PathVariable long orderid) throws URISyntaxException {
+    public Orders deleteOrderById(@PathVariable long orderid) throws URISyntaxException {
         var deleteOrder = ordersrepos.findById(orderid);
         if (deleteOrder.isPresent()) {
             ordersrepos.deleteById(orderid);

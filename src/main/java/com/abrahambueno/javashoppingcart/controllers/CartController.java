@@ -17,25 +17,25 @@ import java.util.List;
 @RequestMapping(value = "/cart/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CartController {
     @Autowired
-    private CartRepository cartrepos;
+    public CartRepository cartrepos;
     @Autowired
-    private CartItemsRepository cartitems;
+    public CartItemsRepository cartitems;
 
     // might not allow it
     @GetMapping("/items")
-    private List<Cart> getAllItems() {
+    public List<Cart> getAllItems() {
         return cartrepos.findAll();
     }
     @GetMapping("/{cartid}")
-    private Cart getCartById(@PathVariable long cartid) throws URISyntaxException {
+    public Cart getCartById(@PathVariable long cartid) throws URISyntaxException {
         return cartrepos.findById(cartid).get();
     }
     @PostMapping("/createcart")
-    private Cart createCart() {
+    public Cart createCart() {
         return cartrepos.save(new Cart());
     }
     @PostMapping("/add/{cartid}/{shopperid}")
-    private ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid, @PathVariable long shopperid) throws URISyntaxException {
+    public ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid, @PathVariable long shopperid) throws URISyntaxException {
         var addToCart = cartrepos.findById(cartid);
         if (addToCart.isPresent()) {
             var productPresent = cartitems.checkValuePair(product.getProductid());
@@ -69,7 +69,7 @@ public class CartController {
 
     // deletes all items from specific cart
     @DeleteMapping("/delete/cart/{cartid}")
-    private Cart deleteCartById(@PathVariable long cartid) throws URISyntaxException {
+    public Cart deleteCartById(@PathVariable long cartid) throws URISyntaxException {
         var deleteCart = cartrepos.findById(cartid);
         if (deleteCart.isPresent()) {
             cartrepos.deleteById(cartid);
@@ -81,7 +81,7 @@ public class CartController {
     }
 
     @DeleteMapping("/delete/product/{cartid}/{productid}")
-    private String deleteProductFromCart(@PathVariable long cartid, @PathVariable long productid) {
+    public String deleteProductFromCart(@PathVariable long cartid, @PathVariable long productid) {
         var updateCart = cartrepos.findById(cartid);
         if (updateCart.isPresent()) {
             cartrepos.deleteProductFromCart(cartid, productid);
@@ -95,7 +95,7 @@ public class CartController {
 
     // update quantity of an item in the cart?
 //    @PutMapping("/update/{cartid}")
-//    private Cart changeCartById(@RequestBody Cart cart, @PathVariable long cartid) throws URISyntaxException {
+//    public Cart changeCartById(@RequestBody Cart cart, @PathVariable long cartid) throws URISyntaxException {
 //        var updateCart = cartrepos.findById(cartid);
 //        if (updateCart.isPresent()) {
 //            if (cart.getProducts() == null) {
