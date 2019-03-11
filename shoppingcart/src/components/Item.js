@@ -30,15 +30,6 @@ export class Item extends Component {
     showInfo() {
         this.props.handleShow(this.props.description);
       }
-
-    add1() {
-        return this + 1;
-    }
-
-    main() {
-        var add1And2 this.add1.bind(3);
-        add1And2(); // 4
-    }
     
       render() {
         return (
