@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createNewUser, loginUser } from "../actions/userCredentials";
+import {
+  createNewUser,
+  loginUser,
+  setShopperId
+} from "../actions/userCredentials";
+import { addShopper } from "../actions/shoppers";
 class TestLogin extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +15,10 @@ class TestLogin extends Component {
       password: "",
       cusername: "",
       cpassword: "",
+      billingaddres: "",
+      shippingaddress: "",
+      phonenumber: "",
+      paymentmethod: "",
       role: ""
     };
   }
@@ -34,7 +43,31 @@ class TestLogin extends Component {
     this.setState({ username: "", password: "" });
   };
 
+  createShopper = e => {
+    const shopperObject = {
+      billingaddres: this.state.billingaddres,
+      shippingaddress: this.state.shippingaddress,
+      phonenumber: this.state.phonenumber,
+      paymentmethod: this.state.paymentmethod
+    };
+    this.props.addShopper(shopperObject);
+    this.setState({
+      billingaddres: "",
+      shippingaddress: "",
+      phonenumber: "",
+      paymentmethod: ""
+    });
+    // this.props.setShopperId();
+  };
+
+  setShopperId = e => {
+    this.props.setShopperId();
+  };
+
   render() {
+    console.log("userid", localStorage.getItem("userid"));
+    console.log("shopperid", localStorage.getItem("shopperid"));
+
     return (
       <div>
         <h3>Create a New User</h3>
@@ -75,6 +108,34 @@ class TestLogin extends Component {
           />
         </div>
         <button onClick={this.loginUser}>Login User</button>
+        <div>
+          <input
+            name="billingaddres"
+            placeholder="Enter billing address"
+            value={this.state.billingaddres}
+            onChange={this.handleChange}
+          />
+          <input
+            name="shippingaddress"
+            placeholder="Please enter shipping address"
+            value={this.state.shippingaddress}
+            onChange={this.handleChange}
+          />
+          <input
+            name="phonenumber"
+            placeholder="Please enter a phone number"
+            value={this.state.phonenumber}
+            onChange={this.handleChange}
+          />
+          <input
+            name="paymentmethod"
+            placeholder="Please enter payment method"
+            value={this.state.paymentmethod}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button onClick={this.createShopper}>Create Shopper</button>
+        <button onClick={this.setShopperId}>Set Shopper ID</button>
       </div>
     );
   }
@@ -88,5 +149,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser }
+  { createNewUser, loginUser, setShopperId, addShopper }
 )(TestLogin);

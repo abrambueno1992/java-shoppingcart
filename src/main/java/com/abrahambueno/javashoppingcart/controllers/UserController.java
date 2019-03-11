@@ -1,6 +1,7 @@
 package com.abrahambueno.javashoppingcart.controllers;
 
 import com.abrahambueno.javashoppingcart.models.User;
+import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
 import com.abrahambueno.javashoppingcart.repositories.UserDao;
 import com.abrahambueno.javashoppingcart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController
     @Autowired
     private UserDao userrepo;
 
+    @Autowired
+    private ShopperRepository shopperrepos;
+
     @GetMapping("/{username}")
     public User getUserByUsername(@PathVariable String username) {
         return this.userrepo.findByUsername(username);
@@ -38,7 +42,15 @@ public class UserController
 
     @PostMapping({"/newuser"})
     public User addNewUser(@RequestBody User newuser) throws URISyntaxException {
+
         return this.userService.save(newuser);
+    }
+
+    @PostMapping({"/shopperid/{shopperid}/{userid}"})
+    public User addShopperidToUser(@PathVariable long shopperid, @PathVariable long userid) {
+        var updateUser = userrepo.findById(userid);
+        updateUser.get().setShopperxyz(shopperrepos.findById(shopperid).get());
+        return updateUser.get();
     }
 
     @DeleteMapping({"/delete/{id}"})
