@@ -102,7 +102,6 @@ class TestLogin extends Component {
           />
         </div>
         <button onClick={this.createUser}> Create USer</button>
-        <button onClick={this.getUserInfo}>Get User Info</button>
         <h3>Login User</h3>
         <div>
           <input
@@ -119,6 +118,7 @@ class TestLogin extends Component {
           />
         </div>
         <button onClick={this.loginUser}>Login User</button>
+        <h3>Create Shopper Profile</h3>
         <div>
           <input
             name="billingaddres"

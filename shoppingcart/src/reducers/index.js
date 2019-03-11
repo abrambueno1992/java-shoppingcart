@@ -6,6 +6,7 @@ import {
   SET_SHOPPER_ID,
   GET_USER_INFO
 } from "../actions/userCredentials";
+import { NEW_SHOPPER } from "../actions/shoppers";
 const initialState = {
   nothing: true,
   product_list: null,
@@ -15,6 +16,7 @@ const initialState = {
   set_shopper_id: null,
   set_user_info: null,
   items_in_cart: null,
+  new_shopper: null,
   cart: null,
   error: null
 };
@@ -52,6 +54,10 @@ const cartItems = (state = initialState, actions) => {
     case ADD_ITEM_TO_CART:
       return Object.assign({}, state, {
         items_in_cart: actions.payload
+      });
+    case NEW_SHOPPER:
+      return Object.assign({}, state, {
+        new_shopper: actions.payload
       });
     case "FAILURE":
       return Object.assign({}, state, {

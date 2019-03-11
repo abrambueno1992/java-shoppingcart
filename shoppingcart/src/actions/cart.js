@@ -59,23 +59,56 @@ function postSuccessAddItem(body) {
     payload: body
   };
 }
-export const addItemToCart = (productMap, cartid) => {
-  const shopperid = localStorage.getItem("shopperid");
-  for (let [k, v] of productMap) {
-    return dispatch => {
-      dispatch(fetchRequest());
-      return fetch(`${url}add/${cartid}/${shopperid}/${k}/${v}`, {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(res => res.json())
-        .then(body => dispatch(postSuccessAddItem(body)))
-        .catch(ex => dispatch(failedAction(ex)));
-    };
-  }
+export const addItemToCart = url => {
+  // const shopperid = localStorage.getItem("shopperid");
+  // const url = [];
+  // for (let [k, v] of productMap) {
+  //   url.push(`${url}add/${cartid}/${shopperid}/${k}/${v}`);
+  // }
+  //  url.forEach(async promise => {
+  // asyncArr(await promise);
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(url, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(postSuccessAddItem(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+  // });
+  // return dispatch => {
+  //   dispatch(fetchRequest());
+  //   return fetch(url, {
+  //     method: "POST", // or 'PUT'
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(body => dispatch(postSuccessAddItem(body)))
+  //     .catch(ex => dispatch(failedAction(ex)));
+  // };
 };
+
+const asyncArr = async completeURL => {
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(url, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(postSuccessAddItem(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+
 function deleteSuccessCart(body) {
   return {
     type: DELETE_CART,

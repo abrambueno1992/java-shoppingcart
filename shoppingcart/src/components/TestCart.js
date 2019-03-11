@@ -15,7 +15,8 @@ export class TestCart extends Component {
     super(props);
 
     this.state = {
-      items: new Map()
+      items: new Map(),
+      url: []
     };
   }
 
@@ -43,8 +44,36 @@ export class TestCart extends Component {
     // Go over map object to get productid and quantity
     // Add the products to the cart
     // Send this as an order
-    this.props.addItemToCart(this.state.items, this.props.cart.cartid);
+    const shopperid = localStorage.getItem("shopperid");
+    const baseURL = "http://localhost:2019/cart/";
+    const url = [];
+    // if (this.state.url[0] === undefined) {
+    const mapObject = this.state.items;
+    for (let [k, v] of this.state.items) {
+      url.push(
+        `${baseURL}add/${this.props.cart.cartid}/${shopperid}/${k}/${v}`
+      );
+      mapObject.delete(k);
+    }
+    // }
+    if (url[0] !== undefined) {
+      this.props.addItemToCart(url.shift());
+      this.setState({ url: url });
+    }
   };
+  iterateUrl = () => {
+    const url = this.state.url;
+    console.log("Lenght:", url.length);
+    const value = url.shift();
+    this.setState({ url: url });
+    this.props.addItemToCart(value);
+    // url.shift();
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.url[0] !== undefined) {
+      this.iterateUrl();
+    }
+  }
 
   render() {
     if (this.props.product_list === null) {

@@ -20,6 +20,8 @@ public class Orders {
 
 
     private int quantity;
+
+    private long totalcost;
     // destination address
     private String destinationaddress;
     // dispatch address
@@ -41,6 +43,14 @@ public class Orders {
 
     public long getOrderid() {
         return orderid;
+    }
+
+    public long getTotalcost() {
+        return totalcost;
+    }
+
+    public void setTotalcost(long totalcost) {
+        this.totalcost = totalcost;
     }
 
     public void setOrderid(long orderid) {
