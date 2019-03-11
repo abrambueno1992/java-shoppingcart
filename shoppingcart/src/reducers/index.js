@@ -1,9 +1,14 @@
 import { GET_PRODUCTS, NEW_PRODUCT } from "../actions/productList";
+import { CREATE_CART, ADD_ITEM_TO_CART } from "../actions/cart";
 import {
   CREATE_USER,
   LOGIN_USER,
-  SET_SHOPPER_ID
+  SET_SHOPPER_ID,
+  GET_USER_INFO
 } from "../actions/userCredentials";
+
+import { NEW_SHOPPER } from "../actions/shoppers";
+
 import _ from "lodash";
 
 const initialState = {
@@ -13,6 +18,10 @@ const initialState = {
   user_token: null,
   new_user: null,
   set_shopper_id: null,
+  set_user_info: null,
+  items_in_cart: null,
+  new_shopper: null,
+  cart: null,
   error: null
 };
 
@@ -40,6 +49,22 @@ const cartItems = (state = initialState, actions) => {
     case SET_SHOPPER_ID:
       return Object.assign({}, state, {
         set_shopper_id: actions.payload
+      });
+    case GET_USER_INFO:
+      return Object.assign({}, state, {
+        set_user_info: actions.payload
+      });
+    case CREATE_CART:
+      return Object.assign({}, state, {
+        cart: actions.payload
+      });
+    case ADD_ITEM_TO_CART:
+      return Object.assign({}, state, {
+        items_in_cart: actions.payload
+      });
+    case NEW_SHOPPER:
+      return Object.assign({}, state, {
+        new_shopper: actions.payload
       });
     case "FAILURE":
       return Object.assign({}, state, {

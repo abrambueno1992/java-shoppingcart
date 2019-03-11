@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Subtotal from "./Subtotal";
 import ProductList from "./ProductList";
 import TestLogin from "./TestLogin";
+import TestCart from "./TestCart";
 import ItemDetails from "./ItemDetails";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
       <div>
         <Route exact path="/" component={ProductList} />
         <Route exact path="/login" component={TestLogin} />
+        <Route exact path="/cart" component={TestCart} />
         {/* <Subtotal price={this.state.total.toFixed(2)} /> */}
       </div>
     </Router>

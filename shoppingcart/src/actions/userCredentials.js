@@ -3,6 +3,7 @@ const authURL = "http://localhost:2019/oauth/token";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
+export const GET_USER_INFO = "GET_USER_INFO";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -16,7 +17,6 @@ function failedAction(ex) {
   };
 }
 function postUserSuccess(body) {
-  localStorage.setItem("userid", body.id);
   return {
     type: CREATE_USER,
     payload: body
@@ -41,6 +41,7 @@ export const createNewUser = userObject => {
 
 function postLoginSuccess(body) {
   localStorage.setItem("token", body.access_token);
+  // getUserInfo();
   return {
     type: LOGIN_USER,
     payload: body
@@ -50,6 +51,7 @@ function postLoginSuccess(body) {
 // username and password in object
 export const loginUser = userObject => {
   console.log("Userobject", userObject.username, userObject.password);
+  localStorage.setItem("username", userObject.username);
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(authURL, {
@@ -65,6 +67,32 @@ export const loginUser = userObject => {
     })
       .then(res => res.json())
       .then(body => dispatch(postLoginSuccess(body)))
+
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+
+function getUserInfoSuccess(body) {
+  localStorage.setItem("userid", body.id);
+  localStorage.setItem("shopperid", body.shopperxyz.shopperid);
+  return {
+    type: GET_USER_INFO,
+    payload: body
+  };
+}
+
+export const getUserInfo = () => {
+  const username = localStorage.getItem("username");
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(url + username, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(getUserInfoSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };

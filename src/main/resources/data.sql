@@ -14,8 +14,8 @@ values (1, 1),
 insert into shoppingcartapp.cart(cartid, quantity)
 values (1, 0);
 
-insert into shoppingcartapp.orders(orderid, destinationaddress, dispatchaddress, quantity, shippedstatus, shopperid)
-values (1, "1235 N Destination", "2352 N Dispatch Avenue", 3, "pending", 1);
+insert into shoppingcartapp.orders(orderid,totalcost, destinationaddress, dispatchaddress, quantity, shippedstatus, shopperid)
+values (1,50, "1235 N Destination", "2352 N Dispatch Avenue", 3, "pending", 1);
 
 insert into shoppingcartapp.shoppers(shopperid, billingaddress, paymentmethod, phonenumber, shippingaddress)
 values (1, "123 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address"),

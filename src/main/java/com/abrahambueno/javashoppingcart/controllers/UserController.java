@@ -50,6 +50,7 @@ public class UserController
     public User addShopperidToUser(@PathVariable long shopperid, @PathVariable long userid) {
         var updateUser = userrepo.findById(userid);
         updateUser.get().setShopperxyz(shopperrepos.findById(shopperid).get());
+        userrepo.save(updateUser.get());
         return updateUser.get();
     }
 
