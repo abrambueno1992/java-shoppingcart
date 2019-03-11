@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   createNewUser,
   loginUser,
-  setShopperId
+  setShopperId,
+  getUserInfo
 } from "../actions/userCredentials";
 import { addShopper } from "../actions/shoppers";
 class TestLogin extends Component {
@@ -64,6 +65,15 @@ class TestLogin extends Component {
     this.props.setShopperId();
   };
 
+  getUserInfo = () => {
+    this.props.getUserInfo();
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user_token !== this.props.user_token) {
+      this.props.getUserInfo();
+    }
+  }
+
   render() {
     console.log("userid", localStorage.getItem("userid"));
     console.log("shopperid", localStorage.getItem("shopperid"));
@@ -92,6 +102,7 @@ class TestLogin extends Component {
           />
         </div>
         <button onClick={this.createUser}> Create USer</button>
+        <button onClick={this.getUserInfo}>Get User Info</button>
         <h3>Login User</h3>
         <div>
           <input
@@ -143,11 +154,12 @@ class TestLogin extends Component {
 
 const mapStateToProps = state => {
   return {
-    user_token: state.user_token
+    user_token: state.user_token,
+    set_user_info: state.set_user_info
   };
 };
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser, setShopperId, addShopper }
+  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo }
 )(TestLogin);

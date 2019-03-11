@@ -32,7 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 //                .antMatchers("/oauth/**").access("hasAnyRole('ROLE_USER')")
                 .antMatchers("/data/**").access("hasAnyRole('ROLE_DATA')")
                 .antMatchers("/authors/**").access("hasAnyRole('ROLE_MGR','ROLE_USER')")
-                .antMatchers("/cart/**").access("hasAnyRole('ROLE_MGR','ROLE_USER')")
+//                .antMatchers("/cart/**").access("hasAnyRole('ROLE_MGR','ROLE_USER')")
                 .antMatchers("/sections/**").access("hasAnyRole('ROLE_MGR','ROLE_USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }

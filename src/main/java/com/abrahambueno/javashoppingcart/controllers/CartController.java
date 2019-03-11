@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,20 +35,20 @@ public class CartController {
     public Cart createCart() {
         return cartrepos.save(new Cart());
     }
-    @PostMapping("/add/{cartid}/{shopperid}")
-    public ProductList addProductToCart(@RequestBody ProductList product, @PathVariable long cartid, @PathVariable long shopperid) throws URISyntaxException {
+    @PostMapping("/add/{cartid}/{shopperid}/{productid}/{quantity}")
+    public Set<ProductList> addProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
         var addToCart = cartrepos.findById(cartid);
         if (addToCart.isPresent()) {
-            var productPresent = cartitems.checkValuePair(product.getProductid());
+            var productPresent = cartitems.checkValuePair(productid);
             if (productPresent != null) {
-                long productidTwo = cartitems.returnCartItem(product.getProductid()).getCartitemsid();
+                long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
                 var updateCartItems = cartitems.findById(productidTwo);
-                updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + 1);
+                updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + quantity);
                 cartitems.save(updateCartItems.get());
             } else {
                 CartItems newCartItem = new CartItems();
-                newCartItem.setQuantity(1);
-                newCartItem.setProductid(product.getProductid());
+                newCartItem.setQuantity(quantity);
+                newCartItem.setProductid(productid);
                 newCartItem.setCartidinsert(cartid);
                 newCartItem.setAsdf(addToCart.get());
                 newCartItem.setShopperid(shopperid);
@@ -55,12 +56,12 @@ public class CartController {
                 cartitems.save(newCartItem);
             }
             addToCart.get().setQuantity(addToCart.get().getQuantity() + 1);
-            Object productInCart = cartrepos.checkValue(cartid, product.getProductid());
+            Object productInCart = cartrepos.checkValue(cartid, productid);
             System.out.println("THIS is the product in cart" + productInCart);
             if (productInCart == null) {
-                cartrepos.addProductToCart(cartid, product.getProductid());
+                cartrepos.addProductToCart(cartid, productid);
             }
-            return product;
+            return cartrepos.findById(cartid).get().getProducts();
         } else {
             return null;
         }
