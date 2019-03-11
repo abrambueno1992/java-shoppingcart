@@ -6,8 +6,14 @@ import {
   SET_SHOPPER_ID,
   GET_USER_INFO
 } from "../actions/userCredentials";
+
 import { NEW_SHOPPER } from "../actions/shoppers";
+
 import { NEW_ORDER } from "../actions/orders";
+
+import _ from "lodash";
+
+
 const initialState = {
   nothing: true,
   product_list: null,
@@ -30,8 +36,11 @@ const cartItems = (state = initialState, actions) => {
         product_list: actions.payload
       });
     case NEW_PRODUCT:
+      const newProductList = _.clone(state.product_list);
+      newProductList.push(actions.payload);
       return Object.assign({}, state, {
-        new_product: actions.payload
+        new_product: actions.payload,
+        product_list: newProductList,
       });
     case LOGIN_USER:
       return Object.assign({}, state, {
