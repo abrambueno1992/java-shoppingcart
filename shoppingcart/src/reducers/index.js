@@ -1,5 +1,6 @@
 import { GET_PRODUCTS, NEW_PRODUCT } from "../actions/productList";
 import { CREATE_USER, LOGIN_USER } from "../actions/userCredentials";
+import _ from "lodash";
 const initialState = {
   nothing: true,
   product_list: null,
@@ -16,8 +17,11 @@ const cartItems = (state = initialState, actions) => {
         product_list: actions.payload
       });
     case NEW_PRODUCT:
+      const newProductList = _.clone(state.product_list);
+      newProductList.push(actions.payload);
       return Object.assign({}, state, {
-        new_product: actions.payload
+        new_product: actions.payload,
+        product_list: newProductList,
       });
     case LOGIN_USER:
       return Object.assign({}, state, {
