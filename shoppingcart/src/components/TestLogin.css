@@ -46,6 +46,11 @@
   cursor: pointer;
 }
 
+.createShopper {
+    margin-bottom: 0.8em;
+}
+
 h3 {
     font-family: "Avenir";
+    text-align: left;
 }

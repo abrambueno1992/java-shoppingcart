@@ -147,8 +147,8 @@ class TestLogin extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button onClick={this.createShopper}>Create Shopper</button>
-        <button onClick={this.setShopperId}>Set Shopper ID</button>
+        <button class="createShopper" onClick={this.createShopper}>Create Shopper</button> <br />
+        <button class="setShopper" onClick={this.setShopperId}>Set Shopper ID</button>
 
       </div>
     </div>
