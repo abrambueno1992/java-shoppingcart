@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import "./Item.css";
 
 export class Item extends Component {
     constructor(props){
@@ -33,7 +34,11 @@ export class Item extends Component {
     
       render() {
         return (
+
           <div>
+
+          <div class="cards">
+
             <div className="row form-group">
               <div className="col-sm-10">
                 <h4>{this.props.name} {this.props.description}: ${this.props.price}</h4>
