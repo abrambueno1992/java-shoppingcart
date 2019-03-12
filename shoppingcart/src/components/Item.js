@@ -35,7 +35,7 @@ export class Item extends Component {
       render() {
         return (
 
-          <div>
+          
 
           <div class="cards">
 

@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {
+  createNewUser,
+  loginUser,
+  setShopperId,
+  getUserInfo
+} from "../actions/userCredentials";
 import { getProductList, createNewProduct } from "../actions/productList";
+import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
+
 import { Item } from "./Item";
 
 export class ProductList extends Component {
@@ -21,6 +29,9 @@ export class ProductList extends Component {
   };
   componentDidMount() {
     this.props.getProductList();
+    if (this.props.set_user_info === null) {
+      this.props.getUserInfo();
+    }
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -51,47 +62,15 @@ export class ProductList extends Component {
     console.log("Input change of state:", this.state.description);
 
     if (this.props.product_list === null) {
-      return (
-        <p>Loading...</p>
-      );
+      return <p>Loading...</p>;
     }
 
-    const itemComponents = this.props.product_list.map((productItem) => {
-      return (
-        <Item {...productItem}></Item>
-      );
+    const itemComponents = this.props.product_list.map(productItem => {
+      return <Item {...productItem} />;
     });
     return (
       <div>
-
-        <div>{itemComponents}</div>
-        <input
-          name="description"
-          placeholder="Please enter a description"
-          value={this.state.description}
-          onChange={this.handleChange}
-        />
-        <input
-          name="name"
-          placeholder="Please enter a name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <input
-          name="price"
-          placeholder="Please enter a price"
-          value={this.state.price}
-          onChange={this.handleChange}
-        />
-        <input
-          name="quantity"
-          placeholder="Please enter a quantity"
-          value={this.state.quantity}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.sendNewProduct}>hey</button>
-
-        <div class="wrapper"> 
+        <div class="wrapper">
           <input
             name="name"
             placeholder="Name"
@@ -119,7 +98,6 @@ export class ProductList extends Component {
           <button onClick={this.sendNewProduct}>hey</button>
         </div>
         <div class="item">{itemComponents}</div>
-
       </div>
     );
   }
@@ -127,13 +105,23 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => {
   return {
-    product_list: state.product_list,
-    new_product: state.new_product
+    product_list: state.productList.product_list,
+    new_product: state.productList.new_product,
+    shopper_cart: state.cart.shopper_cart,
+    set_user_info: state.userCredentials.set_user_info,
+    cart: state.cart.cart
   };
 };
 export default connect(
   mapStateToProps,
-  { getProductList, createNewProduct }
+  {
+    getProductList,
+    createNewProduct,
+    getUserInfo,
+    createCart,
+    addItemToCart,
+    getShopperCart
+  }
 )(ProductList);
 
 // const mapDispatchToProps = {};
