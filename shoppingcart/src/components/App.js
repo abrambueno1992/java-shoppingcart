@@ -5,6 +5,9 @@ import ProductList from "./ProductList";
 import TestLogin from "./TestLogin";
 import TestCart from "./TestCart";
 import TestOrders from "./TestOrders";
+import UpdateUsers from "./UpdateUsers";
+import UpdateCart from "./UpdateCart";
+import UpdateOrders from "./UpdateOrders";
 import ItemDetails from "./ItemDetails";
 
 const App = () => {
@@ -25,6 +28,9 @@ const App = () => {
         <Route exact path="/login" component={TestLogin} />
         <Route exact path="/cart" component={TestCart} />
         <Route exact path="/order" component={TestOrders} />
+        <Route exact path="/updatelogin" component={UpdateUsers} />
+        <Route exact path="/updatecart" component={UpdateCart} />
+        <Route exact path="/updateorder" component={UpdateOrders} />
         {/* <Subtotal price={this.state.total.toFixed(2)} /> */}
       </div>
     </Router>

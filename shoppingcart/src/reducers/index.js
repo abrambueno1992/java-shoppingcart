@@ -1,3 +1,20 @@
+
+import { combineReducers } from "redux";
+import cart from "./cart";
+import orders from "./orders";
+import productList from "./productList";
+import shoppers from "./shoppers";
+import userCredentials from "./userCredentials";
+// import suppliers from "./suppliers"
+
+export default combineReducers({
+  cart,
+  orders,
+  productList,
+  shoppers,
+  userCredentials
+});
+
 import { GET_PRODUCTS, NEW_PRODUCT } from "../actions/productList";
 import { CREATE_CART, ADD_ITEM_TO_CART } from "../actions/cart";
 import {
@@ -84,3 +101,4 @@ const cartItems = (state = initialState, actions) => {
 };
 
 export default cartItems;
+

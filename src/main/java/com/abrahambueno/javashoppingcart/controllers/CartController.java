@@ -31,33 +31,109 @@ public class CartController {
     public Cart getCartById(@PathVariable long cartid) throws URISyntaxException {
         return cartrepos.findById(cartid).get();
     }
-    @PostMapping("/createcart")
-    public Cart createCart() {
-        return cartrepos.save(new Cart());
+    @GetMapping("/shopper/{shopperid}")
+    public Cart getCartByShopperId(@PathVariable long shopperid) throws URISyntaxException {
+        return cartrepos.findByShopperid(shopperid);
+    }
+    @PostMapping("/createcart/{shopperid}")
+    public Cart createCart(@PathVariable long shopperid) throws URISyntaxException {
+        Cart newCart = new Cart();
+        newCart.setShopperid(shopperid);
+        return cartrepos.save(newCart);
     }
     @PostMapping("/add/{cartid}/{shopperid}/{productid}/{quantity}")
     public Set<ProductList> addProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
+        // the cart to add the items
         var addToCart = cartrepos.findById(cartid);
+        // check if the cart exists
         if (addToCart.isPresent()) {
+            // check the productid to the database
             var productPresent = cartitems.checkValuePair(productid);
+            // check if the product is present in the cart
             if (productPresent != null) {
+                // get productid
                 long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
+                // get the cartitem
                 var updateCartItems = cartitems.findById(productidTwo);
+                // update quantity on CartItems
                 updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + quantity);
+                // save cart changes
                 cartitems.save(updateCartItems.get());
             } else {
+                // initiate new Object
                 CartItems newCartItem = new CartItems();
+                // set required variables, data
                 newCartItem.setQuantity(quantity);
                 newCartItem.setProductid(productid);
                 newCartItem.setCartidinsert(cartid);
                 newCartItem.setAsdf(addToCart.get());
                 newCartItem.setShopperid(shopperid);
-//                cartitems.addProductToCartItems(newCartItem.getCartitemsid(), cartid);
+                // save CartItesm object
                 cartitems.save(newCartItem);
             }
-            addToCart.get().setQuantity(addToCart.get().getQuantity() + 1);
+            // update quantity on Cart
+            addToCart.get().setQuantity(addToCart.get().getQuantity() + quantity);
+            // save changes on Cart
+            cartrepos.save(addToCart.get());
             Object productInCart = cartrepos.checkValue(cartid, productid);
-            System.out.println("THIS is the product in cart" + productInCart);
+            if (productInCart == null) {
+                cartrepos.addProductToCart(cartid, productid);
+            }
+            return cartrepos.findById(cartid).get().getProducts();
+        } else {
+            return null;
+        }
+    }
+    @PutMapping("/update/{cartid}/{shopperid}/{productid}/{quantity}")
+    public Set<ProductList> changeProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
+        // the cart to add the items
+        var addToCart = cartrepos.findById(cartid);
+        // check if the cart exists
+        if (addToCart.isPresent()) {
+            // check the productid to the database
+            var productPresent = cartitems.checkValuePair(productid);
+            // check if the product is present in the cart
+            if (productPresent != null) {
+                // get productid
+                long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
+                // get the cartitem
+                var updateCartItems = cartitems.findById(productidTwo);
+                // update quantity on CartItems
+                int olderQuantityOfProduct = updateCartItems.get().getQuantity();
+                // update the quantity of the cart
+                if (olderQuantityOfProduct > quantity) {
+                    // quantity went down
+                    int subtract = olderQuantityOfProduct - quantity;
+                    addToCart.get().setQuantity(addToCart.get().getQuantity() - subtract);
+                    cartrepos.save(addToCart.get());
+                } else if (olderQuantityOfProduct < quantity) {
+                    // quantity went up
+                    int add = quantity - olderQuantityOfProduct;
+                    addToCart.get().setQuantity(addToCart.get().getQuantity() + add);
+                    cartrepos.save(addToCart.get());
+                } else {
+                    // no change in quantity, odd
+                }
+                updateCartItems.get().setQuantity(quantity);
+                // save cart changes
+                cartitems.save(updateCartItems.get());
+            } else {
+                // initiate new Object
+                CartItems newCartItem = new CartItems();
+                // set required variables, data
+                newCartItem.setQuantity(quantity);
+                newCartItem.setProductid(productid);
+                newCartItem.setCartidinsert(cartid);
+                newCartItem.setAsdf(addToCart.get());
+                newCartItem.setShopperid(shopperid);
+                // save CartItesm object
+                cartitems.save(newCartItem);
+                // update quantity on Cart
+                addToCart.get().setQuantity(addToCart.get().getQuantity() + quantity);
+                // save changes on Cart
+                cartrepos.save(addToCart.get());
+            }
+            Object productInCart = cartrepos.checkValue(cartid, productid);
             if (productInCart == null) {
                 cartrepos.addProductToCart(cartid, productid);
             }

@@ -21,7 +21,7 @@ function fetchSuccess(body) {
 function failedAction(ex) {
   return {
     type: "FAILURE",
-    ex
+    payload: ex
   };
 }
 

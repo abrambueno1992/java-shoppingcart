@@ -3,6 +3,7 @@ export const CREATE_CART = "CREATE_CART";
 export const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 export const DELETE_CART = "DELETE_CART";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const GET_SHOPPER_CART = "GET_SHOPPER_CART";
 const url = "http://localhost:2019/cart/";
 
 function fetchRequest() {
@@ -20,7 +21,7 @@ function fetchSuccess(body) {
 function failedAction(ex) {
   return {
     type: "FAILURE",
-    ex
+    payload: ex
   };
 }
 
@@ -39,10 +40,10 @@ function postSuccess(body) {
     payload: body
   };
 }
-export const createCart = () => {
+export const createCart = shopperid => {
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + "createcart", {
+    return fetch(`${url}createcart/${shopperid}`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json"
@@ -60,13 +61,6 @@ function postSuccessAddItem(body) {
   };
 }
 export const addItemToCart = url => {
-  // const shopperid = localStorage.getItem("shopperid");
-  // const url = [];
-  // for (let [k, v] of productMap) {
-  //   url.push(`${url}add/${cartid}/${shopperid}/${k}/${v}`);
-  // }
-  //  url.forEach(async promise => {
-  // asyncArr(await promise);
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url, {
@@ -79,32 +73,25 @@ export const addItemToCart = url => {
       .then(body => dispatch(postSuccessAddItem(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
-  // });
-  // return dispatch => {
-  //   dispatch(fetchRequest());
-  //   return fetch(url, {
-  //     method: "POST", // or 'PUT'
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(body => dispatch(postSuccessAddItem(body)))
-  //     .catch(ex => dispatch(failedAction(ex)));
-  // };
 };
+function getSuccessShopperCart(body) {
+  return {
+    type: GET_SHOPPER_CART,
+    payload: body
+  };
+}
 
-const asyncArr = async completeURL => {
+export const getShopperCart = shopperid => {
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url, {
-      method: "POST", // or 'PUT'
+    return fetch(`${url}shopper/${shopperid}`, {
+      method: "GET", // or 'PUT'
       headers: {
         "Content-Type": "application/json"
       }
     })
       .then(res => res.json())
-      .then(body => dispatch(postSuccessAddItem(body)))
+      .then(body => dispatch(getSuccessShopperCart(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };
