@@ -4,6 +4,7 @@ export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
 export const GET_USER_INFO = "GET_USER_INFO";
+export const FAILURE = "FAILURE";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -12,7 +13,7 @@ function fetchRequest() {
 
 function failedAction(ex) {
   return {
-    type: "FAILURE",
+    type: FAILURE,
     paylod: ex
   };
 }

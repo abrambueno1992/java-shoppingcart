@@ -20,6 +20,7 @@ public class Cart {
     //set quantity from controllers
     private int quantity = 0;
 
+    private long shopperid;
 
     @ManyToMany
     @JoinTable(name = "cartproducts",
@@ -37,11 +38,16 @@ public class Cart {
 //    @JsonIgnoreProperties("cartidtwo")
 //    private Set<ProductList> products;
     public Cart() {
-        if (products != null) {
-            this.quantity = products.size();
-        }
+
     }
 
+    public long getShopperid() {
+        return shopperid;
+    }
+
+    public void setShopperid(long shopperid) {
+        this.shopperid = shopperid;
+    }
 
     public Set<CartItems> getCartitemquantity() {
         return cartitemquantity;
