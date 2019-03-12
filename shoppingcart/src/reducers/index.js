@@ -9,7 +9,10 @@ import {
 
 import { NEW_SHOPPER } from "../actions/shoppers";
 
+import { NEW_ORDER } from "../actions/orders";
+
 import _ from "lodash";
+
 
 const initialState = {
   nothing: true,
@@ -21,6 +24,7 @@ const initialState = {
   set_user_info: null,
   items_in_cart: null,
   new_shopper: null,
+  new_order: null,
   cart: null,
   error: null
 };
@@ -65,6 +69,10 @@ const cartItems = (state = initialState, actions) => {
     case NEW_SHOPPER:
       return Object.assign({}, state, {
         new_shopper: actions.payload
+      });
+    case NEW_ORDER:
+      return Object.assign({}, state, {
+        new_order: actions.payload
       });
     case "FAILURE":
       return Object.assign({}, state, {

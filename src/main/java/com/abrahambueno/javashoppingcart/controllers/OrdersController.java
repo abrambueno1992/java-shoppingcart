@@ -2,6 +2,7 @@ package com.abrahambueno.javashoppingcart.controllers;
 
 import com.abrahambueno.javashoppingcart.models.Orders;
 import com.abrahambueno.javashoppingcart.repositories.OrdersRepository;
+import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,11 @@ import java.util.List;
 public class OrdersController {
     @Autowired
     public OrdersRepository ordersrepos;
+
+    @Autowired
+    public ShopperRepository shopperrepos;
+
+
     // not sure if it should be allowed
     @GetMapping("/all")
     public List<Orders> getAllOrders() {
@@ -26,8 +32,9 @@ public class OrdersController {
         return ordersrepos.findById(orderid).get();
     }
 
-    @PostMapping("/add")
-    public Orders createOrder(@RequestBody Orders order) throws URISyntaxException {
+    @PostMapping("/add/{shopperid}")
+    public Orders createOrder(@RequestBody Orders order, @PathVariable long shopperid) throws URISyntaxException {
+        order.setPaymentdetails(shopperrepos.findById(shopperid).get());
         return ordersrepos.save(order);
     }
     @PutMapping("/update/{orderid}")

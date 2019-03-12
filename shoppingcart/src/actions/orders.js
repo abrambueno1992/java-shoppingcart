@@ -4,6 +4,7 @@ export const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 export const DELETE_CART = "DELETE_CART";
 export const NEW_ORDER = "NEW_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
+export const UPDATE_ORDER = "UPDATE_ORDER";
 
 const url = "http://localhost:2019/orders/";
 
@@ -41,10 +42,10 @@ function postSuccessNewOrder(body) {
     payload: body
   };
 }
-export const addOrder = orderObject => {
+export const addOrder = (orderObject, shopperid) => {
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + "add", {
+    return fetch(`${url}add/${shopperid}`, {
       method: "POST", // or 'PUT'
       body: JSON.stringify(orderObject),
       headers: {
