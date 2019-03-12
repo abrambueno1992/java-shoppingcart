@@ -63,34 +63,6 @@ export class ProductList extends Component {
     });
     return (
       <div>
-
-        {/* <div>{itemComponents}</div>
-        <input
-          name="description"
-          placeholder="Please enter a description"
-          value={this.state.description}
-          onChange={this.handleChange}
-        />
-        <input
-          name="name"
-          placeholder="Please enter a name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <input
-          name="price"
-          placeholder="Please enter a price"
-          value={this.state.price}
-          onChange={this.handleChange}
-        />
-        <input
-          name="quantity"
-          placeholder="Please enter a quantity"
-          value={this.state.quantity}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.sendNewProduct}>hey</button> */}
-
         <div class="wrapper"> 
           <input
             name="name"
