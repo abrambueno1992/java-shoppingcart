@@ -5,6 +5,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const FAILURE = "FAILURE";
+export const RESET_DATA = "RESET_DATA";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -122,5 +123,14 @@ export const setShopperId = () => {
       .then(res => res.json())
       .then(body => dispatch(postSetShopperIdSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+
+export const resetData = () => {
+  return dispatch => {
+    dispatch({
+      type: RESET_DATA,
+      payload: null
+    });
   };
 };

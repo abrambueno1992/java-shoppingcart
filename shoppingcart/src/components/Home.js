@@ -5,6 +5,7 @@ import {
   createNewUser,
   loginUser,
   setShopperId,
+  resetData,
   getUserInfo
 } from "../actions/userCredentials";
 import { addShopper } from "../actions/shoppers";
@@ -31,37 +32,24 @@ export class Home extends Component {
   handleButton = () => {
     this.setState({ login: !this.state.login });
   };
-  getUserInfo = () => {
-    this.props.getUserInfo();
-  };
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.fetchUser !== this.state.fetchUser) {
-      this.setState({ doubleCheck: true });
+    if (prevProps.user_token !== this.props.user_token) {
+      this.setState({ username: "", password: "", fetchUser: true });
+    }
+
+    if (
+      prevState.fetchUser !== this.state.fetchUser &&
+      this.props.set_user_info !== null
+    ) {
+      this.props.history.push("/productlist");
     }
     if (
-      prevState.doubleCheck !== this.state.doubleCheck &&
-      this.props.user_token !== null
+      prevState.fetchUser !== this.state.fetchUser &&
+      this.props.set_user_info === null
     ) {
-      if (prevProps.set_user_info === this.state.set_user_info) {
-        // alert("NULL");
-        console.log("no data", this.props.set_user_info);
-
-        // this.props.history.push("/shopperprofile");
-      } else {
-        console.log("DATA");
-
-        // alert("DATA");
-      }
+      this.props.history.push("/shopperprofile");
     }
-    if (prevProps.user_token !== this.props.user_token) {
-      this.props.getUserInfo();
-      this.setState({ fetchUser: true });
-    }
-    // if (prevProps.userCredentials !== this.props.userCredentials) {
-    //   if (this.props.set_user_info === null && this.props.user_token !== null) {
-    //     this.props.history.push("/shopperprofile");
-    //   }
-    // }
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -80,8 +68,10 @@ export class Home extends Component {
       username: this.state.username,
       password: this.state.password
     };
+    // this.props.resetData();
     this.props.loginUser(userObject);
-    this.setState({ username: "", password: "" });
+    this.props.getUserInfo();
+    this.setState({ fetchUser: false });
   };
 
   render() {
@@ -154,5 +144,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo }
+  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo, resetData }
 )(Home);

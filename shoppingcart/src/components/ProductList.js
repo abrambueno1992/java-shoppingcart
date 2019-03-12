@@ -70,7 +70,7 @@ export class ProductList extends Component {
     });
     return (
       <div>
-        <div class="wrapper">
+        {/* <div class="wrapper">
           <input
             name="name"
             placeholder="Name"
@@ -96,7 +96,7 @@ export class ProductList extends Component {
             onChange={this.handleChange}
           />
           <button onClick={this.sendNewProduct}>hey</button>
-        </div>
+        </div> */}
         <div class="item">{itemComponents}</div>
       </div>
     );
