@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import "./TestLogin.css";
 import {
   createNewUser,
   loginUser,
@@ -79,7 +80,9 @@ class TestLogin extends Component {
     console.log("shopperid", localStorage.getItem("shopperid"));
 
     return (
-      <div>
+    <div class="align">
+      <div class="form">
+      <div class="heading">Login to Everdwell</div>
         <h3>Create a New User</h3>
         <div>
           <input
@@ -145,9 +148,11 @@ class TestLogin extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button onClick={this.createShopper}>Create Shopper</button>
-        <button onClick={this.setShopperId}>Set Shopper ID</button>
+        <button class="createShopper" onClick={this.createShopper}>Create Shopper</button> <br />
+        <button class="setShopper" onClick={this.setShopperId}>Set Shopper ID</button>
+
       </div>
+    </div>
     );
   }
 }
