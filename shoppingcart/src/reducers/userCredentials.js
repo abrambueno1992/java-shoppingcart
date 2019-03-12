@@ -3,7 +3,8 @@ import {
   LOGIN_USER,
   SET_SHOPPER_ID,
   GET_USER_INFO,
-  FAILURE
+  FAILURE,
+  RESET_DATA
 } from "../actions/userCredentials";
 
 const initialState = {
@@ -31,6 +32,14 @@ const cartItems = (state = initialState, actions) => {
     case GET_USER_INFO:
       return Object.assign({}, state, {
         set_user_info: actions.payload
+      });
+    case RESET_DATA:
+      return Object.assign({}, state, {
+        user_token: actions.payload,
+        new_user: actions.payload,
+        set_shopper_id: actions.payload,
+        set_user_info: actions.payload,
+        error: actions.payload
       });
     case FAILURE:
       return Object.assign({}, state, {

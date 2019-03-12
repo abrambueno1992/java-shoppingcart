@@ -71,6 +71,8 @@ export class UpdateUsers extends Component {
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.user_token !== this.props.user_token) {
+      console.log("Get the user info");
+
       this.props.getUserInfo();
     }
   }
@@ -78,6 +80,7 @@ export class UpdateUsers extends Component {
   render() {
     console.log("userid", localStorage.getItem("userid"));
     console.log("shopperid", localStorage.getItem("shopperid"));
+    console.log("TOken: ", this.props.user_token);
 
     return (
       <div>
@@ -155,8 +158,8 @@ export class UpdateUsers extends Component {
 
 const mapStateToProps = state => {
   return {
-    user_token: state.user_token,
-    set_user_info: state.set_user_info
+    user_token: state.userCredentials.user_token,
+    set_user_info: state.userCredentials.set_user_info
   };
 };
 

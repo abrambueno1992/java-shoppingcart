@@ -9,7 +9,8 @@ import UpdateUsers from "./UpdateUsers";
 import UpdateCart from "./UpdateCart";
 import UpdateOrders from "./UpdateOrders";
 import ItemDetails from "./ItemDetails";
-
+import Home from "./Home";
+import ShopperProfile from "./ShopperProfile";
 const App = () => {
   // constructor(props) {
   //   super(props);
@@ -24,7 +25,9 @@ const App = () => {
   return (
     <Router className="App">
       <div>
-        <Route exact path="/" component={ProductList} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/productlist" component={ProductList} />
+        <Route exact path="/shopperprofile" component={ShopperProfile} />
         <Route exact path="/login" component={TestLogin} />
         <Route exact path="/cart" component={TestCart} />
         <Route exact path="/order" component={TestOrders} />

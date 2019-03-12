@@ -1,0 +1,119 @@
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  createNewUser,
+  loginUser,
+  setShopperId,
+  getUserInfo
+} from "../actions/userCredentials";
+import { addShopper } from "../actions/shoppers";
+export class ShopperProfile extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fetchUser: false,
+      billingaddres: "",
+      shippingaddress: "",
+      phonenumber: "",
+      paymentmethod: ""
+    };
+  }
+
+  static propTypes = {
+    prop: PropTypes
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user_token !== this.props.user_token) {
+      this.props.getUserInfo();
+      this.setState({ fetchUser: true });
+    }
+    // if (prevProps.userCredentials !== this.props.userCredentials) {
+    //   if (this.props.set_user_info === null && this.props.user_token !== null) {
+    //     this.props.history.push("/shopperprofile");
+    //   }
+    // }
+    if (prevState.fetchUser !== this.state.fetchUser) {
+      alert("HEllo");
+
+      if (this.props.set_user_info === null) {
+        // this.props.history.push("/shopperprofile");
+      }
+    }
+  }
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  createShopper = e => {
+    const shopperObject = {
+      billingaddres: this.state.billingaddres,
+      shippingaddress: this.state.shippingaddress,
+      phonenumber: this.state.phonenumber,
+      paymentmethod: this.state.paymentmethod
+    };
+    this.props.addShopper(shopperObject);
+    this.setState({
+      billingaddres: "",
+      shippingaddress: "",
+      phonenumber: "",
+      paymentmethod: ""
+    });
+    // this.props.setShopperId();
+  };
+
+  setShopperId = e => {
+    this.props.setShopperId();
+  };
+
+  render() {
+    return (
+      <div>
+        <h3>SHopper Profile</h3>
+        <div>
+          <input
+            name="billingaddres"
+            placeholder="Enter billing address"
+            value={this.state.billingaddres}
+            onChange={this.handleChange}
+          />
+          <input
+            name="shippingaddress"
+            placeholder="Please enter shipping address"
+            value={this.state.shippingaddress}
+            onChange={this.handleChange}
+          />
+          <input
+            name="phonenumber"
+            placeholder="Please enter a phone number"
+            value={this.state.phonenumber}
+            onChange={this.handleChange}
+          />
+          <input
+            name="paymentmethod"
+            placeholder="Please enter payment method"
+            value={this.state.paymentmethod}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button onClick={this.createShopper}>Create Shopper</button>
+        <button onClick={this.setShopperId}>Set Shopper ID</button>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user_token: state.userCredentials.user_token,
+    set_user_info: state.userCredentials.set_user_info,
+    userCredentials: state.userCredentials
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo }
+)(ShopperProfile);
