@@ -54,3 +54,13 @@ h3 {
     font-family: "Avenir";
     text-align: left;
 }
+
+.heading {
+    background: #ae2f47;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    /* font-weight: bold; */
+    padding: 1.5em;
+    font-family: "Avenir";
+}

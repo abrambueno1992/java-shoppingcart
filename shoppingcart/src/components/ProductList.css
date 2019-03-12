@@ -1,0 +1,10 @@
+.wrapper {
+    
+    text-align: center;
+    display: block;
+}
+
+.item {
+    display: grid;
+}
+

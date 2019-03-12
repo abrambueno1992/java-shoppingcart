@@ -82,6 +82,7 @@ class TestLogin extends Component {
     return (
     <div class="align">
       <div class="form">
+      <div class="heading">Login to Everdwell</div>
         <h3>Create a New User</h3>
         <div>
           <input
