@@ -4,6 +4,8 @@ export const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 export const DELETE_CART = "DELETE_CART";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const GET_SHOPPER_CART = "GET_SHOPPER_CART";
+export const UPDATE_ITEMS = "UPDATE_ITEMS";
+
 const url = "http://localhost:2019/cart/";
 
 function fetchRequest() {
@@ -135,5 +137,14 @@ export const deleteItemFromCart = (cartid, productid) => {
       .then(res => res.json())
       .then(body => dispatch(deleteSuccessItem(body)))
       .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+
+export const updateItems = updatedMap => {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_ITEMS,
+      payload: updatedMap
+    });
   };
 };
