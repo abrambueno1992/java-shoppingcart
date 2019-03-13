@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import "./Home.css";
 import {
   createNewUser,
   loginUser,
@@ -79,7 +80,7 @@ export class Home extends Component {
 
     if (this.state.login === true) {
       return (
-        <div>
+        <div class="signup">
           <button onClick={this.handleButton}>Signup</button>
           <h3>Login User</h3>
           <div>
@@ -101,7 +102,7 @@ export class Home extends Component {
       );
     } else {
       return (
-        <div>
+        <div class="login">
           <button onClick={this.handleButton}>Login</button>
           <h3>Signup</h3>
           <div>
