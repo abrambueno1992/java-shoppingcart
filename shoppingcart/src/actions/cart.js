@@ -66,7 +66,7 @@ export const addItemToCart = url => {
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url, {
-      method: "POST", // or 'PUT'
+      method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json"
       }

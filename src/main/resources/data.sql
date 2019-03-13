@@ -34,3 +34,4 @@ values (1, 1),
 insert into shoppingcartapp.user(id, password, role, username, shopperid)
 values (1, "$2a$10$u2TUPddwnqppd4j9Np51W.bWlKkV0EzAHi1jj3MkyiEPK0uXbDPde", "user", "bob", 1),
         (2, "tomato", "admin", "tom", 2);
+
