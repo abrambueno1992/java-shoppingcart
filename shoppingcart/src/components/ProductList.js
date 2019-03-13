@@ -28,7 +28,9 @@ export class ProductList extends Component {
       show: false,
       toggle: new Map(),
       totalCosts: 0,
-      calculate: false
+      calculate: false,
+      sendOrder: false,
+      startCalculation: false
     };
   }
 
@@ -54,16 +56,21 @@ export class ProductList extends Component {
     const baseURL = "http://localhost:2019/cart/";
     const url = [];
     // if (this.state.url[0] === undefined) {
+    console.log("cart object", this.props.cart);
+    console.log("shopper cart object", this.props.shopper_cart);
+
     const mapObject = this.state.items;
+    const cartid =
+      this.props.shopper_cart !== null
+        ? this.props.shopper_cart.cartid
+        : this.props.cart.cartid;
     for (let [k, v] of this.state.items) {
-      url.push(
-        `${baseURL}add/${this.props.shopper_cart.cartid}/${shopperid}/${k}/${v}`
-      );
-      mapObject.delete(k);
+      url.push(`${baseURL}update/${cartid}/${shopperid}/${k}/${v}`);
+      // mapObject.delete(k);
     }
     // }
     if (url[0] !== undefined) {
-      this.props.addItemToCart(url.shift());
+      this.props.addItemToCart(url.shift(), shopperid);
       this.setState({ url: url });
     }
   };
@@ -80,7 +87,6 @@ export class ProductList extends Component {
       this.iterateUrl();
     }
     if (prevProps.set_user_info !== this.props.set_user_info) {
-      console.log("FIring getShopperCart");
       this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
     }
     if (prevProps.cart !== this.props.cart) {
@@ -95,24 +101,33 @@ export class ProductList extends Component {
       this.props.set_user_info === null
     ) {
       this.props.getUserInfo();
-      console.log("CDUP ", this.props.set_user_info);
     }
-    console.log(
-      "previous items: ",
-      prevState.items,
-      " items:",
-      this.state.items
-    );
 
     if (prevState.calculate !== this.state.calculate) {
+      if (this.props.cart !== null || this.props.shopper_cart !== null) {
+        this.sendOrder();
+        this.setState({ sendOrder: !this.state.sendOrder });
+      }
+    }
+    if (prevProps.cart !== this.props.cart) {
+      this.sendOrder();
+      this.setState({ sendOrder: !this.state.sendOrder });
+    }
+    // if (prevState.sendOrder !== this.state.sendOrder) {
+    if (prevProps.shopper_cart !== this.props.shopper_cart) {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
       const quantityMap = productQuantityMap(
         this.props.shopper_cart.cartitemquantity
       );
       const total = calculateTotalCosts(priceMap, quantityMap);
-      console.log("fired the calculator", priceMap, quantityMap, total);
-
       this.setState({ totalCosts: total });
+    }
+    if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
     }
   }
   handleAdd = productid => {
@@ -238,34 +253,7 @@ export class ProductList extends Component {
             </div>
           );
         })}
-        {/* <div class="wrapper">
-          <input
-            name="name"
-            placeholder="Name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <input
-            name="description"
-            placeholder="Description"
-            value={this.state.description}
-            onChange={this.handleChange}
-          />
-          <input
-            name="price"
-            placeholder="Please enter a price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
-          <input
-            name="quantity"
-            placeholder="Please enter a quantity"
-            value={this.state.quantity}
-            onChange={this.handleChange}
-          />
-          <button onClick={this.sendNewProduct}>hey</button>
-        </div> */}
-        {/* <div class="item">{itemComponents}</div> */}
+
         <h3>{this.state.totalCosts}</h3>
         <button onClick={this.sendOrder}>Send Order </button>
       </div>

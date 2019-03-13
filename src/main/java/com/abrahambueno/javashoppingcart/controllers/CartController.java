@@ -104,19 +104,27 @@ public class CartController {
                 if (olderQuantityOfProduct > quantity) {
                     // quantity went down
                     int subtract = olderQuantityOfProduct - quantity;
+                    // updating cart
                     addToCart.get().setQuantity(addToCart.get().getQuantity() - subtract);
                     cartrepos.save(addToCart.get());
+                    // updating item in cart
+                    updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() - subtract);
+                    cartitems.save(updateCartItems.get());
                 } else if (olderQuantityOfProduct < quantity) {
                     // quantity went up
                     int add = quantity - olderQuantityOfProduct;
+                    // update cart
                     addToCart.get().setQuantity(addToCart.get().getQuantity() + add);
                     cartrepos.save(addToCart.get());
+                    // update item in cart
+                    updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + add);
+                    cartitems.save(updateCartItems.get());
                 } else {
                     // no change in quantity, odd
                 }
-                updateCartItems.get().setQuantity(quantity);
-                // save cart changes
-                cartitems.save(updateCartItems.get());
+//                updateCartItems.get().setQuantity(quantity);
+//                // save cart changes
+//                cartitems.save(updateCartItems.get());
             } else {
                 // initiate new Object
                 CartItems newCartItem = new CartItems();
