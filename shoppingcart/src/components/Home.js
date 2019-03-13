@@ -81,7 +81,6 @@ export class Home extends Component {
     if (this.state.login === true) {
       return (
         <div class="signup">
-          <button onClick={this.handleButton}>Signup</button>
           <h3>Login User</h3>
           <div>
             <input
@@ -96,14 +95,14 @@ export class Home extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <button onClick={this.loginUser}>Login User</button>
+            <button class="button buttonBlue" onClick={this.loginUser}>Login</button>
+            <button class= "button buttonBlue" onClick={this.handleButton}>Signup</button>
           </div>
         </div>
       );
     } else {
       return (
         <div class="login">
-          <button onClick={this.handleButton}>Login</button>
           <h3>Signup</h3>
           <div>
             <input
@@ -124,7 +123,8 @@ export class Home extends Component {
               value={this.state.role}
               onChange={this.handleChange}
             />
-            <button onClick={this.createUser}> Create USer</button>
+            <button class="button buttonBlue" onClick={this.createUser}> Create User</button>
+            <button class="button buttonBlue" onClick={this.handleButton}>Login</button>
           </div>
         </div>
       );
