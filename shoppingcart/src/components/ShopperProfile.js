@@ -38,8 +38,12 @@ export class ShopperProfile extends Component {
       alert("HEllo");
 
       if (this.props.set_user_info === null) {
-        // this.props.history.push("/shopperprofile");
+        this.props.history.push("/shopperprofile");
       }
+    }
+    if (prevProps.new_shopper !== this.props.new_shopper) {
+      this.props.setShopperId();
+      this.props.history.push("/productlist");
     }
   }
   handleChange = e => {
@@ -62,9 +66,7 @@ export class ShopperProfile extends Component {
     // this.props.setShopperId();
   };
 
-  setShopperId = e => {
-    this.props.setShopperId();
-  };
+  setShopperId = e => {};
 
   render() {
     return (
@@ -97,7 +99,7 @@ export class ShopperProfile extends Component {
           />
         </div>
         <button onClick={this.createShopper}>Create Shopper</button>
-        <button onClick={this.setShopperId}>Set Shopper ID</button>
+        {/* <button onClick={this.setShopperId}>Set Shopper ID</button> */}
       </div>
     );
   }
@@ -107,6 +109,7 @@ const mapStateToProps = state => {
   return {
     user_token: state.userCredentials.user_token,
     set_user_info: state.userCredentials.set_user_info,
+    new_shopper: state.shoppers.new_shopper,
     userCredentials: state.userCredentials
   };
 };
