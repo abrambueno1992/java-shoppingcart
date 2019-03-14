@@ -9,6 +9,7 @@ import {
 } from "../actions/userCredentials";
 import { getProductList, createNewProduct } from "../actions/productList";
 import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
+import "./ProductList.css";
 
 import { Item } from "./Item";
 import {
@@ -216,7 +217,7 @@ export class ProductList extends Component {
                     <div>
                       {item.description}
                       <button
-                        className="btn btn-outline-primary"
+                        className="button buttonBlue btn btn-outline-primary"
                         onClick={() => this.handleToggle(item.productid)}
                       >
                         hide info
@@ -225,7 +226,7 @@ export class ProductList extends Component {
                   ) : (
                     <div>
                       <button
-                        className="btn btn-outline-primary"
+                        className="button buttonBlue btn btn-outline-primary"
                         onClick={() => this.handleToggle(item.productid)}
                       >
                         show info
@@ -235,13 +236,13 @@ export class ProductList extends Component {
                 </div>
                 <div className="col-6 text-right">
                   <button
-                    className="btn btn-outline-primary"
+                    className="button buttonBlue btn btn-outline-primary"
                     onClick={() => this.handleAdd(item.productid)}
                   >
                     +1
                   </button>
                   <button
-                    className="btn btn-outline-primary"
+                    className="button buttonBlue btn btn-outline-primary"
                     onClick={() => this.handleSubtract(item.productid)}
                     disabled={this.state.quantity < 1}
                   >
