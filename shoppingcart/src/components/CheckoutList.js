@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
 import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
-
+import "./CheckoutList.css";
 import {
   productPriceMap,
   productQuantityMap,
   calculateTotalCosts
 } from "./calculateCosts";
 
-export class ProductList extends Component {
+export class CheckoutList extends Component {
   constructor(props) {
     super(props);
 
@@ -22,46 +22,26 @@ export class ProductList extends Component {
       toggle: new Map(),
       totalCosts: 0,
       calculate: false,
-      // sendOrder: false,
+      //   sendOrder: false,
       key: null
     };
   }
-
-  componentDidMount() {
-    this.props.getProductList();
-    this.props.getUserInfo();
-    this.setState({ fetchShopperID: true });
-  }
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  sendOrder = (productid, value) => {
-    // Go over map object to get productid and quantity
-    // Add the products to the cart
-    // Send this as an order
-    const shopperid = localStorage.getItem("shopperid");
-    const baseURL = "http://localhost:2019/cart/";
-
-    const mapObject = this.state.items;
-    const cartid =
-      this.props.shopper_cart !== null
-        ? this.props.shopper_cart.cartid
-        : this.props.cart.cartid;
-    const url = `${baseURL}update/${cartid}/${shopperid}/${productid}/${value}`;
-
-    this.props.addItemToCart(url, shopperid);
-  };
-
+  //   componentDidMount() {
+  //     this.props.getProductList();
+  //     this.props.getUserInfo();
+  //     this.setState({ fetchShopperID: true });
+  //   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.set_user_info !== this.props.set_user_info) {
-      this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
-    }
+    // if (prevProps.set_user_info !== this.props.set_user_info) {
+    //   this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
+    // }
 
     // if (
     //   prevState.fetchShopperID !== this.state.fetchShopperID &&
-    //   this.props.set_user_info === null
+    //   prevProps.set_user_info === this.props.set_user_info
     // ) {
+    //   console.log("fetching user info again:", this.props.set_user_info);
+
     //   this.props.getUserInfo();
     // }
 
@@ -98,7 +78,28 @@ export class ProductList extends Component {
       this.props.getShopperCart(shopperid);
     }
   }
-  handleAdd = productid => {
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  sendOrder = (productid, value) => {
+    // Go over map object to get productid and quantity
+    // Add the products to the cart
+    // Send this as an order
+    const shopperid = localStorage.getItem("shopperid");
+    const baseURL = "http://localhost:2019/cart/";
+
+    const mapObject = this.state.items;
+    const cartid =
+      this.props.shopper_cart !== null
+        ? this.props.shopper_cart.cartid
+        : this.props.cart.cartid;
+    const url = `${baseURL}update/${cartid}/${shopperid}/${productid}/${value}`;
+
+    this.props.addItemToCart(url, shopperid);
+  };
+  handleAdd = () => {
+    const productid = this.props.productid;
     const update = this.state.items;
     const shopperid =
       this.props.set_user_info !== null
@@ -122,7 +123,8 @@ export class ProductList extends Component {
     });
   };
 
-  handleSubtract = productid => {
+  handleSubtract = () => {
+    const productid = this.props.productid;
     const update = this.state.items;
     const shopperid =
       this.props.set_user_info !== null
@@ -152,89 +154,30 @@ export class ProductList extends Component {
       });
     }
   };
-
-  handleShowInfo = () => {
-    this.setState({ show: true });
-  };
-
-  handleToggle = shopperid => {
-    const toggleState = this.state.toggle;
-    if (toggleState.get(shopperid) === undefined) {
-      toggleState.set(shopperid, true);
-      this.setState({ toggle: toggleState });
-    } else {
-      toggleState.set(shopperid, !toggleState.get(shopperid));
-      this.setState({ toggle: toggleState });
-    }
-  };
-
   render() {
-    if (this.props.product_list === null) {
-      return <p>Loading...</p>;
-    }
     return (
-      <div>
-        {this.props.product_list.map((item, i) => {
-          return (
-            <div key={item.productid + i} className="cards">
-              <div className="row form-group">
-                <div className="col-sm-10">
-                  <h4>
-                    {item.name} {item.description}: ${item.price}
-                  </h4>
-                </div>
-                <div className="col-sm-2 text-right">
-                  quantity: {this.state.items.get(item.productid)}
-                </div>
-              </div>
-              <div className="row btn-toolbar">
-                <div className="col-6">
-                  {this.state.toggle.get(item.productid) === true ? (
-                    <div>
-                      {item.description}
-                      <button
-                        className="btn btn-outline-primary"
-                        onClick={() => this.handleToggle(item.productid)}
-                      >
-                        hide info
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <button
-                        className="btn btn-outline-primary"
-                        onClick={() => this.handleToggle(item.productid)}
-                      >
-                        show info
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <div className="col-6 text-right">
-                  <button
-                    className="btn btn-outline-primary"
-                    onClick={() => this.handleAdd(item.productid)}
-                  >
-                    +1
-                  </button>
-                  <button
-                    className="btn btn-outline-primary"
-                    onClick={() => this.handleSubtract(item.productid)}
-                    disabled={this.state.quantity < 1}
-                  >
-                    -1
-                  </button>
-                </div>
-              </div>
-              <hr />
+      <div className="list">
+        {/* <h3>{this.props.productid}</h3> */}
+        {/* {/* <h3>{this.props.name}</h3> */}
+        <div className="itemCard">
+          <div className="itemName">{this.props.description}</div>
+          <div className="changeQuantity">
+            <div className="inputPrice">
+              <input placeholder="one" />
             </div>
-          );
-        })}
-
-        <div className="subtotal">
-          <h3>{this.state.totalCosts}</h3>
-          <button onClick={this.sendOrder}>Send Order </button>
+            <div className="quantityButtons">
+              <button className="addItem" onClick={this.handleAdd}>
+                +
+              </button>
+              <button className="subtractItem" onClick={this.handleSubtract}>
+                -
+              </button>
+            </div>
+          </div>
+          <div className="itemPrice">{this.props.price}</div>
         </div>
+        {/* <h3>{this.props.price}</h3> */}
+        {/* <h3>{this.props.quantity}</h3> */}
       </div>
     );
   }
@@ -260,4 +203,4 @@ export default connect(
     addItemToCart,
     getShopperCart
   }
-)(ProductList);
+)(CheckoutList);

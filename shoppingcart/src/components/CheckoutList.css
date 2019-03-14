@@ -1,0 +1,49 @@
+.list {
+  width: 100%;
+  /* color: beige; */
+  /* background: rebeccapurple; */
+  display: inline-flex;
+}
+.itemCard {
+  width: 35%;
+  margin-left: 32.5%;
+  border: 1px solid red;
+}
+.itemName {
+  width: 20%;
+  /* border: 1px solid black; */
+
+  display: inline-flex;
+  margin-left: 5%;
+  margin-right: 5%;
+  color: blue;
+  font-weight: bold;
+}
+.changeQuantity {
+  width: 40%;
+  align-self: center;
+  border: 1px solid yellow;
+
+  display: inline-flex;
+}
+.quantityButtons {
+  width: 50%;
+  /* border: 3px solid black; */
+}
+.inputPrice {
+  width: 50%;
+  /* border: 3px solid green; */
+}
+.addItem {
+  width: 100%;
+}
+.subtractItem {
+  width: 100%;
+}
+.itemPrice {
+  width: 10%;
+  margin-left: 9%;
+  margin-right: 9%;
+  display: inline-flex;
+  font-weight: bold;
+}
