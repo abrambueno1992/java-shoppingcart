@@ -41,49 +41,49 @@ public class CartController {
         newCart.setShopperid(shopperid);
         return cartrepos.save(newCart);
     }
-    @PostMapping("/add/{cartid}/{shopperid}/{productid}/{quantity}")
-    public Set<ProductList> addProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
-        // the cart to add the items
-        var addToCart = cartrepos.findById(cartid);
-        // check if the cart exists
-        if (addToCart.isPresent()) {
-            // check the productid to the database
-            var productPresent = cartitems.checkValuePair(productid);
-            // check if the product is present in the cart
-            if (productPresent != null) {
-                // get productid
-                long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
-                // get the cartitem
-                var updateCartItems = cartitems.findById(productidTwo);
-                // update quantity on CartItems
-                updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + quantity);
-                // save cart changes
-                cartitems.save(updateCartItems.get());
-            } else {
-                // initiate new Object
-                CartItems newCartItem = new CartItems();
-                // set required variables, data
-                newCartItem.setQuantity(quantity);
-                newCartItem.setProductid(productid);
-                newCartItem.setCartidinsert(cartid);
-                newCartItem.setAsdf(addToCart.get());
-                newCartItem.setShopperid(shopperid);
-                // save CartItesm object
-                cartitems.save(newCartItem);
-            }
-            // update quantity on Cart
-            addToCart.get().setQuantity(addToCart.get().getQuantity() + quantity);
-            // save changes on Cart
-            cartrepos.save(addToCart.get());
-            Object productInCart = cartrepos.checkValue(cartid, productid);
-            if (productInCart == null) {
-                cartrepos.addProductToCart(cartid, productid);
-            }
-            return cartrepos.findById(cartid).get().getProducts();
-        } else {
-            return null;
-        }
-    }
+//    @PostMapping("/add/{cartid}/{shopperid}/{productid}/{quantity}")
+//    public Set<ProductList> addProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
+//        // the cart to add the items
+//        var addToCart = cartrepos.findById(cartid);
+//        // check if the cart exists
+//        if (addToCart.isPresent()) {
+//            // check the productid to the database
+//            var productPresent = cartitems.checkValuePair(productid, productid);
+//            // check if the product is present in the cart
+//            if (productPresent != null) {
+//                // get productid
+//                long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
+//                // get the cartitem
+//                var updateCartItems = cartitems.findById(productidTwo);
+//                // update quantity on CartItems
+//                updateCartItems.get().setQuantity(updateCartItems.get().getQuantity() + quantity);
+//                // save cart changes
+//                cartitems.save(updateCartItems.get());
+//            } else {
+//                // initiate new Object
+//                CartItems newCartItem = new CartItems();
+//                // set required variables, data
+//                newCartItem.setQuantity(quantity);
+//                newCartItem.setProductid(productid);
+//                newCartItem.setCartidinsert(cartid);
+//                newCartItem.setAsdf(addToCart.get());
+//                newCartItem.setShopperid(shopperid);
+//                // save CartItesm object
+//                cartitems.save(newCartItem);
+//            }
+//            // update quantity on Cart
+//            addToCart.get().setQuantity(addToCart.get().getQuantity() + quantity);
+//            // save changes on Cart
+//            cartrepos.save(addToCart.get());
+//            Object productInCart = cartrepos.checkValue(cartid, productid);
+//            if (productInCart == null) {
+//                cartrepos.addProductToCart(cartid, productid);
+//            }
+//            return cartrepos.findById(cartid).get().getProducts();
+//        } else {
+//            return null;
+//        }
+//    }
     @PutMapping("/update/{cartid}/{shopperid}/{productid}/{quantity}")
     public Set<ProductList> changeProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
         // the cart to add the items
@@ -91,11 +91,11 @@ public class CartController {
         // check if the cart exists
         if (addToCart.isPresent()) {
             // check the productid to the database
-            var productPresent = cartitems.checkValuePair(productid);
+            var productPresent = cartitems.checkValuePair(productid, shopperid);
             // check if the product is present in the cart
             if (productPresent != null) {
                 // get productid
-                long productidTwo = cartitems.returnCartItem(productid).getCartitemsid();
+                long productidTwo = cartitems.returnCartItem(productid, shopperid).getCartitemsid();
                 // get the cartitem
                 var updateCartItems = cartitems.findById(productidTwo);
                 // update quantity on CartItems
