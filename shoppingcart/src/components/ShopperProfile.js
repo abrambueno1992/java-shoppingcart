@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import "./ShopperProfile.css";
 import {
   createNewUser,
-  loginUser,
   setShopperId,
   getUserInfo
 } from "../actions/userCredentials";
@@ -119,5 +118,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo }
+  { createNewUser, setShopperId, addShopper, getUserInfo }
 )(ShopperProfile);
