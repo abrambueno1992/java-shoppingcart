@@ -203,7 +203,7 @@ export class ProductList extends Component {
                   ) : (
                     <div>
                       <button
-                        className="button buttonBlue btn btn-outline-primary"
+                        className="button"
                         onClick={() => this.handleToggle(item.productid)}
                       >
                         show info
@@ -213,13 +213,13 @@ export class ProductList extends Component {
                 </div>
                 <div className="col-6 text-right">
                   <button
-                    className="button buttonBlue btn btn-outline-primary"
+                    className=" btn btn-outline-primary"
                     onClick={() => this.handleAdd(item.productid)}
                   >
                     +1
                   </button>
                   <button
-                    className="button buttonBlue btn btn-outline-primary"
+                    className=" btn btn-outline-primary"
                     onClick={() => this.handleSubtract(item.productid)}
                     disabled={this.state.quantity < 1}
                   >
@@ -234,8 +234,8 @@ export class ProductList extends Component {
 
         <div className="subtotal">
 
-          <h3>{this.state.totalCosts}</h3>
-          <button onClick={this.sendOrder}>Send Order </button>
+          <h3>Total: ${this.state.totalCosts}</h3>
+          <button className="checkout" onClick={this.sendOrder}>Send Order </button>
         </div>
       </div>
     );
