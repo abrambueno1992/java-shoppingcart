@@ -230,7 +230,9 @@ export class ProductList extends Component {
             </div>
           );
         })}
+
         <div className="subtotal">
+
           <h3>{this.state.totalCosts}</h3>
           <button onClick={this.sendOrder}>Send Order </button>
         </div>
