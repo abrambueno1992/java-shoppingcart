@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  createNewUser,
-  loginUser,
-  setShopperId,
-  getUserInfo
-} from "../actions/userCredentials";
-import { getProductList, createNewProduct } from "../actions/productList";
+import { getUserInfo } from "../actions/userCredentials";
+import { getProductList } from "../actions/productList";
 import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
 import "./ProductList.css";
 
-import { Item } from "./Item";
 import {
   productPriceMap,
   productQuantityMap,
@@ -24,79 +18,47 @@ export class ProductList extends Component {
 
     this.state = {
       items: new Map(),
-      url: [],
       fetchShopperID: false,
       show: false,
       toggle: new Map(),
       totalCosts: 0,
       calculate: false,
       sendOrder: false,
-      startCalculation: false
+      key: null
     };
   }
 
-  static propTypes = {
-    prop: PropTypes
-  };
   componentDidMount() {
     this.props.getProductList();
-    // if (this.props.set_user_info === null) {
     this.props.getUserInfo();
     this.setState({ fetchShopperID: true });
-    // }
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  sendOrder = () => {
+  sendOrder = (productid, value) => {
     // Go over map object to get productid and quantity
     // Add the products to the cart
     // Send this as an order
     const shopperid = localStorage.getItem("shopperid");
     const baseURL = "http://localhost:2019/cart/";
-    const url = [];
-    // if (this.state.url[0] === undefined) {
-    console.log("cart object", this.props.cart);
-    console.log("shopper cart object", this.props.shopper_cart);
 
     const mapObject = this.state.items;
     const cartid =
       this.props.shopper_cart !== null
         ? this.props.shopper_cart.cartid
         : this.props.cart.cartid;
-    for (let [k, v] of this.state.items) {
-      url.push(`${baseURL}update/${cartid}/${shopperid}/${k}/${v}`);
-      // mapObject.delete(k);
-    }
-    // }
-    if (url[0] !== undefined) {
-      this.props.addItemToCart(url.shift(), shopperid);
-      this.setState({ url: url });
-    }
+    const url = `${baseURL}update/${cartid}/${shopperid}/${productid}/${value}`;
+
+    this.props.addItemToCart(url, shopperid);
   };
-  iterateUrl = () => {
-    const url = this.state.url;
-    console.log("Lenght:", url.length);
-    const value = url.shift();
-    this.setState({ url: url });
-    this.props.addItemToCart(value);
-    // url.shift();
-  };
+
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.url[0] !== undefined) {
-      this.iterateUrl();
-    }
     if (prevProps.set_user_info !== this.props.set_user_info) {
       this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
     }
-    if (prevProps.cart !== this.props.cart) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
+
     if (
       prevState.fetchShopperID !== this.state.fetchShopperID &&
       this.props.set_user_info === null
@@ -106,15 +68,20 @@ export class ProductList extends Component {
 
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
-        this.sendOrder();
+        this.sendOrder(this.state.key, this.state.items.get(this.state.key));
         this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
     if (prevProps.cart !== this.props.cart) {
-      this.sendOrder();
+      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
       this.setState({ sendOrder: !this.state.sendOrder });
+      // get shopper's updated cart
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
     }
-    // if (prevState.sendOrder !== this.state.sendOrder) {
     if (prevProps.shopper_cart !== this.props.shopper_cart) {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
       const quantityMap = productQuantityMap(
@@ -133,8 +100,6 @@ export class ProductList extends Component {
     }
   }
   handleAdd = productid => {
-    console.log("id: ", this.props.set_shopper_id);
-
     const update = this.state.items;
     const shopperid =
       this.props.set_user_info !== null
@@ -151,14 +116,14 @@ export class ProductList extends Component {
     } else {
       update.set(productid, update.get(productid) + 1);
     }
-    // this.props.updateItems(update);
-    this.setState({ items: update, calculate: !this.state.calculate });
+    this.setState({
+      items: update,
+      calculate: !this.state.calculate,
+      key: productid
+    });
   };
 
   handleSubtract = productid => {
-    // console.log(this.props.productid);
-    // const productid = this.props.productid;
-    // const productid = this.props.product_list[index].productid;
     const update = this.state.items;
     const shopperid =
       this.props.set_user_info !== null
@@ -170,12 +135,23 @@ export class ProductList extends Component {
     }
 
     // map productid to quantity
-    if (update.get(productid) === undefined || update.get(productid) === 0) {
+    if (update.get(productid) === undefined) {
       update.set(productid, 0);
+      this.setState({
+        items: update,
+        calculate: !this.state.calculate,
+        key: productid
+      });
+    } else if (update.get(productid) === 0) {
+      // do nothing, it was zero and it remains zero
     } else {
       update.set(productid, update.get(productid) - 1);
+      this.setState({
+        items: update,
+        calculate: !this.state.calculate,
+        key: productid
+      });
     }
-    this.setState({ items: update, calculate: !this.state.calculate });
   };
 
   handleShowInfo = () => {
@@ -199,9 +175,9 @@ export class ProductList extends Component {
     }
     return (
       <div>
-        {this.props.product_list.map(item => {
+        {this.props.product_list.map((item, i) => {
           return (
-            <div class="cards">
+            <div key={item.productid + i} className="cards">
               <div className="row form-group">
                 <div className="col-sm-10">
                   <h4>
@@ -255,7 +231,9 @@ export class ProductList extends Component {
             </div>
           );
         })}
-        <div class="subtotal">
+
+        <div className="subtotal">
+
           <h3>{this.state.totalCosts}</h3>
           <button onClick={this.sendOrder}>Send Order </button>
         </div>
@@ -279,7 +257,6 @@ export default connect(
   mapStateToProps,
   {
     getProductList,
-    createNewProduct,
     getUserInfo,
     createCart,
     addItemToCart,

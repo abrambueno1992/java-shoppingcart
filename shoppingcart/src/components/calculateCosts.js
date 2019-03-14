@@ -17,12 +17,8 @@ export const productQuantityMap = products => {
 export const calculateTotalCosts = (priceMap, quantityMap) => {
   let totalCost = 0;
   for (let [k, v] of quantityMap) {
-    console.log("key: ", k, " value: ", v);
-
     totalCost += v * priceMap.get(k);
-    console.log("totalCost: ", totalCost);
   }
-  console.log("What is this? ", totalCost);
 
   return totalCost.toFixed(2);
 };
