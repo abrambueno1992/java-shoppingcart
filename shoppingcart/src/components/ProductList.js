@@ -68,12 +68,12 @@ export class ProductList extends Component {
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
         this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-        this.setState({ sendOrder: !this.state.sendOrder });
+        // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
     if (prevProps.cart !== this.props.cart) {
       this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-      this.setState({ sendOrder: !this.state.sendOrder });
+      // this.setState({ sendOrder: !this.state.sendOrder });
       // get shopper's updated cart
       const shopperid =
         this.props.set_user_info !== null
