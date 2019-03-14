@@ -8,7 +8,8 @@ import "./CheckoutList.css";
 import {
   productPriceMap,
   productQuantityMap,
-  calculateTotalCosts
+  calculateTotalCosts,
+  orderData
 } from "./calculateCosts";
 
 export class CheckoutList extends Component {
@@ -71,6 +72,10 @@ export class CheckoutList extends Component {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
       const quantityMap = productQuantityMap(
         this.props.shopper_cart.cartitemquantity
+      );
+      const orderedData = orderData(
+        this.props.shopper_cart.products,
+        quantityMap
       );
       this.setState({ items: quantityMap });
       const total = calculateTotalCosts(priceMap, quantityMap);
@@ -171,7 +176,7 @@ export class CheckoutList extends Component {
           <div className="itemName">{this.props.description}</div>
           <div className="changeQuantity">
             <div className="inputPrice">
-              <input placeholder="one" />
+              <input placeholder={this.props.quantity} />
             </div>
             <div className="quantityButtons">
               <button className="addItem" onClick={this.handleAdd}>

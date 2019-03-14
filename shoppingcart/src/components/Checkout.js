@@ -51,32 +51,32 @@ export class Checkout extends Component {
     //     // this.setState({ sendOrder: !this.state.sendOrder });
     //   }
     // }
-    // if (prevProps.cart !== this.props.cart) {
-    //   this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-    //   // this.setState({ sendOrder: !this.state.sendOrder });
-    //   // get shopper's updated cart
-    //   const shopperid =
-    //     this.props.set_user_info !== null
-    //       ? this.props.set_user_info.shopperxyz.shopperid
-    //       : this.props.set_shopper_id.id;
-    //   this.props.getShopperCart(shopperid);
-    // }
-    // if (prevProps.shopper_cart !== this.props.shopper_cart) {
-    //   const priceMap = productPriceMap(this.props.shopper_cart.products);
-    //   const quantityMap = productQuantityMap(
-    //     this.props.shopper_cart.cartitemquantity
-    //   );
-    //   this.setState({ items: quantityMap });
-    //   const total = calculateTotalCosts(priceMap, quantityMap);
-    //   this.setState({ totalCosts: total });
-    // }
-    // if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
-    //   const shopperid =
-    //     this.props.set_user_info !== null
-    //       ? this.props.set_user_info.shopperxyz.shopperid
-    //       : this.props.set_shopper_id.id;
-    //   this.props.getShopperCart(shopperid);
-    // }
+    if (prevProps.cart !== this.props.cart) {
+      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+      // this.setState({ sendOrder: !this.state.sendOrder });
+      // get shopper's updated cart
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
+    }
+    if (prevProps.shopper_cart !== this.props.shopper_cart) {
+      const priceMap = productPriceMap(this.props.shopper_cart.products);
+      const quantityMap = productQuantityMap(
+        this.props.shopper_cart.cartitemquantity
+      );
+      this.setState({ items: quantityMap });
+      const total = calculateTotalCosts(priceMap, quantityMap);
+      this.setState({ totalCosts: total });
+    }
+    if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
+    }
   }
   render() {
     if (this.props.product_list === null) {
@@ -91,6 +91,9 @@ export class Checkout extends Component {
       return <div>Loading items</div>;
     } else {
       console.log("array is:", this.props.shopper_cart.products[0]);
+      const ordered = this.props.shopper_cart.products.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
 
       return (
         <div>
@@ -99,8 +102,7 @@ export class Checkout extends Component {
             <div className="changeQuantity">Change quantity</div>
             <div className="itemPrice">Price</div>
           </div>
-          {console.log(this.props.shopper_cart.products)}
-          {this.props.shopper_cart.products.map((each, i) => {
+          {ordered.map((each, i) => {
             {
               console.log("iterate", i);
             }
@@ -111,7 +113,7 @@ export class Checkout extends Component {
                   name={each.name}
                   description={each.description}
                   price={each.price}
-                  quantity={each.quantity}
+                  quantity={this.state.items.get(each.productid)}
                 />
               </div>
             );
@@ -119,7 +121,7 @@ export class Checkout extends Component {
           <div className="itemCard">
             <div className="itemName">Subtotal</div>
             <div className="changeQuantity"> </div>
-            <div className="itemPrice" />
+            <div className="itemPrice">{this.state.totalCosts}</div>
           </div>
         </div>
       );
