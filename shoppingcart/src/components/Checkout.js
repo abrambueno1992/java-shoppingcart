@@ -45,38 +45,38 @@ export class Checkout extends Component {
     //   this.props.getUserInfo();
     // }
 
-    if (prevState.calculate !== this.state.calculate) {
-      if (this.props.cart !== null || this.props.shopper_cart !== null) {
-        this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-        // this.setState({ sendOrder: !this.state.sendOrder });
-      }
-    }
-    if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-      // this.setState({ sendOrder: !this.state.sendOrder });
-      // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
-    if (prevProps.shopper_cart !== this.props.shopper_cart) {
-      const priceMap = productPriceMap(this.props.shopper_cart.products);
-      const quantityMap = productQuantityMap(
-        this.props.shopper_cart.cartitemquantity
-      );
-      this.setState({ items: quantityMap });
-      const total = calculateTotalCosts(priceMap, quantityMap);
-      this.setState({ totalCosts: total });
-    }
-    if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
+    // if (prevState.calculate !== this.state.calculate) {
+    //   if (this.props.cart !== null || this.props.shopper_cart !== null) {
+    //     this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+    //     // this.setState({ sendOrder: !this.state.sendOrder });
+    //   }
+    // }
+    // if (prevProps.cart !== this.props.cart) {
+    //   this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+    //   // this.setState({ sendOrder: !this.state.sendOrder });
+    //   // get shopper's updated cart
+    //   const shopperid =
+    //     this.props.set_user_info !== null
+    //       ? this.props.set_user_info.shopperxyz.shopperid
+    //       : this.props.set_shopper_id.id;
+    //   this.props.getShopperCart(shopperid);
+    // }
+    // if (prevProps.shopper_cart !== this.props.shopper_cart) {
+    //   const priceMap = productPriceMap(this.props.shopper_cart.products);
+    //   const quantityMap = productQuantityMap(
+    //     this.props.shopper_cart.cartitemquantity
+    //   );
+    //   this.setState({ items: quantityMap });
+    //   const total = calculateTotalCosts(priceMap, quantityMap);
+    //   this.setState({ totalCosts: total });
+    // }
+    // if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
+    //   const shopperid =
+    //     this.props.set_user_info !== null
+    //       ? this.props.set_user_info.shopperxyz.shopperid
+    //       : this.props.set_shopper_id.id;
+    //   this.props.getShopperCart(shopperid);
+    // }
   }
   render() {
     if (this.props.product_list === null) {

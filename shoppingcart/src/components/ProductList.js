@@ -86,7 +86,8 @@ export class ProductList extends Component {
       const quantityMap = productQuantityMap(
         this.props.shopper_cart.cartitemquantity
       );
-      this.setState({ items: quantityMap });
+      const orderedMap = new Map([...quantityMap.entries()].sort());
+      this.setState({ items: orderedMap });
       const total = calculateTotalCosts(priceMap, quantityMap);
       this.setState({ totalCosts: total });
     }

@@ -47,12 +47,18 @@ export class CheckoutList extends Component {
 
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
-        this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+        this.sendOrder(
+          this.props.productid,
+          this.state.items.get(this.state.key)
+        );
         // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
     if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+      this.sendOrder(
+        this.props.productid,
+        this.state.items.get(this.state.key)
+      );
       // this.setState({ sendOrder: !this.state.sendOrder });
       // get shopper's updated cart
       const shopperid =
@@ -105,6 +111,8 @@ export class CheckoutList extends Component {
       this.props.set_user_info !== null
         ? this.props.set_user_info.shopperxyz.shopperid
         : this.props.set_shopper_id.id;
+    console.log("Shopper id:", shopperid);
+
     // create cart if there's none
     if (this.props.shopper_cart === null) {
       this.props.createCart(shopperid);
