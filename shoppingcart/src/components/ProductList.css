@@ -9,26 +9,11 @@
     display: grid;
 }
 
-.button {
-    position: relative;
-    display: inline-block;
-    padding: 12px 24px;
-    margin: .3em 0 1em 0;
-    /* width: 80%; */
-    vertical-align: middle;
-    color: black;
-    font-size: 12px;
-    line-height: 20px;
-    
-    text-align: left;
-    letter-spacing: 1px;
-    background: 448AFF;
-    border: 0;
-    border-bottom: 2px solid #3160B6;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+.plusMinus {
+    /* padding: 1em 2em; */
+    border-radius: 3px;
 }
+
 
 .buttonBlue {
     background: #4a89dc;
@@ -60,4 +45,10 @@
     color: #fff;
     background: #448AFF;
     margin-bottom: 4%;
+  }
+
+  .info {
+    padding: .2em .5em;
+    font-family: "Avenir";
+    border-radius: 3px;
   }
