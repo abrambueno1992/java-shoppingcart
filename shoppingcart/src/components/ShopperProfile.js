@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import "./ShopperProfile.css";
 import {
   createNewUser,
   loginUser,
@@ -70,8 +71,8 @@ export class ShopperProfile extends Component {
 
   render() {
     return (
-      <div>
-        <h3>SHopper Profile</h3>
+      <div class="profile">
+        <h3>Shopper Profile</h3>
         <div>
           <input
             name="billingaddres"

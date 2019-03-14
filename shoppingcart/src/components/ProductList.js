@@ -254,9 +254,10 @@ export class ProductList extends Component {
             </div>
           );
         })}
-
-        <h3>{this.state.totalCosts}</h3>
-        <button onClick={this.sendOrder}>Send Order </button>
+        <div class="subtotal">
+          <h3>{this.state.totalCosts}</h3>
+          <button onClick={this.sendOrder}>Send Order </button>
+        </div>
       </div>
     );
   }
