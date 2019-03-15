@@ -1,4 +1,5 @@
 export const productPriceMap = products => {
+  console.log("products in calculator:", products);
   const priceMap = new Map();
   products.forEach(each => {
     priceMap.set(each.productid, each.price);
@@ -8,6 +9,8 @@ export const productPriceMap = products => {
 
 export const productQuantityMap = products => {
   const quantityMap = new Map();
+  console.log("products in calculator:", products);
+
   products.forEach(each => {
     quantityMap.set(each.productid, each.quantity);
   });
@@ -21,4 +24,21 @@ export const calculateTotalCosts = (priceMap, quantityMap) => {
   }
 
   return totalCost.toFixed(2);
+};
+
+export const orderData = (products, quantityMapping) => {
+  // const nameOfProductsAlphabetical = new Map([...mapProducts.entries()].sort());
+  // nameOfProductsAlphabetical.sort();
+  // const orderedMap = new Map();
+  // nameOfProductsAlphabetical.forEach(each => {
+  //   orderedMap.set(each, quantityMapping.get(each))
+  // })
+};
+
+export const productCost = (priceMap, quantityMap) => {
+  const costMap = new Map();
+  for (let [k, v] of quantityMap) {
+    costMap.set(k, v * priceMap.get(k));
+  }
+  return costMap;
 };

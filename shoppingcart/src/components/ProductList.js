@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
 import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
-import "./ProductList.css";
 
 import {
   productPriceMap,
@@ -23,7 +22,7 @@ export class ProductList extends Component {
       toggle: new Map(),
       totalCosts: 0,
       calculate: false,
-      sendOrder: false,
+      // sendOrder: false,
       key: null
     };
   }
@@ -59,22 +58,22 @@ export class ProductList extends Component {
       this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
     }
 
-    if (
-      prevState.fetchShopperID !== this.state.fetchShopperID &&
-      this.props.set_user_info === null
-    ) {
-      this.props.getUserInfo();
-    }
+    // if (
+    //   prevState.fetchShopperID !== this.state.fetchShopperID &&
+    //   this.props.set_user_info === null
+    // ) {
+    //   this.props.getUserInfo();
+    // }
 
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
         this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-        this.setState({ sendOrder: !this.state.sendOrder });
+        // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
     if (prevProps.cart !== this.props.cart) {
       this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-      this.setState({ sendOrder: !this.state.sendOrder });
+      // this.setState({ sendOrder: !this.state.sendOrder });
       // get shopper's updated cart
       const shopperid =
         this.props.set_user_info !== null
@@ -87,7 +86,8 @@ export class ProductList extends Component {
       const quantityMap = productQuantityMap(
         this.props.shopper_cart.cartitemquantity
       );
-      this.setState({ items: quantityMap });
+      const orderedMap = new Map([...quantityMap.entries()].sort());
+      this.setState({ items: orderedMap });
       const total = calculateTotalCosts(priceMap, quantityMap);
       this.setState({ totalCosts: total });
     }
@@ -233,9 +233,10 @@ export class ProductList extends Component {
         })}
 
         <div className="subtotal">
-
           <h3>Total: ${this.state.totalCosts}</h3>
-          <button className="checkout" onClick={this.sendOrder}>Send Order </button>
+          <button className="checkout" onClick={this.sendOrder}>
+            Send Order{" "}
+          </button>
         </div>
       </div>
     );
