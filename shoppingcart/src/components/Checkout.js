@@ -8,7 +8,8 @@ import CheckoutList from "./CheckoutList";
 import {
   productPriceMap,
   productQuantityMap,
-  calculateTotalCosts
+  calculateTotalCosts,
+  productCost
 } from "./calculateCosts";
 import "./CheckoutList.css";
 export class Checkout extends Component {
@@ -22,6 +23,7 @@ export class Checkout extends Component {
       toggle: new Map(),
       totalCosts: 0,
       calculate: false,
+      costMap: new Map(),
       //   sendOrder: false,
       key: null
     };
@@ -67,8 +69,9 @@ export class Checkout extends Component {
         this.props.shopper_cart.cartitemquantity
       );
       this.setState({ items: quantityMap });
+      const costMap = productCost(priceMap, quantityMap);
       const total = calculateTotalCosts(priceMap, quantityMap);
-      this.setState({ totalCosts: total });
+      this.setState({ totalCosts: total, costMap: costMap });
     }
     if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
       const shopperid =
@@ -91,7 +94,7 @@ export class Checkout extends Component {
       return <div>Loading items</div>;
     } else {
       console.log("array is:", this.props.shopper_cart.products[0]);
-      const ordered = this.props.shopper_cart.products.sort((a, b) =>
+      let ordered = this.props.shopper_cart.products.sort((a, b) =>
         a.name > b.name ? 1 : -1
       );
 
@@ -112,7 +115,7 @@ export class Checkout extends Component {
                   productid={each.productid}
                   name={each.name}
                   description={each.description}
-                  price={each.price}
+                  price={this.state.costMap.get(each.productid)}
                   quantity={this.state.items.get(each.productid)}
                 />
               </div>

@@ -34,3 +34,11 @@ export const orderData = (products, quantityMapping) => {
   //   orderedMap.set(each, quantityMapping.get(each))
   // })
 };
+
+export const productCost = (priceMap, quantityMap) => {
+  const costMap = new Map();
+  for (let [k, v] of quantityMap) {
+    costMap.set(k, v * priceMap.get(k));
+  }
+  return costMap;
+};
