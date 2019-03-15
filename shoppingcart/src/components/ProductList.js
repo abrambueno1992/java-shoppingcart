@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
-import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
+import {
+  getShopperCart,
+  createCart,
+  addItemToCart,
+  deleteProduct
+} from "../actions/cart";
 
 import {
   productPriceMap,
@@ -98,6 +103,13 @@ export class ProductList extends Component {
           : this.props.set_shopper_id.id;
       this.props.getShopperCart(shopperid);
     }
+    if (prevProps.deleted_item !== this.props.deleted_item) {
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
+    }
   }
   handleAdd = productid => {
     const update = this.state.items;
@@ -144,6 +156,8 @@ export class ProductList extends Component {
       });
     } else if (update.get(productid) === 0) {
       // do nothing, it was zero and it remains zero
+    } else if (update.get(productid) === 1) {
+      this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
     } else {
       update.set(productid, update.get(productid) - 1);
       this.setState({
@@ -251,7 +265,8 @@ const mapStateToProps = state => {
     set_user_info: state.userCredentials.set_user_info,
     items_in_cart_added: state.cart.items_in_cart_added,
     set_shopper_id: state.userCredentials.set_shopper_id,
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    deleted_item: state.cart.deleted_item
   };
 };
 export default connect(
@@ -261,6 +276,7 @@ export default connect(
     getUserInfo,
     createCart,
     addItemToCart,
-    getShopperCart
+    getShopperCart,
+    deleteProduct
   }
 )(ProductList);
