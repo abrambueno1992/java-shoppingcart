@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
-import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
+import { getShopperCart } from "../actions/cart";
 import CheckoutList from "./CheckoutList";
 import {
   productPriceMap,
@@ -19,12 +19,9 @@ export class Checkout extends Component {
     this.state = {
       items: new Map(),
       fetchShopperID: false,
-      show: false,
-      toggle: new Map(),
       totalCosts: 0,
       calculate: false,
       costMap: new Map(),
-      //   sendOrder: false,
       key: null
     };
   }
@@ -38,31 +35,6 @@ export class Checkout extends Component {
       this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
     }
 
-    // if (
-    //   prevState.fetchShopperID !== this.state.fetchShopperID &&
-    //   prevProps.set_user_info === this.props.set_user_info
-    // ) {
-    //   console.log("fetching user info again:", this.props.set_user_info);
-
-    //   this.props.getUserInfo();
-    // }
-
-    // if (prevState.calculate !== this.state.calculate) {
-    //   if (this.props.cart !== null || this.props.shopper_cart !== null) {
-    //     this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-    //     // this.setState({ sendOrder: !this.state.sendOrder });
-    //   }
-    // }
-    if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-      // this.setState({ sendOrder: !this.state.sendOrder });
-      // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
     if (prevProps.shopper_cart !== this.props.shopper_cart) {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
       const quantityMap = productQuantityMap(
@@ -93,7 +65,6 @@ export class Checkout extends Component {
     } else if (this.props.cart !== null && this.props.shopper_cart === null) {
       return <div>Loading items</div>;
     } else {
-      console.log("array is:", this.props.shopper_cart.products[0]);
       let ordered = this.props.shopper_cart.products.sort((a, b) =>
         a.name > b.name ? 1 : -1
       );
@@ -106,9 +77,6 @@ export class Checkout extends Component {
             <div className="itemPrice">Price</div>
           </div>
           {ordered.map((each, i) => {
-            {
-              console.log("iterate", i);
-            }
             return (
               <div style={{ border: "2px solid black" }} key={each + i}>
                 <CheckoutList
@@ -151,8 +119,6 @@ export default connect(
   {
     getProductList,
     getUserInfo,
-    createCart,
-    addItemToCart,
     getShopperCart
   }
 )(Checkout);

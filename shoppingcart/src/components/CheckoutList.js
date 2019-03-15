@@ -18,41 +18,18 @@ export class CheckoutList extends Component {
 
     this.state = {
       items: new Map(),
-      fetchShopperID: false,
-      show: false,
-      toggle: new Map(),
-      totalCosts: 0,
       calculate: false,
-      //   sendOrder: false,
       key: null
     };
   }
-  //   componentDidMount() {
-  //     this.props.getProductList();
-  //     this.props.getUserInfo();
-  //     this.setState({ fetchShopperID: true });
-  //   }
+
   componentDidUpdate(prevProps, prevState) {
-    // if (prevProps.set_user_info !== this.props.set_user_info) {
-    //   this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
-    // }
-
-    // if (
-    //   prevState.fetchShopperID !== this.state.fetchShopperID &&
-    //   prevProps.set_user_info === this.props.set_user_info
-    // ) {
-    //   console.log("fetching user info again:", this.props.set_user_info);
-
-    //   this.props.getUserInfo();
-    // }
-
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
         this.sendOrder(
           this.props.productid,
           this.state.items.get(this.state.key)
         );
-        // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
     if (prevProps.cart !== this.props.cart) {
@@ -60,28 +37,7 @@ export class CheckoutList extends Component {
         this.props.productid,
         this.state.items.get(this.state.key)
       );
-      // this.setState({ sendOrder: !this.state.sendOrder });
       // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
-    if (prevProps.shopper_cart !== this.props.shopper_cart) {
-      const priceMap = productPriceMap(this.props.shopper_cart.products);
-      const quantityMap = productQuantityMap(
-        this.props.shopper_cart.cartitemquantity
-      );
-      const orderedData = orderData(
-        this.props.shopper_cart.products,
-        quantityMap
-      );
-      this.setState({ items: quantityMap });
-      const total = calculateTotalCosts(priceMap, quantityMap);
-      this.setState({ totalCosts: total });
-    }
-    if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
       const shopperid =
         this.props.set_user_info !== null
           ? this.props.set_user_info.shopperxyz.shopperid
@@ -124,11 +80,8 @@ export class CheckoutList extends Component {
     }
 
     // map productid to quantity
-    if (update.get(productid) === undefined) {
-      update.set(productid, 1);
-    } else {
-      update.set(productid, update.get(productid) + 1);
-    }
+
+    update.set(productid, this.props.quantity + 1);
     this.setState({
       items: update,
       calculate: !this.state.calculate,
@@ -148,18 +101,10 @@ export class CheckoutList extends Component {
       this.props.createCart(shopperid);
     }
 
-    // map productid to quantity
-    if (update.get(productid) === undefined) {
-      update.set(productid, 0);
-      this.setState({
-        items: update,
-        calculate: !this.state.calculate,
-        key: productid
-      });
-    } else if (update.get(productid) === 0) {
+    if (this.props.quantity === 0) {
       // do nothing, it was zero and it remains zero
     } else {
-      update.set(productid, update.get(productid) - 1);
+      update.set(productid, this.props.quantity - 1);
       this.setState({
         items: update,
         calculate: !this.state.calculate,
