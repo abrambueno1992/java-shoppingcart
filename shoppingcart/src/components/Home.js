@@ -35,8 +35,6 @@ export class Home extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    
-    console.log("token: ",this.props.user_token);
     if (prevProps.user_token !== this.props.user_token) {
       this.setState({ username: "", password: "", fetchUser: true });
     }
@@ -45,14 +43,13 @@ export class Home extends Component {
       prevState.fetchUser !== this.state.fetchUser &&
       this.props.set_user_info !== null
     ) {
-      alert("token: ", this.props.user_token);
       this.props.history.push("/productlist");
     }
     if (
       prevState.fetchUser !== this.state.fetchUser &&
       this.props.set_user_info === null
     ) {
-      if (this.props.user_token.error === "invalid_grant" ) {
+      if (this.props.user_token.error === "invalid_grant") {
         this.setState({ login: !this.state.login });
       } else {
         this.props.history.push("/shopperprofile");
@@ -69,7 +66,12 @@ export class Home extends Component {
       role: this.state.role
     };
     this.props.createNewUser(userObject);
-    this.setState({ cusername: "", cpassword: "", role: "", login: !this.state.login });
+    this.setState({
+      cusername: "",
+      cpassword: "",
+      role: "",
+      login: !this.state.login
+    });
   };
   loginUser = e => {
     const userObject = {
@@ -83,8 +85,6 @@ export class Home extends Component {
   };
 
   render() {
-    console.log("USERINFO: ", this.props.set_user_info);
-
     if (this.state.login === true) {
       return (
         <div class="signup">
@@ -102,8 +102,12 @@ export class Home extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <button class="button buttonBlue" onClick={this.loginUser}>Login</button>
-            <button class= "button buttonBlue" onClick={this.handleButton}>Signup</button>
+            <button class="button buttonBlue" onClick={this.loginUser}>
+              Login
+            </button>
+            <button class="button buttonBlue" onClick={this.handleButton}>
+              Signup
+            </button>
           </div>
         </div>
       );
@@ -130,8 +134,13 @@ export class Home extends Component {
               value={this.state.role}
               onChange={this.handleChange}
             />
-            <button class="button buttonBlue" onClick={this.createUser}> Create User</button>
-            <button class="button buttonBlue" onClick={this.handleButton}>Login</button>
+            <button class="button buttonBlue" onClick={this.createUser}>
+              {" "}
+              Create User
+            </button>
+            <button class="button buttonBlue" onClick={this.handleButton}>
+              Login
+            </button>
           </div>
         </div>
       );
