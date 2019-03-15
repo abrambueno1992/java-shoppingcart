@@ -118,7 +118,9 @@ export class CheckoutList extends Component {
         {/* <h3>{this.props.productid}</h3> */}
         {/* {/* <h3>{this.props.name}</h3> */}
         <div className="itemCard">
-          <div className="itemName">{this.props.description}</div>
+          <div className="itemName">{`${this.props.description} $${
+            this.props.itemPrice
+          }`}</div>
           <div className="changeQuantity">
             <div className="inputPrice">
               <input placeholder={this.props.quantity} />

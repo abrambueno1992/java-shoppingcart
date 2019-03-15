@@ -84,6 +84,7 @@ export class Checkout extends Component {
                   name={each.name}
                   description={each.description}
                   price={this.state.costMap.get(each.productid)}
+                  itemPrice={each.price}
                   quantity={this.state.items.get(each.productid)}
                 />
               </div>
