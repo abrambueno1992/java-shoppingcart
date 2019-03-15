@@ -19,7 +19,8 @@ export class CheckoutList extends Component {
     this.state = {
       items: new Map(),
       calculate: false,
-      key: null
+      key: null,
+      inputQuantity: this.props.quantity
     };
   }
 
@@ -46,7 +47,17 @@ export class CheckoutList extends Component {
     }
   }
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    const update = this.state.items;
+    const productid = this.props.productid;
+    // map productid to quantity
+    const itemQty = parseInt(e.target.value, 10);
+    update.set(this.props.productid, itemQty);
+    this.setState({
+      items: update,
+      calculate: !this.state.calculate,
+      key: productid,
+      inputQuantity: e.target.value
+    });
   };
 
   sendOrder = (productid, value) => {
@@ -68,22 +79,13 @@ export class CheckoutList extends Component {
   handleAdd = () => {
     const productid = this.props.productid;
     const update = this.state.items;
-    const shopperid =
-      this.props.set_user_info !== null
-        ? this.props.set_user_info.shopperxyz.shopperid
-        : this.props.set_shopper_id.id;
-    console.log("Shopper id:", shopperid);
-
-    // create cart if there's none
-    if (this.props.shopper_cart === null) {
-      this.props.createCart(shopperid);
-    }
 
     // map productid to quantity
 
     update.set(productid, this.props.quantity + 1);
     this.setState({
       items: update,
+      inputQuantity: this.props.quantity + 1,
       calculate: !this.state.calculate,
       key: productid
     });
@@ -92,14 +94,6 @@ export class CheckoutList extends Component {
   handleSubtract = () => {
     const productid = this.props.productid;
     const update = this.state.items;
-    const shopperid =
-      this.props.set_user_info !== null
-        ? this.props.set_user_info.shopperxyz.shopperid
-        : this.props.set_shopper_id.id;
-    // create cart if there's none
-    if (this.props.shopper_cart === null) {
-      this.props.createCart(shopperid);
-    }
 
     if (this.props.quantity === 0) {
       // do nothing, it was zero and it remains zero
@@ -107,6 +101,7 @@ export class CheckoutList extends Component {
       update.set(productid, this.props.quantity - 1);
       this.setState({
         items: update,
+        inputQuantity: this.props.quantity - 1,
         calculate: !this.state.calculate,
         key: productid
       });
@@ -123,7 +118,12 @@ export class CheckoutList extends Component {
           }`}</div>
           <div className="changeQuantity">
             <div className="inputPrice">
-              <input placeholder={this.props.quantity} />
+              <input
+                placeholder={this.props.quantity}
+                onChange={this.handleChange}
+                name="inputQuantity"
+                value={this.state.inputQuantity}
+              />
             </div>
             <div className="quantityButtons">
               <button className="addItem" onClick={this.handleAdd}>
