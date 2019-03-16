@@ -11,6 +11,7 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
+import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 export class Checkout extends Component {
   constructor(props) {
@@ -133,4 +134,4 @@ export default connect(
     getUserInfo,
     getShopperCart
   }
-)(Checkout);
+)(withAuth(Checkout));

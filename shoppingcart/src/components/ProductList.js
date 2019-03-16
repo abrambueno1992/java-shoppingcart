@@ -15,6 +15,7 @@ import {
   productQuantityMap,
   calculateTotalCosts
 } from "./calculateCosts";
+import withAuth from "../lib/withAuth";
 
 export class ProductList extends Component {
   constructor(props) {
@@ -279,4 +280,4 @@ export default connect(
     getShopperCart,
     deleteProduct
   }
-)(ProductList);
+)(withAuth(ProductList));
