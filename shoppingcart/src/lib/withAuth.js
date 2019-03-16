@@ -6,6 +6,7 @@ import {
   setShopperId,
   getUserInfo
 } from "../actions/userCredentials";
+import "./withAuth.css";
 const WithAuth = Page => {
   class BaseComponent extends React.Component {
     constructor(props) {
@@ -23,9 +24,15 @@ const WithAuth = Page => {
       if (this.state.authenticated === true) {
         this.props.getUserInfo();
       } else {
-        this.props.history.push("/");
+        if (this.props.match.path !== "/") {
+          this.props.history.push("/");
+        }
       }
     }
+    handleClear = () => {
+      localStorage.clear();
+      this.props.history.push("/");
+    };
 
     componentDidUpdate(prevProps, prevState) {
       if (prevProps.set_user_info !== this.props.set_user_info) {
@@ -44,9 +51,23 @@ const WithAuth = Page => {
 
     render() {
       if (this.state.authenticated) {
-        return <Page {...this.props} />;
+        return (
+          <div>
+            <button className="Logout" onClick={this.handleClear}>
+              Logout
+            </button>
+            <Page {...this.props} />
+          </div>
+        );
+      } else if (this.props.user_token !== null) {
+        return (
+          <div>
+            <Page {...this.props} />
+            <div className="Error">{this.props.user_token.error} </div>
+          </div>
+        );
       } else {
-        return null;
+        return <Page {...this.props} />;
       }
     }
   }
