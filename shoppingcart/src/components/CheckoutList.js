@@ -62,7 +62,7 @@ export class CheckoutList extends Component {
       items: update,
       calculate: !this.state.calculate,
       key: productid,
-      inputQuantity: itemQty
+      inputQuantity: e.target.value
     });
   };
 

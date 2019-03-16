@@ -169,11 +169,19 @@ public class CartController {
     public Cart deleteProductFromCart(@PathVariable long cartid, @PathVariable long productid) throws URISyntaxException {
         var updateCart = cartrepos.findById(cartid);
         if (updateCart.isPresent()) {
-            cartrepos.deleteProductFromCart(cartid, productid);
-            cartitems.deleteProductFromCartItems(cartid, productid);
-            updateCart.get().setQuantity(updateCart.get().getQuantity() - 1);
-            cartrepos.save(updateCart.get());
-            return updateCart.get();
+            var checkProduct = cartitems.checkValuePairCart(productid, cartid);
+            if (checkProduct != null) {
+//                updateCart.get().setQuantity(updateCart.get().getQuantity() - 1);
+                cartrepos.deleteProductFromCart(cartid, productid);
+
+                cartitems.deleteProductFromCartItems(cartid, productid);
+//                cartrepos.save(updateCart.get());
+                return updateCart.get();
+
+            } else {
+                return  null;
+            }
+
 //            cartitems.save(cartitems.returnCartItemCart(productid, cartid));
         } else {
             return null;
