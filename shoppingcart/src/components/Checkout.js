@@ -11,6 +11,7 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
+import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 export class Checkout extends Component {
   constructor(props) {
@@ -45,7 +46,17 @@ export class Checkout extends Component {
       const total = calculateTotalCosts(priceMap, quantityMap);
       this.setState({ totalCosts: total, costMap: costMap });
     }
-    if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
+    if (
+      prevProps.items_in_cart_added !== this.props.items_in_cart_added &&
+      prevProps.deleted_item === this.props.deleted_item
+    ) {
+      const shopperid =
+        this.props.set_user_info !== null
+          ? this.props.set_user_info.shopperxyz.shopperid
+          : this.props.set_shopper_id.id;
+      this.props.getShopperCart(shopperid);
+    }
+    if (prevProps.deleted_item !== this.props.deleted_item) {
       const shopperid =
         this.props.set_user_info !== null
           ? this.props.set_user_info.shopperxyz.shopperid
@@ -109,7 +120,8 @@ const mapStateToProps = state => {
     set_user_info: state.userCredentials.set_user_info,
     items_in_cart_added: state.cart.items_in_cart_added,
     set_shopper_id: state.userCredentials.set_shopper_id,
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    deleted_item: state.cart.deleted_item
   };
 };
 
@@ -122,4 +134,4 @@ export default connect(
     getUserInfo,
     getShopperCart
   }
-)(Checkout);
+)(withAuth(Checkout));

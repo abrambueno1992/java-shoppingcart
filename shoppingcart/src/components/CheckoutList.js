@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
-import { getShopperCart, createCart, addItemToCart } from "../actions/cart";
+import {
+  getShopperCart,
+  createCart,
+  addItemToCart,
+  deleteProduct
+} from "../actions/cart";
 import "./CheckoutList.css";
 import {
   productPriceMap,
@@ -52,6 +57,7 @@ export class CheckoutList extends Component {
     // map productid to quantity
     const itemQty = parseInt(e.target.value, 10);
     update.set(this.props.productid, itemQty);
+
     this.setState({
       items: update,
       calculate: !this.state.calculate,
@@ -96,6 +102,7 @@ export class CheckoutList extends Component {
     const update = this.state.items;
 
     if (this.props.quantity === 0) {
+      // this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
       // do nothing, it was zero and it remains zero
     } else {
       update.set(productid, this.props.quantity - 1);
@@ -106,6 +113,10 @@ export class CheckoutList extends Component {
         key: productid
       });
     }
+  };
+  handleDelete = () => {
+    const productid = this.props.productid;
+    this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
   };
   render() {
     return (
@@ -134,7 +145,13 @@ export class CheckoutList extends Component {
               </button>
             </div>
           </div>
-          <div className="itemPrice">{this.props.price}</div>
+          {this.state.inputQuantity !== 0 && this.props.quantity !== 0 ? (
+            <div className="itemPrice">{this.props.price}</div>
+          ) : (
+            <button onClick={this.handleDelete} className="itemPrice">
+              Delete Item
+            </button>
+          )}
         </div>
         {/* <h3>{this.props.price}</h3> */}
         {/* <h3>{this.props.quantity}</h3> */}
@@ -161,6 +178,7 @@ export default connect(
     getUserInfo,
     createCart,
     addItemToCart,
-    getShopperCart
+    getShopperCart,
+    deleteProduct
   }
 )(CheckoutList);

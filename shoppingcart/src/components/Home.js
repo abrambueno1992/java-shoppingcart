@@ -6,10 +6,9 @@ import {
   createNewUser,
   loginUser,
   setShopperId,
-  resetData,
   getUserInfo
 } from "../actions/userCredentials";
-import { addShopper } from "../actions/shoppers";
+import WithAuth from "../lib/withAuth";
 export class Home extends Component {
   constructor(props) {
     super(props);
@@ -78,7 +77,6 @@ export class Home extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    // this.props.resetData();
     this.props.loginUser(userObject);
     this.props.getUserInfo();
     this.setState({ fetchUser: false });
@@ -161,5 +159,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo, resetData }
-)(Home);
+  { createNewUser, loginUser, setShopperId, getUserInfo }
+)(WithAuth(Home));

@@ -8,6 +8,7 @@ import {
   getUserInfo
 } from "../actions/userCredentials";
 import { addShopper } from "../actions/shoppers";
+import withAuth from "../lib/withAuth";
 export class ShopperProfile extends Component {
   constructor(props) {
     super(props);
@@ -119,4 +120,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   { createNewUser, setShopperId, addShopper, getUserInfo }
-)(ShopperProfile);
+)(withAuth(ShopperProfile));

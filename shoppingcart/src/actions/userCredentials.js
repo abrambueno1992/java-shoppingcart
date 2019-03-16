@@ -42,7 +42,11 @@ export const createNewUser = userObject => {
 };
 
 function postLoginSuccess(body) {
-  localStorage.setItem("token", body.access_token);
+  if (body.error !== "invalid_grant") {
+    localStorage.setItem("token", body.access_token);
+  } else {
+    localStorage.clear();
+  }
   // getUserInfo();
   return {
     type: LOGIN_USER,

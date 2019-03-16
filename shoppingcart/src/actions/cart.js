@@ -5,7 +5,7 @@ export const DELETE_CART = "DELETE_CART";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const GET_SHOPPER_CART = "GET_SHOPPER_CART";
 export const UPDATE_ITEMS = "UPDATE_ITEMS";
-
+export const DELETE_ITEM_CART = "DELETE_ITEM_CART";
 const url = "http://localhost:2019/cart/";
 
 function fetchRequest() {
@@ -73,6 +73,28 @@ export const addItemToCart = url => {
     })
       .then(res => res.json())
       .then(body => dispatch(postSuccessAddItem(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+function deleteItemFromCartSuccess(body) {
+  return {
+    type: DELETE_ITEM_CART,
+    payload: body
+  };
+}
+// /delete/product/{cartid}/{productid}"
+export const deleteProduct = (cartid, productid) => {
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(`${url}delete/product/${cartid}/${productid}`, {
+      method: "DELETE", // or 'PUT'
+      // body: JSON.stringify(orderObject),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(deleteItemFromCartSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };
