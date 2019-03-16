@@ -4,7 +4,8 @@ import {
   SET_SHOPPER_ID,
   GET_USER_INFO,
   FAILURE,
-  RESET_DATA
+  RESET_DATA,
+  FAIL_GET_USER_INFO
 } from "../actions/userCredentials";
 
 const initialState = {
@@ -42,6 +43,10 @@ const cartItems = (state = initialState, actions) => {
         error: actions.payload
       });
     case FAILURE:
+      return Object.assign({}, state, {
+        error: actions.payload
+      });
+    case FAIL_GET_USER_INFO:
       return Object.assign({}, state, {
         error: actions.payload
       });

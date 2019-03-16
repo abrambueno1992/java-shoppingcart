@@ -6,6 +6,7 @@ export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const FAILURE = "FAILURE";
 export const RESET_DATA = "RESET_DATA";
+export const FAIL_GET_USER_INFO = "FAIL_GET_USER_INFO";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -78,6 +79,14 @@ export const loginUser = userObject => {
   };
 };
 
+function failedGetUserInfoAction(ex) {
+  console.log("error fetch: ", JSON.stringify(ex));
+
+  return {
+    type: FAIL_GET_USER_INFO,
+    paylod: JSON.stringify(ex)
+  };
+}
 function getUserInfoSuccess(body) {
   localStorage.setItem("userid", body.id);
   localStorage.setItem("shopperid", body.shopperxyz.shopperid);
@@ -89,17 +98,20 @@ function getUserInfoSuccess(body) {
 
 export const getUserInfo = () => {
   const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + username, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
       .then(body => dispatch(getUserInfoSuccess(body)))
-      .catch(ex => dispatch(failedAction(ex)));
+      .catch(ex => dispatch(failedGetUserInfoAction(ex)));
   };
 };
 

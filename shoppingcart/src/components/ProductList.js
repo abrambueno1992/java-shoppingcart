@@ -34,8 +34,12 @@ export class ProductList extends Component {
   }
 
   componentDidMount() {
-    this.props.getProductList();
-    this.props.getUserInfo();
+    if (this.props.product_list === null) {
+      this.props.getProductList();
+    }
+    if (this.props.set_user_info === null) {
+      this.props.getUserInfo();
+    }
     this.setState({ fetchShopperID: true });
   }
   handleChange = e => {

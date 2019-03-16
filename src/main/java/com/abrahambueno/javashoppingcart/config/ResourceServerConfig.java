@@ -28,7 +28,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
         http.
                 anonymous().disable()
                 .authorizeRequests()
-//                .antMatchers("/users/**").access("hasAnyRole('ROLE_USER')")
+                .antMatchers("/users/**").access("hasAnyRole('ROLE_USER')")
 //                .antMatchers("/oauth/**").access("hasAnyRole('ROLE_USER')")
                 .antMatchers("/data/**").access("hasAnyRole('ROLE_DATA')")
                 .antMatchers("/authors/**").access("hasAnyRole('ROLE_MGR','ROLE_USER')")
