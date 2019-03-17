@@ -27,13 +27,16 @@ function postUserSuccess(body) {
 }
 
 export const createNewUser = userObject => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "newuser", {
       method: "POST", // or 'PUT'
       body: JSON.stringify(userObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

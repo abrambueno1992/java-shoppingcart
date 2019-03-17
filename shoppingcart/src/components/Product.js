@@ -34,6 +34,9 @@ export class Product extends Component {
     if (this.props.set_user_info === null) {
       this.props.getUserInfo();
     }
+    if (localStorage.getItem("token") === null) {
+      this.props.history.push("/");
+    }
     this.setState({ fetchShopperID: true });
   }
   componentDidUpdate(prevProps, prevState) {
@@ -101,8 +104,6 @@ export class Product extends Component {
       return (
         <div>
           {ordered.map((each, i) => {
-            console.log("object", each);
-
             return (
               <div key={each + i}>
                 <ListProducts

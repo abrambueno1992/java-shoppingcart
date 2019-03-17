@@ -4,7 +4,7 @@ export const UPDATE_SHOPPER = "UPDATE_SHOPPER";
 export const DELETE_SHOPPER = "DELETE_SHOPPER";
 
 const url = "http://localhost:2019/shoppers/";
-
+const token = localStorage.getItem("token");
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -28,7 +28,13 @@ function failedAction(ex) {
 export const getShopperByID = id => {
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + id)
+    return fetch(url + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
       .then(res => res.json())
       .then(body => dispatch(fetchSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
@@ -50,7 +56,9 @@ export const addShopper = shopperObject => {
       method: "POST",
       body: JSON.stringify(shopperObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -73,7 +81,9 @@ export const updateShopper = (shopperObject, id) => {
       method: "PUT", // or 'PUT'
       body: JSON.stringify(shopperObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -95,7 +105,9 @@ export const deleteShopper = id => {
     return fetch(url + id, {
       method: "DELETE", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

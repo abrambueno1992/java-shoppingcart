@@ -47,10 +47,10 @@ export class ListProducts extends Component {
       }
     }
     if (prevProps.cart !== this.props.cart) {
-      //   this.sendOrder(
-      //     this.props.productid,
-      //     this.state.items.get(this.state.key)
-      //   );
+      this.sendOrder(
+        this.props.productid,
+        this.state.items.get(this.state.key)
+      );
       // get shopper's updated cart
       const shopperid =
         this.props.set_user_info !== null

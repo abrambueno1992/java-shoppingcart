@@ -8,6 +8,7 @@ import {
   getUserInfo
 } from "../actions/userCredentials";
 import { getShopperCart } from "../actions/cart";
+import { getProductList } from "../actions/productList";
 
 import "./withAuth.css";
 const WithAuth = Page => {
@@ -15,78 +16,92 @@ const WithAuth = Page => {
     constructor(props) {
       super(props);
       this.state = {
-        authenticated:
-          localStorage.getItem("token") !== null &&
-          localStorage.getItem("userid") !== null
-            ? true
-            : false,
+        authenticated: false,
         checked: false
       };
     }
     componentDidMount() {
-      if (this.state.authenticated === true) {
-        this.props.getUserInfo();
-        this.setState({ checked: true });
-        console.log("get me userinfo");
-      } else {
-        if (this.props.match.path !== "/") {
-          this.props.history.push("/");
+      if (
+        localStorage.getItem("token") !== null &&
+        localStorage.getItem("userid") !== null
+      ) {
+        if (
+          localStorage.getItem("userid") !== "undefined" &&
+          localStorage.getItem("token") !== "undefined"
+        ) {
+          this.props.getUserInfo();
+          this.setState({ checked: true, authenticated: true });
+          // console.log("current path: ", this.props.match.path);
+        } else {
+          // console.log("current path: ", this.props.match.path);
+          this.handleClear();
         }
       }
     }
     handleClear = () => {
       localStorage.clear();
-      this.props.history.push("/");
-      this.setState({ checked: false });
+      console.log("current path: ", this.props.match.path);
+
+      if (this.props.match.path !== "/") {
+        console.log("push to /");
+
+        this.props.history.push("/");
+        window.location.reload();
+      }
+      // this.setState({ checked: false });
     };
 
     componentDidUpdate(prevProps, prevState) {
       if (prevProps.set_user_info !== this.props.set_user_info) {
         if (this.props.set_user_info.shopperxyz !== null) {
-          // redirect authenticated user to productlist
-          // home page is for unathenticated users
-          console.log("user info: ", this.props.set_user_info);
-
-          if (this.props.match.path === "/") {
-            this.props.history.push("/productlist");
-          }
+          this.props.getProductList();
         } else {
           // if the authenticated user doesn't have shopper profile
           this.props.history.push("/shopperprofile");
         }
       }
-      if (this.state.checked && this.props.error_user_info === undefined) {
-        if (this.props.set_user_info === null) {
-          // if (
-          //   this.props.match.path === "/productlist" ||
-          //   this.props.match.path === "/shopperprofile"
-          // ) {
-          console.log("clear, true");
-          // this.setState({ checked: false });
-
-          // this.handleClear();
-          // }
+      if (
+        prevProps.set_user_info === this.props.set_user_info &&
+        this.props.set_user_info !== null
+      ) {
+        // console.log("user info didn't change: ", this.props.set_user_info);
+        if (prevProps.product_list !== this.props.product_list) {
+          if (
+            this.props.product_list !== null &&
+            this.props.product_list.error !== "invalid_token" &&
+            this.props.set_user_info !== null &&
+            localStorage.getItem("userid") !== "undefined"
+          ) {
+            if (this.props.match.path === "/") {
+              this.props.history.push("/productlist");
+            }
+          } else {
+            this.handleClear();
+          }
         }
       }
-      if (prevProps.user_token !== this.props.user_token) {
-        this.setState({ checked: true });
-        this.props.getUserInfo();
-      }
-      // if (prevProps.set_user_info !== this.props.set_user_info) {
-      //   const shopperid =
-      //     this.props.set_user_info !== null
-      //       ? this.props.set_user_info.shopperxyz.shopperid
-      //       : this.props.set_shopper_id !== null
-      //       ? this.props.set_shopper_id.id
-      //       : null;
-      //   if (shopperid !== null) {
-      //     this.props.getShopperCart(shopperid);
+      // else {
+      //   console.log("no data for user info : ", this.props.set_user_info);
+      //   if (this.state.authenticated === true) {
+
+      //   } else {
+      //     if (this.props.match.path !== "/") {
+      //       this.handleClear();
+      //     }
       //   }
       // }
+
+      if (prevProps.user_token !== this.props.user_token) {
+        this.setState({ checked: true, authenticated: true });
+        this.props.getUserInfo();
+      }
     }
 
     render() {
-      if (this.state.authenticated === true) {
+      if (
+        this.state.authenticated === true &&
+        this.props.set_user_info !== null
+      ) {
         return (
           <div>
             <button className="Logout" onClick={this.handleClear}>
@@ -130,6 +145,7 @@ const WithAuth = Page => {
   const mapStateToProps = state => {
     return {
       user_token: state.userCredentials.user_token,
+      product_list: state.productList.product_list,
       set_user_info: state.userCredentials.set_user_info,
       userCredentials: state.userCredentials,
       cart: state.cart,
@@ -140,7 +156,14 @@ const WithAuth = Page => {
   };
   return connect(
     mapStateToProps,
-    { createNewUser, getShopperCart, loginUser, setShopperId, getUserInfo }
+    {
+      createNewUser,
+      getProductList,
+      getShopperCart,
+      loginUser,
+      setShopperId,
+      getUserInfo
+    }
   )(BaseComponent);
 };
 
