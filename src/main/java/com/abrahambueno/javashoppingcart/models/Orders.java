@@ -21,7 +21,7 @@ public class Orders {
 
     private int quantity;
 
-    private long totalcost;
+    private double totalcost;
     // destination address
     private String destinationaddress;
     // dispatch address
@@ -34,6 +34,8 @@ public class Orders {
     @JsonIgnoreProperties("orders")
     private Shoppers paymentdetails;
 
+
+
 //    private String paymentdetails;
 
     private String shippedstatus = "processing";
@@ -45,11 +47,12 @@ public class Orders {
         return orderid;
     }
 
-    public long getTotalcost() {
+
+    public double getTotalcost() {
         return totalcost;
     }
 
-    public void setTotalcost(long totalcost) {
+    public void setTotalcost(double totalcost) {
         this.totalcost = totalcost;
     }
 

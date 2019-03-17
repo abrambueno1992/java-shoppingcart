@@ -22,6 +22,8 @@ public class Cart {
 
     private long shopperid;
 
+    private  double totalcost = 0;
+
     @ManyToMany
     @JoinTable(name = "cartproducts",
         joinColumns = {@JoinColumn(name = "cartid")},
@@ -39,6 +41,14 @@ public class Cart {
 //    private Set<ProductList> products;
     public Cart() {
 
+    }
+
+    public double getTotalcost() {
+        return totalcost;
+    }
+
+    public void setTotalcost(double totalcost) {
+        this.totalcost = totalcost;
     }
 
     public long getShopperid() {

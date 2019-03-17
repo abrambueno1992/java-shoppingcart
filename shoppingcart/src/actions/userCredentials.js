@@ -43,11 +43,11 @@ export const createNewUser = userObject => {
 };
 
 function postLoginSuccess(body) {
-  if (body.error !== "invalid_grant") {
-    localStorage.setItem("token", body.access_token);
-  } else {
-    localStorage.clear();
-  }
+  // if (body.error !== "invalid_grant") {
+  localStorage.setItem("token", body.access_token);
+  // } else {
+  // localStorage.clear();
+  // }
   // getUserInfo();
   return {
     type: LOGIN_USER,
@@ -80,11 +80,11 @@ export const loginUser = userObject => {
 };
 
 function failedGetUserInfoAction(ex) {
-  console.log("error fetch: ", JSON.stringify(ex));
+  // console.log("error fetch: ", JSON.stringify(ex));
 
   return {
     type: FAIL_GET_USER_INFO,
-    paylod: JSON.stringify(ex)
+    paylod: ex
   };
 }
 function getUserInfoSuccess(body) {
@@ -97,6 +97,8 @@ function getUserInfoSuccess(body) {
 }
 
 export const getUserInfo = () => {
+  console.log("get user info");
+
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
   return dispatch => {

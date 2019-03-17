@@ -13,7 +13,8 @@ const initialState = {
   new_user: null,
   set_shopper_id: null,
   set_user_info: null,
-  error: null
+  error: null,
+  error_user_info: null
 };
 
 const cartItems = (state = initialState, actions) => {
@@ -48,7 +49,7 @@ const cartItems = (state = initialState, actions) => {
       });
     case FAIL_GET_USER_INFO:
       return Object.assign({}, state, {
-        error: actions.payload
+        error_user_info: actions.payload
       });
     default:
       return state;

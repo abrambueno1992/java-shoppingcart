@@ -42,12 +42,12 @@ function postSuccessNewOrder(body) {
     payload: body
   };
 }
-export const addOrder = (orderObject, shopperid) => {
+export const addOrder = (shopperid, cartid, total) => {
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(`${url}add/${shopperid}`, {
+    return fetch(`${url}add/${shopperid}/${cartid}/${total}`, {
       method: "POST", // or 'PUT'
-      body: JSON.stringify(orderObject),
+      // body: JSON.stringify(orderObject),
       headers: {
         "Content-Type": "application/json"
       }
