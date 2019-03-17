@@ -78,6 +78,9 @@ const WithAuth = Page => {
           } else {
             this.handleClear();
           }
+          if (this.props.product_list.error === "invalid_token") {
+            this.handleClear();
+          }
         }
       }
       // else {
@@ -100,7 +103,9 @@ const WithAuth = Page => {
     render() {
       if (
         this.state.authenticated === true &&
-        this.props.set_user_info !== null
+        this.props.set_user_info !== null &&
+        this.props.product_list !== null &&
+        this.props.product_list.error !== "invalid_token"
       ) {
         return (
           <div>
@@ -119,18 +124,21 @@ const WithAuth = Page => {
             <Page {...this.props} />
           </div>
         );
-      }
-      // else if (this.state.authenticated) {
-      //   return (
-      //     <div>
-      //       <button className="Logout" onClick={this.handleClear}>
-      //         Logout
-      //       </button>
-      //       <Page {...this.props} />
-      //     </div>
-      //   );
-      // }
-      else if (this.props.user_token !== null) {
+      } else if (
+        this.props.product_list !== null &&
+        this.props.product_list.error === "invalid_token"
+      ) {
+        return (
+          <div>
+            Loading...
+            {/* <button className="Logout" onClick={this.handleClear}>
+              Logout
+            </button>
+            <Page {...this.props} /> */}
+            {this.handleClear()}
+          </div>
+        );
+      } else if (this.props.user_token !== null) {
         return (
           <div>
             <Page {...this.props} />

@@ -28,16 +28,16 @@ export class Product extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.product_list === null) {
-      this.props.getProductList();
-    }
-    if (this.props.set_user_info === null) {
-      this.props.getUserInfo();
-    }
-    if (localStorage.getItem("token") === null) {
-      this.props.history.push("/");
-    }
-    this.setState({ fetchShopperID: true });
+    // if (this.props.product_list === null) {
+    //   this.props.getProductList();
+    // }
+    // if (this.props.set_user_info === null) {
+    //   this.props.getUserInfo();
+    // }
+    // if (localStorage.getItem("token") === null) {
+    //   this.props.history.push("/");
+    // }
+    // this.setState({ fetchShopperID: true });
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.set_user_info !== this.props.set_user_info) {
