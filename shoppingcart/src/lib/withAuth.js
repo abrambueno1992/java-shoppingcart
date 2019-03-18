@@ -243,17 +243,18 @@ const WithAuth = Page => {
       ) {
         return <div>LOL</div>;
       } else {
-        if (this.props.match.path !== "/") {
-          console.log("rending this route", this.props.match.path);
-          return <div>Redirecting, not authenticated</div>;
-        } else {
-          console.log("rending this route", this.props.match.path);
-          return (
-            <div>
-              <Page {...this.props} />;
-            </div>
-          );
-        }
+        return <Page {...this.props} />;
+        // if (this.props.match.path !== "/") {
+        //   console.log("rending this route", this.props.match.path);
+        //   return <div>Redirecting, not authenticated</div>;
+        // } else {
+        //   console.log("rending this route", this.props.match.path);
+        //   return (
+        //     <div>
+        //       <Page {...this.props} />;
+        //     </div>
+        //   );
+        // }
         // return <div>LOL</div>;
       }
     }
