@@ -33,6 +33,8 @@ export const createNewUser = userObject => {
       method: "POST", // or 'PUT'
       body: JSON.stringify(userObject),
       headers: {
+        Authorization: "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0",
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json"
       }
     })
@@ -88,6 +90,8 @@ function failedGetUserInfoAction(ex) {
   };
 }
 function getUserInfoSuccess(body) {
+  console.log("set userid && shopperid");
+
   localStorage.setItem("userid", body.id);
   localStorage.setItem("shopperid", body.shopperxyz.shopperid);
   return {

@@ -4,7 +4,7 @@ export const UPDATE_SHOPPER = "UPDATE_SHOPPER";
 export const DELETE_SHOPPER = "DELETE_SHOPPER";
 
 const url = "http://localhost:2019/shoppers/";
-const token = localStorage.getItem("token");
+
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -26,6 +26,7 @@ function failedAction(ex) {
 }
 
 export const getShopperByID = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + id, {
@@ -50,6 +51,7 @@ function postSuccessNewShopper(body) {
 }
 
 export const addShopper = shopperObject => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "add", {
@@ -58,7 +60,7 @@ export const addShopper = shopperObject => {
       headers: {
         Authorization: `Bearer ${token}`,
         "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/json"
       }
     })
       .then(res => res.json())
@@ -75,6 +77,7 @@ function postSuccessUpdateShopper(body) {
 }
 
 export const updateShopper = (shopperObject, id) => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + id, {
@@ -100,6 +103,7 @@ function deleteShopperSuccess(body) {
 }
 
 export const deleteShopper = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + id, {
