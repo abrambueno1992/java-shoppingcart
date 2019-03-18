@@ -6,6 +6,7 @@ export const SET_SHOPPER_ID = "SET_SHOPPER_ID";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const FAILURE = "FAILURE";
 export const RESET_DATA = "RESET_DATA";
+export const FAIL_GET_USER_INFO = "FAIL_GET_USER_INFO";
 function fetchRequest() {
   return {
     type: "REQUEST"
@@ -32,6 +33,8 @@ export const createNewUser = userObject => {
       method: "POST", // or 'PUT'
       body: JSON.stringify(userObject),
       headers: {
+        Authorization: "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0",
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json"
       }
     })
@@ -42,11 +45,11 @@ export const createNewUser = userObject => {
 };
 
 function postLoginSuccess(body) {
-  if (body.error !== "invalid_grant") {
-    localStorage.setItem("token", body.access_token);
-  } else {
-    localStorage.clear();
-  }
+  // if (body.error !== "invalid_grant") {
+  localStorage.setItem("token", body.access_token);
+  // } else {
+  // localStorage.clear();
+  // }
   // getUserInfo();
   return {
     type: LOGIN_USER,
@@ -78,7 +81,17 @@ export const loginUser = userObject => {
   };
 };
 
+function failedGetUserInfoAction(ex) {
+  // console.log("error fetch: ", JSON.stringify(ex));
+
+  return {
+    type: FAIL_GET_USER_INFO,
+    paylod: ex
+  };
+}
 function getUserInfoSuccess(body) {
+  console.log("set userid && shopperid");
+
   localStorage.setItem("userid", body.id);
   localStorage.setItem("shopperid", body.shopperxyz.shopperid);
   return {
@@ -88,18 +101,23 @@ function getUserInfoSuccess(body) {
 }
 
 export const getUserInfo = () => {
+  console.log("get user info");
+
   const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + username, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
       .then(body => dispatch(getUserInfoSuccess(body)))
-      .catch(ex => dispatch(failedAction(ex)));
+      .catch(ex => dispatch(failedGetUserInfoAction(ex)));
   };
 };
 

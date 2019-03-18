@@ -28,14 +28,19 @@ export class ProductList extends Component {
       toggle: new Map(),
       totalCosts: 0,
       calculate: false,
+      fetchCart: false,
       // sendOrder: false,
       key: null
     };
   }
 
   componentDidMount() {
-    this.props.getProductList();
-    this.props.getUserInfo();
+    if (this.props.product_list === null) {
+      this.props.getProductList();
+    }
+    if (this.props.set_user_info === null) {
+      this.props.getUserInfo();
+    }
     this.setState({ fetchShopperID: true });
   }
   handleChange = e => {
@@ -48,7 +53,7 @@ export class ProductList extends Component {
     // Send this as an order
     const shopperid = localStorage.getItem("shopperid");
     const baseURL = "http://localhost:2019/cart/";
-
+    //
     const mapObject = this.state.items;
     const cartid =
       this.props.shopper_cart !== null
@@ -60,8 +65,11 @@ export class ProductList extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.set_user_info !== this.props.set_user_info) {
+    if (this.props.set_user_info !== null && this.state.fetchCart === false) {
+      console.log("gettin cart");
+
       this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
+      this.setState({ fetchCart: true });
     }
 
     // if (
@@ -74,19 +82,24 @@ export class ProductList extends Component {
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
         this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+        const shopperid =
+          this.props.set_user_info !== null
+            ? this.props.set_user_info.shopperxyz.shopperid
+            : this.props.set_shopper_id.id;
+        this.props.getShopperCart(shopperid);
         // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
-    if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-      // this.setState({ sendOrder: !this.state.sendOrder });
-      // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
-    }
+    // if (prevProps.cart !== this.props.cart) {
+    //   this.sendOrder(this.state.key, this.state.items.get(this.state.key));
+    //   // this.setState({ sendOrder: !this.state.sendOrder });
+    //   // get shopper's updated cart
+    //   const shopperid =
+    //     this.props.set_user_info !== null
+    //       ? this.props.set_user_info.shopperxyz.shopperid
+    //       : this.props.set_shopper_id.id;
+    //   this.props.getShopperCart(shopperid);
+    // }
     if (prevProps.shopper_cart !== this.props.shopper_cart) {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
       const quantityMap = productQuantityMap(
@@ -249,9 +262,9 @@ export class ProductList extends Component {
 
         <div className="subtotal">
           <h3>Total: ${this.state.totalCosts}</h3>
-          <button className="checkout" onClick={this.sendOrder}>
+          {/* <button className="checkout" onClick={this.sendOrder}>
             Send Order{" "}
-          </button>
+          </button> */}
         </div>
       </div>
     );

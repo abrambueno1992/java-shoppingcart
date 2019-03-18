@@ -28,9 +28,16 @@ function failedAction(ex) {
 }
 
 export const getOrderByID = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + id)
+    return fetch(url + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
       .then(res => res.json())
       .then(body => dispatch(fetchSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
@@ -42,14 +49,17 @@ function postSuccessNewOrder(body) {
     payload: body
   };
 }
-export const addOrder = (orderObject, shopperid) => {
+export const addOrder = (shopperid, cartid, total) => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(`${url}add/${shopperid}`, {
+    return fetch(`${url}add/${shopperid}/${cartid}/${total}`, {
       method: "POST", // or 'PUT'
-      body: JSON.stringify(orderObject),
+      // body: JSON.stringify(orderObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -65,13 +75,16 @@ function postSuccessUpdateOrder(body) {
   };
 }
 export const updateOrder = (orderObject, id) => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "update/" + id, {
       method: "PUT", // or 'PUT'
       body: JSON.stringify(orderObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -86,12 +99,15 @@ function deleteOrderScuccess(body) {
   };
 }
 export const deleteOrder = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "delete/" + id, {
       method: "DELETE", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

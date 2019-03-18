@@ -26,9 +26,16 @@ function failedAction(ex) {
 }
 
 export const getShopperByID = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + id)
+    return fetch(url + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
       .then(res => res.json())
       .then(body => dispatch(fetchSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
@@ -44,12 +51,15 @@ function postSuccessNewShopper(body) {
 }
 
 export const addShopper = shopperObject => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "add", {
       method: "POST",
       body: JSON.stringify(shopperObject),
       headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json"
       }
     })
@@ -67,13 +77,16 @@ function postSuccessUpdateShopper(body) {
 }
 
 export const updateShopper = (shopperObject, id) => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + id, {
       method: "PUT", // or 'PUT'
       body: JSON.stringify(shopperObject),
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -90,12 +103,15 @@ function deleteShopperSuccess(body) {
 }
 
 export const deleteShopper = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + id, {
       method: "DELETE", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

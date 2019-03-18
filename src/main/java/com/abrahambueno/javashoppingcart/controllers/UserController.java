@@ -28,7 +28,7 @@ public class UserController
     private ShopperRepository shopperrepos;
 
     @GetMapping("/{username}")
-    public User getUserByUsername(@PathVariable String username) {
+    public User getUserByUsername(@PathVariable String username) throws URISyntaxException {
         return this.userrepo.findByUsername(username);
     }
 
