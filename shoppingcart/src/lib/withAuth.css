@@ -1,0 +1,24 @@
+.Error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.Logout {
+  width: 10%;
+  height: 2em;
+  margin-left: 80%;
+  background-color: black;
+  color: white;
+}
+
+.navigate {
+  width: 10%;
+  height: 2em;
+  margin-left: 80%;
+  margin-top: 2em;
+  color: beige;
+  font-weight: bold;
+  background-color: blue;
+}

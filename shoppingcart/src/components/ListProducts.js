@@ -9,7 +9,7 @@ import {
   addItemToCart,
   deleteProduct
 } from "../actions/cart";
-import "./CheckoutList.css";
+import "./ListProducts.css";
 import {
   productPriceMap,
   productQuantityMap,
@@ -17,7 +17,7 @@ import {
   orderData
 } from "./calculateCosts";
 
-export class CheckoutList extends Component {
+export class ListProducts extends Component {
   constructor(props) {
     super(props);
 
@@ -25,13 +25,21 @@ export class CheckoutList extends Component {
       items: new Map(),
       calculate: false,
       key: null,
-      inputQuantity: this.props.quantity
+      inputQuantity: this.props.quantity,
+      toggle: false
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
+        console.log(
+          "send order:",
+          this.state.items.get(this.props.productid),
+          this.state.items.get(this.state.key),
+          this.state.key,
+          this.props.productid
+        );
         this.sendOrder(
           this.props.productid,
           this.state.items.get(this.state.key)
@@ -87,8 +95,23 @@ export class CheckoutList extends Component {
     const update = this.state.items;
 
     // map productid to quantity
+    const shopperid =
+      this.props.set_user_info !== null
+        ? this.props.set_user_info.shopperxyz.shopperid
+        : this.props.set_shopper_id.id;
+    // create cart if there's none
+    if (this.props.shopper_cart === null) {
+      this.props.createCart(shopperid);
+    }
 
-    update.set(productid, this.props.quantity + 1);
+    // map productid to quantity
+    if (this.props.quantity === undefined) {
+      update.set(productid, 1);
+    } else {
+      update.set(productid, this.props.quantity + 1);
+    }
+
+    // update.set(productid, this.props.quantity + 1);
     this.setState({
       items: update,
       inputQuantity: this.props.quantity + 1,
@@ -100,6 +123,25 @@ export class CheckoutList extends Component {
   handleSubtract = () => {
     const productid = this.props.productid;
     const update = this.state.items;
+    const shopperid =
+      this.props.set_user_info !== null
+        ? this.props.set_user_info.shopperxyz.shopperid
+        : this.props.set_shopper_id.id;
+    // create cart if there's none
+    if (this.props.shopper_cart === null) {
+      this.props.createCart(shopperid);
+    }
+
+    // map productid to quantity
+    if (this.props.quantity === undefined || this.props.quantity === 0) {
+      // don't add 0 items to the cart
+    } else if (this.props.quantity === 1) {
+      // delete item , REMEMBER
+      update.set(productid, this.props.quantity - 1);
+      this.handleDelete();
+    } else {
+      update.set(productid, this.props.quantity - 1);
+    }
 
     if (this.props.quantity === 0) {
       // this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
@@ -120,41 +162,58 @@ export class CheckoutList extends Component {
   };
   render() {
     return (
-      <div className="list">
-        {/* <h3>{this.props.productid}</h3> */}
-        {/* {/* <h3>{this.props.name}</h3> */}
-        <div className="itemCard">
-          <div className="itemName">{`${this.props.description} $${
-            this.props.itemPrice
-          }`}</div>
-          <div className="changeQuantity">
-            <div className="inputPrice">
-              <input
-                placeholder={this.props.quantity}
-                onChange={this.handleChange}
-                name="inputQuantity"
-                value={this.state.inputQuantity}
-              />
-            </div>
-            <div className="quantityButtons">
-              <button className="addItem" onClick={this.handleAdd}>
-                +
-              </button>
-              <button className="subtractItem" onClick={this.handleSubtract}>
-                -
-              </button>
-            </div>
+      <div key={this.props.productid} className="cards">
+        <div className="row form-group">
+          <div className="col-sm-10">
+            <h4>
+              {this.props.name} {this.props.description}: ${this.props.price}
+            </h4>
           </div>
-          {this.state.inputQuantity !== 0 && this.props.quantity !== 0 ? (
-            <div className="itemPrice">{this.props.price}</div>
-          ) : (
-            <button onClick={this.handleDelete} className="itemPrice">
-              Delete Item
-            </button>
-          )}
+          <div className="col-sm-2 text-right">
+            quantity:{" "}
+            {this.props.quantity !== undefined ? this.props.quantity : 0}
+          </div>
         </div>
-        {/* <h3>{this.props.price}</h3> */}
-        {/* <h3>{this.props.quantity}</h3> */}
+        <div className="row btn-toolbar">
+          <div className="col-6">
+            {this.state.toggle === true ? (
+              <div>
+                {this.props.description}
+                <button
+                  className="info buttonBlue"
+                  onClick={() => this.handleToggle(this.props.productid)}
+                >
+                  hide info
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  className="info buttonBlue"
+                  onClick={() => this.handleToggle(this.props.productid)}
+                >
+                  show info
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="col-6 text-right">
+            <button
+              className="plusMinus btn btn-outline-primary"
+              onClick={this.handleAdd}
+            >
+              +1
+            </button>
+            <button
+              className="plusMinus btn btn-outline-primary"
+              onClick={this.handleSubtract}
+              disabled={this.state.quantity < 1}
+            >
+              -1
+            </button>
+          </div>
+        </div>
+        <hr />
       </div>
     );
   }
@@ -181,4 +240,4 @@ export default connect(
     getShopperCart,
     deleteProduct
   }
-)(CheckoutList);
+)(ListProducts);

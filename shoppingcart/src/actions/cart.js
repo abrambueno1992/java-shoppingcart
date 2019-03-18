@@ -5,7 +5,7 @@ export const DELETE_CART = "DELETE_CART";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const GET_SHOPPER_CART = "GET_SHOPPER_CART";
 export const UPDATE_ITEMS = "UPDATE_ITEMS";
-
+export const DELETE_ITEM_CART = "DELETE_ITEM_CART";
 const url = "http://localhost:2019/cart/";
 
 function fetchRequest() {
@@ -28,9 +28,16 @@ function failedAction(ex) {
 }
 
 export const getCartByID = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(url + id)
+    return fetch(url + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
       .then(res => res.json())
       .then(body => dispatch(fetchSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
@@ -43,12 +50,15 @@ function postSuccess(body) {
   };
 }
 export const createCart = shopperid => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(`${url}createcart/${shopperid}`, {
       method: "POST", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -63,16 +73,44 @@ function postSuccessAddItem(body) {
   };
 }
 export const addItemToCart = url => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url, {
       method: "PUT", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
       .then(body => dispatch(postSuccessAddItem(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+function deleteItemFromCartSuccess(body) {
+  return {
+    type: DELETE_ITEM_CART,
+    payload: body
+  };
+}
+// /delete/product/{cartid}/{productid}"
+export const deleteProduct = (cartid, productid) => {
+  const token = localStorage.getItem("token");
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(`${url}delete/product/${cartid}/${productid}`, {
+      method: "DELETE", // or 'PUT'
+      // body: JSON.stringify(orderObject),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(deleteItemFromCartSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };
@@ -84,12 +122,15 @@ function getSuccessShopperCart(body) {
 }
 
 export const getShopperCart = shopperid => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(`${url}shopper/${shopperid}`, {
       method: "GET", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -105,12 +146,15 @@ function deleteSuccessCart(body) {
   };
 }
 export const deleteCart = id => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(url + "delete/cart/" + id, {
       method: "DELETE", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
@@ -126,12 +170,15 @@ function deleteSuccessItem(body) {
 }
 
 export const deleteItemFromCart = (cartid, productid) => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
     return fetch(`${url}delete/product/${cartid}/${productid}`, {
       method: "DELETE", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())

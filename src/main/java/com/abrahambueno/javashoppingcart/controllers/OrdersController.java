@@ -1,8 +1,10 @@
 package com.abrahambueno.javashoppingcart.controllers;
 
 import com.abrahambueno.javashoppingcart.models.Orders;
+import com.abrahambueno.javashoppingcart.repositories.CartRepository;
 import com.abrahambueno.javashoppingcart.repositories.OrdersRepository;
 import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
+import com.abrahambueno.javashoppingcart.repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping(value = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/orders/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrdersController {
     @Autowired
     public OrdersRepository ordersrepos;
@@ -20,6 +22,11 @@ public class OrdersController {
     @Autowired
     public ShopperRepository shopperrepos;
 
+    @Autowired
+    public CartRepository cartrepos;
+
+    @Autowired
+    public UserDao userrepos;
 
     // not sure if it should be allowed
     @GetMapping("/all")
@@ -32,10 +39,23 @@ public class OrdersController {
         return ordersrepos.findById(orderid).get();
     }
 
-    @PostMapping("/add/{shopperid}")
-    public Orders createOrder(@RequestBody Orders order, @PathVariable long shopperid) throws URISyntaxException {
-        order.setPaymentdetails(shopperrepos.findById(shopperid).get());
-        return ordersrepos.save(order);
+    @GetMapping("/user/{shopperid}")
+    public List<Orders> getShopperOrders(@PathVariable long shopperid) {
+        return ordersrepos.findAllByShopperid(shopperid);
+    }
+
+    @PostMapping("/add/{shopperid}/{cartid}/{total}")
+    public Orders createOrder(@PathVariable long shopperid, @PathVariable long cartid, @PathVariable double total) throws URISyntaxException {
+        var cart = cartrepos.findById(cartid).get();
+        cart.setTotalcost(total);
+        Orders newOrder = new Orders();
+        newOrder.setQuantity(cart.getQuantity());
+        newOrder.setTotalcost(total);
+        newOrder.setDestinationaddress(shopperrepos.findById(shopperid).get().getShippingaddress());
+        newOrder.setPaymentdetails(shopperrepos.findById(shopperid).get());
+//        newOrder.setShopperid(shopperid);
+        cartrepos.save(cart);
+        return ordersrepos.save(newOrder);
     }
     @PutMapping("/update/{orderid}")
     public Orders changeOrder(@RequestBody Orders order, @PathVariable long orderid) throws URISyntaxException {

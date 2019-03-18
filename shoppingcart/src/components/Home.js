@@ -6,10 +6,9 @@ import {
   createNewUser,
   loginUser,
   setShopperId,
-  resetData,
   getUserInfo
 } from "../actions/userCredentials";
-import { addShopper } from "../actions/shoppers";
+import WithAuth from "../lib/withAuth";
 export class Home extends Component {
   constructor(props) {
     super(props);
@@ -36,25 +35,25 @@ export class Home extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.user_token !== this.props.user_token) {
-      this.setState({ username: "", password: "", fetchUser: true });
+      // this.setState({ username: "", password: "", fetchUser: true });
     }
 
-    if (
-      prevState.fetchUser !== this.state.fetchUser &&
-      this.props.set_user_info !== null
-    ) {
-      this.props.history.push("/productlist");
-    }
-    if (
-      prevState.fetchUser !== this.state.fetchUser &&
-      this.props.set_user_info === null
-    ) {
-      if (this.props.user_token.error === "invalid_grant") {
-        this.setState({ login: !this.state.login });
-      } else {
-        this.props.history.push("/shopperprofile");
-      }
-    }
+    // if (
+    //   prevState.fetchUser !== this.state.fetchUser &&
+    //   this.props.set_user_info !== null
+    // ) {
+    //   this.props.history.push("/productlist");
+    // }
+    // if (
+    //   prevState.fetchUser !== this.state.fetchUser &&
+    //   this.props.set_user_info === null
+    // ) {
+    //   if (this.props.user_token.error === "invalid_grant") {
+    //     this.setState({ login: !this.state.login });
+    //   } else {
+    //     this.props.history.push("/shopperprofile");
+    //   }
+    // }
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -78,10 +77,9 @@ export class Home extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    // this.props.resetData();
     this.props.loginUser(userObject);
     this.props.getUserInfo();
-    this.setState({ fetchUser: false });
+    this.setState({ fetchUser: false, username: "", password: "" });
   };
 
   render() {
@@ -161,5 +159,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { createNewUser, loginUser, setShopperId, addShopper, getUserInfo, resetData }
-)(Home);
+  { createNewUser, loginUser, setShopperId, getUserInfo }
+)(WithAuth(Home));

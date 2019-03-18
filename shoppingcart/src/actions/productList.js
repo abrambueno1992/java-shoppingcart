@@ -22,9 +22,16 @@ function failedAction(ex) {
 }
 
 export const getProductList = () => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchTodosRequest());
-    return fetch(url + "all")
+    return fetch(url + "all", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
       .then(res => res.json())
       .then(body => dispatch(fetchTodosSuccess(body)))
       .catch(ex => dispatch(failedAction(ex)));
@@ -52,13 +59,16 @@ function postSuccess(body) {
 // }
 
 export const createNewProduct = productObject => {
+  const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(postRequest());
     return fetch(url + "add", {
       method: "POST", // or 'PUT'
       body: JSON.stringify(productObject), // data can be `string` or {object}!
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
       .then(res => res.json())
