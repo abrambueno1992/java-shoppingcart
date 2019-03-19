@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
-import { getShopperCart } from "../actions/cart";
+import { getShopperCart, createCart } from "../actions/cart";
 import { addOrder } from "../actions/orders";
 import CheckoutList from "./CheckoutList";
 import {
@@ -12,6 +12,12 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
+// import {
+//   getShopperCart,
+//   createCart,
+//   addItemToCart,
+//   deleteProduct
+// } from "../actions/cart";
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 import { Link } from "react-router-dom";
@@ -81,6 +87,9 @@ export class Checkout extends Component {
         ? this.props.shopper_cart.cartid
         : this.props.cart.cartid;
     this.props.addOrder(shopperid, cartid, this.state.totalCosts);
+    this.props.createCart(shopperid);
+    this.props.getShopperCart(shopperid);
+    this.props.getUserInfo();
   };
   render() {
     if (this.props.product_list === null) {
@@ -93,6 +102,12 @@ export class Checkout extends Component {
       );
     } else if (this.props.cart !== null && this.props.shopper_cart === null) {
       return <div>Loading items</div>;
+    } else if (this.props.shopper_cart.products === null) {
+      return (
+        <div>
+          <h3>No products</h3>
+        </div>
+      );
     } else {
       let ordered = this.props.shopper_cart.products.sort((a, b) =>
         a.name > b.name ? 1 : -1
@@ -155,6 +170,7 @@ export default connect(
     getProductList,
     getUserInfo,
     getShopperCart,
-    addOrder
+    addOrder,
+    createCart
   }
 )(withAuth(Checkout));
