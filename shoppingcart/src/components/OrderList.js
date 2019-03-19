@@ -57,12 +57,19 @@ export class OrderList extends Component {
           <h5>{this.props.order.destinationaddress}</h5>
           <h5>{this.props.order.dispatchaddress}</h5>
           <h5>{this.props.order.shippedstatus}</h5>
-          <OrderDetails
-            priceMap={priceMap}
-            quantityMap={quantityMap}
-            costMap={costMap}
-            total={total}
-          />
+          {this.props.order.cartstwo.products.map((each, i) => {
+            return (
+              <div key={each + i}>
+                <OrderDetails
+                  price={priceMap.get(each.productid)}
+                  quantity={quantityMap.get(each.productid)}
+                  cost={costMap.get(each.productid)}
+                  total={total}
+                  product={each}
+                />
+              </div>
+            );
+          })}
         </div>
       );
     }
