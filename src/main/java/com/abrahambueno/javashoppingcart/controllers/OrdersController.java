@@ -53,6 +53,7 @@ public class OrdersController {
         newOrder.setTotalcost(total);
         newOrder.setDestinationaddress(shopperrepos.findById(shopperid).get().getShippingaddress());
         newOrder.setPaymentdetails(shopperrepos.findById(shopperid).get());
+        newOrder.setCartstwo(cartrepos.findById(cartid).get());
 //        newOrder.setShopperid(shopperid);
         cartrepos.save(cart);
         return ordersrepos.save(newOrder);

@@ -14,6 +14,7 @@ import {
 } from "./calculateCosts";
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
+import { Link } from "react-router-dom";
 export class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -104,6 +105,9 @@ export class Checkout extends Component {
             <div className="changeQuantity">Change quantity</div>
             <div className="itemPrice">Price</div>
           </div>
+          <Link to="/orders">
+            <button>Order History</button>
+          </Link>
           {ordered.map((each, i) => {
             return (
               <div style={{ border: "2px solid black" }} key={each + i}>
