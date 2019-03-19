@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { connect } from "react-redux";
 import {
   createNewUser,
@@ -184,16 +186,16 @@ const WithAuth = Page => {
       ) {
         return (
           <div>
-            <button className="Logout" onClick={this.handleClear}>
-              Logout
-            </button>
+            <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
+              Log out
+            </Button>
             {this.props.match.path === "/productlist" ? (
               <Link to="/checkout">
                 <button className="navigate">Checkout</button>
               </Link>
             ) : (
               <Link to="/productlist">
-                <button className="navigate">ProductList</button>
+                <Button variant="contained" color="primary" className="navigate">ProductList</Button>
               </Link>
             )}
             <Page {...this.props} />
