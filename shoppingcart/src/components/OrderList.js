@@ -52,11 +52,11 @@ export class OrderList extends Component {
         orderid: ${this.props.order.orderid} 
         items: ${this.props.order.quantity} 
         total cost: ${this.props.order.totalcost}`}</span>
-          <h5>{this.props.order.quantity}</h5>
-          <h5>{this.props.order.totalcost}</h5>
-          <h5>{this.props.order.destinationaddress}</h5>
-          <h5>{this.props.order.dispatchaddress}</h5>
-          <h5>{this.props.order.shippedstatus}</h5>
+          {/* <h5>{this.props.order.quantity}</h5>
+          <h5>{this.props.order.totalcost}</h5> */}
+          <h5>Destination Address: {this.props.order.destinationaddress}</h5>
+          <h5>Dispatch Address: {this.props.order.dispatchaddress}</h5>
+          <h5>Shipped Status: {this.props.order.shippedstatus}</h5>
           {this.props.order.cartstwo.products.map((each, i) => {
             return (
               <div key={each + i}>
