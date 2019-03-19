@@ -7,6 +7,7 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
+import OrderDetails from "./OrderDetails";
 export class OrderList extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +68,7 @@ export class OrderList extends Component {
           <h5>{this.props.order.destinationaddress}</h5>
           <h5>{this.props.order.dispatchaddress}</h5>
           <h5>{this.props.order.shippedstatus}</h5>
+          <OrderDetails />
         </div>
       );
     }
