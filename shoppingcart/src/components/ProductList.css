@@ -16,7 +16,7 @@
 
 
 .buttonBlue {
-    background: #4a89dc;
+    background: black;
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
   }
 
@@ -51,4 +51,12 @@
     padding: .2em .5em;
     font-family: "Avenir";
     border-radius: 3px;
+  }
+
+  .cards {
+    display: inline-block;
+  }
+
+  .form-group {
+    display: inline-block;
   }

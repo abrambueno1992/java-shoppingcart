@@ -191,7 +191,7 @@ const WithAuth = Page => {
             </Button>
             {this.props.match.path === "/productlist" ? (
               <Link to="/checkout">
-                <button className="navigate">Checkout</button>
+                <button variant="contained" color="primary" className="navigate">Checkout</button>
               </Link>
             ) : (
               <Link to="/productlist">

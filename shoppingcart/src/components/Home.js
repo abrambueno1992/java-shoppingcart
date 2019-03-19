@@ -96,6 +96,7 @@ export class Home extends Component {
             />
             <input
               name="password"
+              type="password"
               placeholder="Enter a password"
               value={this.state.password}
               onChange={this.handleChange}

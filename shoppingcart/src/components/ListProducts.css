@@ -22,8 +22,8 @@
   display: inline-block;
   width: 30%;
   min-width: 20%;
-  /* // height: 330px;
-	// border: 1px solid transparentize(grey,0.7); */
+  /* height: 330px;
+	border: 1px solid transparentize(grey,0.7); */
   box-sizing: border-box;
   box-shadow: 2px 2px 25px 0px transparentize(black, 0.3);
   border-radius: 3px;
@@ -49,4 +49,8 @@
   padding: 0.2em 0.5em;
   font-family: "Avenir";
   border-radius: 3px;
+}
+
+.cards {
+  /* border: 10px solid transparentize(black,0.7); */
 }
