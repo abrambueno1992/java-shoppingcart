@@ -7,6 +7,7 @@ import { getShopperCart } from "../actions/cart";
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 import OrderList from "./OrderList";
+import "./OrderSummary.css";
 
 export class OrderSummary extends Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export class OrderSummary extends Component {
           <h3>Order history</h3>
           {this.props.order_history.map((each, i) => {
             return (
-              <div key={each + i}>
+              <div className="order-summary" key={each + i}>
                 <OrderList
                   order={each}
                   shopper_cart={this.props.shopper_cart}

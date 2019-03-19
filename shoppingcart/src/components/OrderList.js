@@ -47,7 +47,7 @@ export class OrderList extends Component {
       const costMap = productCost(priceMap, quantityMap);
       const total = calculateTotalCosts(priceMap, quantityMap);
       return (
-        <div>
+        <div className="order-list">
           <span onClick={this.handleDetails}>{`
         orderid: ${this.props.order.orderid} 
         items: ${this.props.order.quantity} 
