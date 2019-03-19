@@ -7,6 +7,7 @@ import { getShopperCart } from "../actions/cart";
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 import OrderList from "./OrderList";
+
 export class OrderSummary extends Component {
   static propTypes = {
     prop: PropTypes

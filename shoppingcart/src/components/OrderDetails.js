@@ -1,18 +1,9 @@
 import React from "react";
 
-export default () => {
+export default props => {
   return (
     <div>
-      <h3>Details</h3>
+      <h3>Details {props.total}</h3>
     </div>
   );
 };
-
-// const Details = props => {
-//   return (
-//     <div>
-//     </div>
-//   );
-// };
-
-// export default Details;

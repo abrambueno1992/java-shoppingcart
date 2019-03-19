@@ -40,23 +40,12 @@ export class OrderList extends Component {
         </div>
       );
     } else {
-      const priceMap = productPriceMap(this.props.shopper_cart.products);
+      const priceMap = productPriceMap(this.props.order.cartstwo.products);
       const quantityMap = productQuantityMap(
-        this.props.shopper_cart.cartitemquantity
+        this.props.order.cartstwo.cartitemquantity
       );
-      //   this.setState({ items: quantityMap });
       const costMap = productCost(priceMap, quantityMap);
-      //   const total = calculateTotalCosts(priceMap, quantityMap);
-      //   this.setState({ totalCosts: total, costMap: costMap });
-
-      //   const priceMap = productPriceMap(this.props.shopper_cart.products);
-      //   const quantityMap = productQuantityMap(
-      //     this.props.shopper_cart.cartitemquantity
-      //   );
-      //   const orderedMap = new Map([...quantityMap.entries()].sort());
-      //   this.setState({ items: orderedMap });
       const total = calculateTotalCosts(priceMap, quantityMap);
-      //   this.setState({ totalCosts: total });
       return (
         <div>
           <span onClick={this.handleDetails}>{`
@@ -68,7 +57,12 @@ export class OrderList extends Component {
           <h5>{this.props.order.destinationaddress}</h5>
           <h5>{this.props.order.dispatchaddress}</h5>
           <h5>{this.props.order.shippedstatus}</h5>
-          <OrderDetails />
+          <OrderDetails
+            priceMap={priceMap}
+            quantityMap={quantityMap}
+            costMap={costMap}
+            total={total}
+          />
         </div>
       );
     }
