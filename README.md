@@ -2,6 +2,9 @@
 
 ## Available Scripts
 
+### Requirements
+- NPM or Yarn
+
 In the ```/shopping``` folder, you can run:
 
 ```
