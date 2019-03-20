@@ -17,10 +17,10 @@ values (1, 0, 1, 0);
 insert into shoppingcartapp.orders(orderid,totalcost, destinationaddress, dispatchaddress, quantity, shippedstatus, shopperid)
 values (1,50, "1235 N Destination", "2352 N Dispatch Avenue", 3, "pending", 1);
 
-insert into shoppingcartapp.shoppers(shopperid, billingaddress, paymentmethod, phonenumber, shippingaddress)
-values (1, "123 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address"),
-       (2, "456 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address"),
-       (3, "456 Tammy Billing Address", "Cash", "555-555-555", "123 Tammy's Destination Address");
+insert into shoppingcartapp.shoppers(shopperid, billingaddress, paymentmethod, phonenumber, shippingaddress, currentcartid)
+values (1, "123 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address", 1),
+       (2, "456 Customer Billing Address", "Cash", "555-555-555", "123 Destination Address", 2),
+       (3, "456 Tammy Billing Address", "Cash", "555-555-555", "123 Tammy's Destination Address", 3);
 
 insert into shoppingcartapp.supplier(supplierid, suppliername)
 values (1, "office supplies"),

@@ -125,7 +125,7 @@ export const getShopperCart = shopperid => {
   const token = localStorage.getItem("token");
   return dispatch => {
     dispatch(fetchRequest());
-    return fetch(`${url}shopper/${shopperid}`, {
+    return fetch(`${url}${shopperid}`, {
       method: "GET", // or 'PUT'
       headers: {
         Authorization: `Bearer ${token}`,

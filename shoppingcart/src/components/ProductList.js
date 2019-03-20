@@ -55,10 +55,10 @@ export class ProductList extends Component {
     const baseURL = "http://localhost:2019/cart/";
     //
     const mapObject = this.state.items;
-    const cartid =
-      this.props.shopper_cart !== null
-        ? this.props.shopper_cart.cartid
-        : this.props.cart.cartid;
+    const cartid = this.props.set_user_info.shopperxyz.currentcartid;
+    // this.props.shopper_cart !== null
+    //   ? this.props.shopper_cart.cartid
+    //   : this.props.cart.cartid;
     const url = `${baseURL}update/${cartid}/${shopperid}/${productid}/${value}`;
 
     this.props.addItemToCart(url, shopperid);
@@ -68,7 +68,9 @@ export class ProductList extends Component {
     if (this.props.set_user_info !== null && this.state.fetchCart === false) {
       console.log("gettin cart");
 
-      this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
       this.setState({ fetchCart: true });
     }
 
@@ -82,11 +84,10 @@ export class ProductList extends Component {
     if (prevState.calculate !== this.state.calculate) {
       if (this.props.cart !== null || this.props.shopper_cart !== null) {
         this.sendOrder(this.state.key, this.state.items.get(this.state.key));
-        const shopperid =
-          this.props.set_user_info !== null
-            ? this.props.set_user_info.shopperxyz.shopperid
-            : this.props.set_shopper_id.id;
-        this.props.getShopperCart(shopperid);
+        const currentcartid = this.props.set_user_info.shopperxyz.currentcartid;
+        console.log("cartid", currentcartid);
+
+        this.props.getShopperCart(currentcartid);
         // this.setState({ sendOrder: !this.state.sendOrder });
       }
     }
@@ -111,31 +112,20 @@ export class ProductList extends Component {
       this.setState({ totalCosts: total });
     }
     if (prevProps.items_in_cart_added !== this.props.items_in_cart_added) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      const currentcartid = this.props.set_user_info.shopperxyz.currentcartid;
+      this.props.getShopperCart(currentcartid);
     }
     if (prevProps.deleted_item !== this.props.deleted_item) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      const currentcartid = this.props.set_user_info.shopperxyz.currentcartid;
+      // const shopperid =
+      //   this.props.set_user_info !== null
+      //     ? this.props.set_user_info.shopperxyz.shopperid
+      //     : this.props.set_shopper_id.id;
+      this.props.getShopperCart(currentcartid);
     }
   }
   handleAdd = productid => {
     const update = this.state.items;
-    const shopperid =
-      this.props.set_user_info !== null
-        ? this.props.set_user_info.shopperxyz.shopperid
-        : this.props.set_shopper_id.id;
-    // create cart if there's none
-    if (this.props.shopper_cart === null) {
-      this.props.createCart(shopperid);
-    }
-
     // map productid to quantity
     if (update.get(productid) === undefined) {
       update.set(productid, 1);
@@ -151,15 +141,6 @@ export class ProductList extends Component {
 
   handleSubtract = productid => {
     const update = this.state.items;
-    const shopperid =
-      this.props.set_user_info !== null
-        ? this.props.set_user_info.shopperxyz.shopperid
-        : this.props.set_shopper_id.id;
-    // create cart if there's none
-    if (this.props.shopper_cart === null) {
-      this.props.createCart(shopperid);
-    }
-
     // map productid to quantity
     if (update.get(productid) === undefined) {
       update.set(productid, 0);
@@ -171,7 +152,10 @@ export class ProductList extends Component {
     } else if (update.get(productid) === 0) {
       // do nothing, it was zero and it remains zero
     } else if (update.get(productid) === 1) {
-      this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
+      this.props.deleteProduct(
+        this.props.set_user_info.shopperxyz.currentcartid,
+        productid
+      );
     } else {
       update.set(productid, update.get(productid) - 1);
       this.setState({
