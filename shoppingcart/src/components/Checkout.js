@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import Button from '@material-ui/core/Button';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
 import { getShopperCart, createCart } from "../actions/cart";
@@ -139,18 +142,22 @@ export class Checkout extends Component {
       );
 
       return (
-        <div>
+        <div className="checkoutElements">
           <div className="itemCard">
             <div className="itemName">Product</div>
             <div className="changeQuantity">Change quantity</div>
             <div className="itemPrice">Price</div>
           </div>
+<<<<<<< HEAD
           <Link to="/orders">
             <button>Order History</button>
           </Link>
+=======
+          <Divider variant="middle" />
+>>>>>>> d1696739df9c6ed57bd18596399f7a246ce22eb2
           {ordered.map((each, i) => {
             return (
-              <div style={{ border: "2px solid black" }} key={each + i}>
+              <div  key={each + i}>
                 <CheckoutList
                   productid={each.productid}
                   name={each.name}
@@ -162,12 +169,15 @@ export class Checkout extends Component {
               </div>
             );
           })}
+          <Divider variant="middle" />
           <div className="itemCard">
             <div className="itemName">Subtotal</div>
             <div className="changeQuantity"> </div>
             <div className="itemPrice">{this.state.totalCosts}</div>
           </div>
-          <button onClick={this.handleOrder}>Send Order </button>
+          <div className="sendOrder">
+            <Button variant="contained" color="primary" onClick={this.handleOrder}>Send Order </Button>
+          </div>
         </div>
       );
     }

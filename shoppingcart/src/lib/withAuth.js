@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { connect } from "react-redux";
 import {
   createNewUser,
@@ -183,17 +185,17 @@ const WithAuth = Page => {
         this.props.product_list.error !== "invalid_token"
       ) {
         return (
-          <div>
-            <button className="Logout" onClick={this.handleClear}>
-              Logout
-            </button>
+          <div className="parent">
+            <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
+              Log out
+            </Button>
             {this.props.match.path === "/productlist" ? (
               <Link to="/checkout">
-                <button className="navigate">Checkout</button>
+                <button variant="contained" color="primary" className="navigate">Checkout</button>
               </Link>
             ) : (
               <Link to="/productlist">
-                <button className="navigate">ProductList</button>
+                <Button variant="contained" color="primary" className="navigate">ProductList</Button>
               </Link>
             )}
             <Page {...this.props} />
@@ -243,17 +245,18 @@ const WithAuth = Page => {
       ) {
         return <div>LOL</div>;
       } else {
-        if (this.props.match.path !== "/") {
-          console.log("rending this route", this.props.match.path);
-          return <div>Redirecting, not authenticated</div>;
-        } else {
-          console.log("rending this route", this.props.match.path);
-          return (
-            <div>
-              <Page {...this.props} />;
-            </div>
-          );
-        }
+        return <Page {...this.props} />;
+        // if (this.props.match.path !== "/") {
+        //   console.log("rending this route", this.props.match.path);
+        //   return <div>Redirecting, not authenticated</div>;
+        // } else {
+        //   console.log("rending this route", this.props.match.path);
+        //   return (
+        //     <div>
+        //       <Page {...this.props} />;
+        //     </div>
+        //   );
+        // }
         // return <div>LOL</div>;
       }
     }

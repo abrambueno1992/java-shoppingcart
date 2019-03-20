@@ -163,19 +163,19 @@ export class ListProducts extends Component {
   render() {
     return (
       <div key={this.props.productid} className="cards">
-        <div className="row form-group">
-          <div className="col-sm-10">
+        <div >
+          <div >
             <h4>
               {this.props.name} {this.props.description}: ${this.props.price}
             </h4>
           </div>
-          <div className="col-sm-2 text-right">
+          <div >
             quantity:{" "}
             {this.props.quantity !== undefined ? this.props.quantity : 0}
           </div>
         </div>
-        <div className="row btn-toolbar">
-          <div className="col-6">
+        <div >
+          <div >
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
@@ -197,7 +197,7 @@ export class ListProducts extends Component {
               </div>
             )}
           </div>
-          <div className="col-6 text-right">
+          <div >
             <button
               className="plusMinus btn btn-outline-primary"
               onClick={this.handleAdd}
