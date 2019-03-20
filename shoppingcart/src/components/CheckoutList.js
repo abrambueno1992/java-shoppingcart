@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
@@ -137,12 +138,13 @@ export class CheckoutList extends Component {
               />
             </div>
             <div className="quantityButtons">
-              <button className="addItem" onClick={this.handleAdd}>
+              
+              <Button variant="contained" color="primary" className="addItem" onClick={this.handleAdd}>
                 +
-              </button>
-              <button className="subtractItem" onClick={this.handleSubtract}>
+              </Button>
+              <Button variant="contained" color="primary" className="subtractItem" onClick={this.handleSubtract}>
                 -
-              </button>
+              </Button>
             </div>
           </div>
           {this.state.inputQuantity !== 0 && this.props.quantity !== 0 ? (

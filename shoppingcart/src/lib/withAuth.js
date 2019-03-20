@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { connect } from "react-redux";
 import {
   createNewUser,
@@ -75,51 +77,6 @@ const WithAuth = Page => {
     };
 
     componentDidUpdate(prevProps, prevState) {
-      // if (
-      //   prevProps.set_user_info === this.props.set_user_info &&
-      //   this.props.set_user_info !== null
-      // ) {
-      //   // console.log("user info didn't change: ", this.props.set_user_info);
-      //   if (prevProps.product_list !== this.props.product_list) {
-      //     if (
-      //       this.props.product_list !== null &&
-      //       this.props.product_list.error !== "invalid_token" &&
-      //       this.props.set_user_info !== null &&
-      //       localStorage.getItem("userid") !== "undefined"
-      //     ) {
-      //       if (this.props.match.path === "/") {
-      //         this.props.history.push("/productlist");
-      //       }
-      //     }
-      //     if (this.props.product_list.error === "invalid_token") {
-      //       // this.handleClear();
-      //     }
-      //   }
-      // }
-
-      // if (prevProps.set_user_info !== this.props.set_user_info) {
-      //   console.log("change user info");
-
-      //   if (prevProps.product_list !== this.props.product_list) {
-      //     console.log("change user info && products");
-      //     // products && user credentials
-      //     if (
-      //       (this.props.match.path !== "/productlist" &&
-      //         this.state.noShopperID === false) ||
-      //       (this.props.match.path !== "/checkout" &&
-      //         this.state.noShopperID === false)
-      //     ) {
-      //       this.props.history.push("/productlist");
-      //     }
-      //   }
-      //   if (
-      //     this.props.match.path !== "/shopperprofile" &&
-      //     this.state.noShopperID === true
-      //   ) {
-      //     console.log("redirect shopper NOshopperID");
-      //     this.props.history.push("/shopperprofile");
-      //   }
-      // }
       if (this.props.product_list !== null) {
         console.log("change IN products");
         if (prevProps.set_user_info !== this.props.set_user_info) {
@@ -191,17 +148,12 @@ const WithAuth = Page => {
           }
         }
       }
-
-      // if (
-      //   prevState.noShopperID !== this.state.noShopperID &&
-      //   this.props.set_user_info === null
-      // ) {
-      //   if (this.props.match.path !== "/shopperprofile") {
-      //     console.log("redirect shopper !shopperID");
-
-      //     this.props.history.push("/shopperprofile");
-      //   }
-      // }
+      if (
+        prevProps.userCredentials.set_shopper_id !==
+        this.props.userCredentials.set_shopper_id
+      ) {
+        this.props.getUserInfo();
+      }
 
       if (prevProps.user_token !== this.props.user_token) {
         console.log("new user... getting userinfo");
@@ -233,17 +185,17 @@ const WithAuth = Page => {
         this.props.product_list.error !== "invalid_token"
       ) {
         return (
-          <div>
-            <button className="Logout" onClick={this.handleClear}>
-              Logout
-            </button>
+          <div className="parent">
+            <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
+              Log out
+            </Button>
             {this.props.match.path === "/productlist" ? (
               <Link to="/checkout">
-                <button className="navigate">Checkout</button>
+                <button variant="contained" color="primary" className="navigate">Checkout</button>
               </Link>
             ) : (
               <Link to="/productlist">
-                <button className="navigate">ProductList</button>
+                <Button variant="contained" color="primary" className="navigate">ProductList</Button>
               </Link>
             )}
             <Page {...this.props} />
@@ -260,7 +212,7 @@ const WithAuth = Page => {
               Logout
             </button>
             <Page {...this.props} /> */}
-            {/* {this.handleClear()} */}
+            {this.handleClear()}
           </div>
         );
       } else if (this.state.noShopperID === true) {
@@ -273,15 +225,39 @@ const WithAuth = Page => {
             <Page {...this.props} />
           </div>
         );
-      } else if (this.props.user_token !== null) {
-        return (
-          <div>
-            <Page {...this.props} />
-            <div className="Error">{this.props.user_token.error} </div>
-          </div>
-        );
+      }
+      // else if (this.props.user_token !== null) {
+      //   console.log("error props:,", this.props);
+      //   return (
+      //     <div>
+      //       <Page {...this.props} />
+      //       <div className="Error">{this.props.user_token.error} </div>
+      //     </div>
+      //   );
+      // }
+      else if (
+        (this.state.determineShopperID === true &&
+          this.props.userCredentials.set_shopper_id !== null &&
+          this.props.product_list !== null) ||
+        (this.state.determineShopperID === true &&
+          this.props.set_user_info !== null &&
+          this.props.product_list !== null)
+      ) {
+        return <div>LOL</div>;
       } else {
         return <Page {...this.props} />;
+        // if (this.props.match.path !== "/") {
+        //   console.log("rending this route", this.props.match.path);
+        //   return <div>Redirecting, not authenticated</div>;
+        // } else {
+        //   console.log("rending this route", this.props.match.path);
+        //   return (
+        //     <div>
+        //       <Page {...this.props} />;
+        //     </div>
+        //   );
+        // }
+        // return <div>LOL</div>;
       }
     }
   }

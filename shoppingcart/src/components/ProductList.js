@@ -9,7 +9,7 @@ import {
   addItemToCart,
   deleteProduct
 } from "../actions/cart";
-
+import "./ProductList.css";
 import {
   productPriceMap,
   productQuantityMap,

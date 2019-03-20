@@ -8,17 +8,27 @@
 .Logout {
   width: 10%;
   height: 2em;
-  margin-left: 80%;
+  /* margin-left: 80%; */
   background-color: black;
   color: white;
+  /* float: right; */
+  transform: scale(0.75);
+  
 }
 
 .navigate {
   width: 10%;
   height: 2em;
-  margin-left: 80%;
+  /* margin-left: 80%; */
   margin-top: 2em;
   color: beige;
   font-weight: bold;
   background-color: blue;
+  /* float: right; */
+  transform: scale(0.75);
 }
+
+/* .parent {
+  display: flex;
+} */
+
