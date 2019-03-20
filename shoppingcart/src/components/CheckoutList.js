@@ -40,16 +40,20 @@ export class CheckoutList extends Component {
       }
     }
     if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(
-        this.props.productid,
-        this.state.items.get(this.state.key)
-      );
+      // if (prevProps.new_order === this.props.new_order) {
+      //   this.sendOrder(
+      //     this.props.productid,
+      //     this.state.items.get(this.state.key)
+      //   );
+      // }
       // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      // const shopperid =
+      //   this.props.set_user_info !== null
+      //     ? this.props.set_user_info.shopperxyz.shopperid
+      //     : this.props.set_shopper_id.id;
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
     }
   }
   handleChange = e => {

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import {
   createNewUser,
   loginUser,
@@ -13,6 +14,18 @@ import { getShopperCart } from "../actions/cart";
 import { getProductList } from "../actions/productList";
 
 import "./withAuth.css";
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
+  },
+  navigate: {
+    marginRight: "55%"
+  }
+});
 const WithAuth = Page => {
   class BaseComponent extends React.Component {
     constructor(props) {
@@ -186,16 +199,33 @@ const WithAuth = Page => {
       ) {
         return (
           <div className="parent">
-            <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
+            <Button
+              variant="contained"
+              color="primary"
+              className="Logout"
+              onClick={this.handleClear}
+            >
               Log out
             </Button>
             {this.props.match.path === "/productlist" ? (
               <Link to="/checkout">
-                <button variant="contained" color="primary" className="navigate">Checkout</button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="navigate"
+                >
+                  Checkout
+                </Button>
               </Link>
             ) : (
               <Link to="/productlist">
-                <Button variant="contained" color="primary" className="navigate">ProductList</Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="navigate"
+                >
+                  ProductList
+                </Button>
               </Link>
             )}
             <Page {...this.props} />
@@ -283,7 +313,7 @@ const WithAuth = Page => {
       setShopperId,
       getUserInfo
     }
-  )(BaseComponent);
+  )(withStyles(styles)(BaseComponent));
 };
 
 export default WithAuth;

@@ -11,11 +11,11 @@ public interface CartItemsRepository extends JpaRepository<CartItems, Long> {
     @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.shopperid = :shopperid ", nativeQuery = true)
     Object checkValuePair(long productid, long shopperid);
 
-    @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.cartidinsert = :cartidinsert ", nativeQuery = true)
+    @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.cartidinsert = :cartidinsert  ", nativeQuery = true)
     Object checkValuePairCart(long productid, long cartidinsert);
 
-    @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.shopperid = :shopperid ", nativeQuery = true)
-    CartItems returnCartItem(long productid, long shopperid);
+    @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.shopperid = :shopperid and cartitems.cartidinsert = :cartidinsert ", nativeQuery = true)
+    CartItems returnCartItem(long productid, long shopperid, long cartidinsert);
 
     @Query(value = "SELECT * from cartitems where cartitems.productid = :productid and cartitems.cartidinsert = :cartidinsert ", nativeQuery = true)
     CartItems returnCartItemCart(long productid, long cartidinsert);
