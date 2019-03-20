@@ -123,6 +123,7 @@ export class Home extends Component {
             />
             <input
               name="cpassword"
+              type="password"
               placeholder="Enter a password"
               value={this.state.cpassword}
               onChange={this.handleChange}

@@ -11,8 +11,9 @@
   /* margin-left: 80%; */
   background-color: black;
   color: white;
-  float: right;
+  /* float: right; */
   transform: scale(0.75);
+  
 }
 
 .navigate {
@@ -23,6 +24,11 @@
   color: beige;
   font-weight: bold;
   background-color: blue;
-  float: right;
+  /* float: right; */
   transform: scale(0.75);
 }
+
+/* .parent {
+  display: flex;
+} */
+

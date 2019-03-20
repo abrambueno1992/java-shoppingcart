@@ -185,7 +185,7 @@ const WithAuth = Page => {
         this.props.product_list.error !== "invalid_token"
       ) {
         return (
-          <div>
+          <div className="parent">
             <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
               Log out
             </Button>
