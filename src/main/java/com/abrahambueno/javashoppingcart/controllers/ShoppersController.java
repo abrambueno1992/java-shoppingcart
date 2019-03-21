@@ -5,10 +5,11 @@ import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import io.swagger.annotations.*;
 import java.net.URISyntaxException;
 import java.util.List;
 
+@Api(value = "User Controller", description = "get/post/delete")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/shoppers", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,7 +32,13 @@ public class ShoppersController {
     public Shoppers addShopper(@RequestBody Shoppers shopper) throws URISyntaxException {
         return shoppersrepo.save(shopper);
     }
-
+    @ApiOperation(value = "Put the shopperid.", response = Long.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully retreived shopperid"),
+            @ApiResponse(code = 401, message = "you are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @PutMapping("/{shopperid}")
     public Shoppers changeShopper(@RequestBody Shoppers shopper, @PathVariable long shopperid) throws URISyntaxException {
         var updateShopper = shoppersrepo.findById(shopperid);

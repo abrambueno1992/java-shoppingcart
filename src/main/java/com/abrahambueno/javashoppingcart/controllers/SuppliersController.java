@@ -5,10 +5,11 @@ import com.abrahambueno.javashoppingcart.repositories.SuppliersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import io.swagger.annotations.*;
 import java.net.URISyntaxException;
 import java.util.List;
 
+@Api(value = "Suppliers Controller", description = "get/post/put/delete")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/suppliers/", produces = MediaType.APPLICATION_JSON_VALUE)

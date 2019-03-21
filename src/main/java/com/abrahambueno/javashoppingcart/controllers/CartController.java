@@ -10,11 +10,12 @@ import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import io.swagger.annotations.*;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
+@Api(value = "User Controller", description = "get/post/put/delete")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/cart/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +37,13 @@ public class CartController {
     public Cart getCartById(@PathVariable long cartid) throws URISyntaxException {
         return cartrepos.findById(cartid).get();
     }
+    @ApiOperation(value = "Get the shopper by shopperid.", response = Long.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully retreived shooper by shopperid"),
+            @ApiResponse(code = 401, message = "you are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @GetMapping("/shopper/{shopperid}")
     public Cart getCartByShopperId(@PathVariable long shopperid) throws URISyntaxException {
         return cartrepos.findByShopperid(shopperid);
@@ -95,6 +103,14 @@ public class CartController {
 //            return null;
 //        }
 //    }
+
+    @ApiOperation(value = "Update the quantity.", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successfully updated quantity of product in a shoppers cart"),
+            @ApiResponse(code = 401, message = "you are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
     @PutMapping("/update/{cartid}/{shopperid}/{productid}/{quantity}")
     public Set<ProductList> changeProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
         // the cart to add the items
