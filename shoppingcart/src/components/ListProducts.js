@@ -46,17 +46,19 @@ export class ListProducts extends Component {
         );
       }
     }
-    if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(
-        this.props.productid,
-        this.state.items.get(this.state.key)
-      );
+    if (prevProps.set_user_info !== this.props.set_user_info) {
+      // this.sendOrder(
+      //   this.props.productid,
+      //   this.state.items.get(this.state.key)
+      // );
       // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      // const shopperid =
+      //   this.props.set_user_info !== null
+      //     ? this.props.set_user_info.shopperxyz.shopperid
+      //     : this.props.set_shopper_id.id;
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
     }
   }
   handleChange = e => {
@@ -175,19 +177,21 @@ export class ListProducts extends Component {
   render() {
     return (
       <div key={this.props.productid} className="cards">
-        <div>
+        <div className="wrap-product-info">
           <div>
-            <h4>
-              {this.props.name} {this.props.description}: ${this.props.price}
-            </h4>
+            <b>Name:</b>
+            {this.props.name}{" "}
+            <div>
+              <b>Item Price:</b> ${this.props.itemPrice}
+            </div>
           </div>
           <div>
-            quantity:{" "}
+            <b>quantity:</b>
             {this.props.quantity !== undefined ? this.props.quantity : 0}
           </div>
         </div>
         <div>
-          <div>
+          <div className="wrapp-product-buttons">
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
@@ -202,21 +206,21 @@ export class ListProducts extends Component {
                 </button>
               </div>
             )}
-          </div>
-          <div>
-            <button
-              className="plusMinus btn btn-outline-primary"
-              onClick={this.handleAdd}
-            >
-              +1
-            </button>
-            <button
-              className="plusMinus btn btn-outline-primary"
-              onClick={this.handleSubtract}
-              disabled={this.state.quantity < 1}
-            >
-              -1
-            </button>
+            <div>
+              <button
+                className="plusMinus btn btn-outline-primary"
+                onClick={this.handleAdd}
+              >
+                +1
+              </button>
+              <button
+                className="plusMinus btn btn-outline-primary"
+                onClick={this.handleSubtract}
+                disabled={this.state.quantity < 1}
+              >
+                -1
+              </button>
+            </div>
           </div>
         </div>
         <hr />

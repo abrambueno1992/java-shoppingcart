@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions/userCredentials";
 import { getProductList } from "../actions/productList";
@@ -79,10 +79,10 @@ export class CheckoutList extends Component {
     const baseURL = "http://localhost:2019/cart/";
 
     const mapObject = this.state.items;
-    const cartid =
-      this.props.shopper_cart !== null
-        ? this.props.shopper_cart.cartid
-        : this.props.cart.cartid;
+    const cartid = this.props.set_user_info.shopperxyz.currentcartid;
+    // this.props.shopper_cart !== null
+    //   ? this.props.shopper_cart.cartid
+    //   : this.props.cart.cartid;
     const url = `${baseURL}update/${cartid}/${shopperid}/${productid}/${value}`;
 
     this.props.addItemToCart(url, shopperid);
@@ -121,7 +121,10 @@ export class CheckoutList extends Component {
   };
   handleDelete = () => {
     const productid = this.props.productid;
-    this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
+    this.props.deleteProduct(
+      this.props.set_user_info.shopperxyz.currentcartid,
+      productid
+    );
   };
   render() {
     return (
@@ -142,11 +145,20 @@ export class CheckoutList extends Component {
               />
             </div>
             <div className="quantityButtons">
-              
-              <Button variant="contained" color="primary" className="addItem" onClick={this.handleAdd}>
+              <Button
+                variant="contained"
+                color="primary"
+                className="addItem"
+                onClick={this.handleAdd}
+              >
                 +
               </Button>
-              <Button variant="contained" color="primary" className="subtractItem" onClick={this.handleSubtract}>
+              <Button
+                variant="contained"
+                color="primary"
+                className="subtractItem"
+                onClick={this.handleSubtract}
+              >
                 -
               </Button>
             </div>
@@ -154,9 +166,16 @@ export class CheckoutList extends Component {
           {this.state.inputQuantity !== 0 && this.props.quantity !== 0 ? (
             <div className="itemPrice">{this.props.price}</div>
           ) : (
-            <button onClick={this.handleDelete} className="itemPrice">
-              Delete Item
-            </button>
+            <div className="button-wrapper">
+              <Button
+                onClick={this.handleDelete}
+                className="deleteItem"
+                variant="contained"
+                color="primary"
+              >
+                Delete Item
+              </Button>
+            </div>
           )}
         </div>
         {/* <h3>{this.props.price}</h3> */}
