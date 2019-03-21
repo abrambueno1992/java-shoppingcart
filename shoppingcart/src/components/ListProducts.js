@@ -46,11 +46,11 @@ export class ListProducts extends Component {
         );
       }
     }
-    if (prevProps.cart !== this.props.cart) {
-      this.sendOrder(
-        this.props.productid,
-        this.state.items.get(this.state.key)
-      );
+    if (prevProps.set_user_info !== this.props.set_user_info) {
+      // this.sendOrder(
+      //   this.props.productid,
+      //   this.state.items.get(this.state.key)
+      // );
       // get shopper's updated cart
       const shopperid =
         this.props.set_user_info !== null
@@ -181,13 +181,13 @@ export class ListProducts extends Component {
               {this.props.name} {this.props.description}: ${this.props.price}
             </h4>
           </div>
-          <div>
-            quantity:{" "}
-            {this.props.quantity !== undefined ? this.props.quantity : 0}
-          </div>
         </div>
         <div>
-          <div>
+          <div className="wrapp-product-buttons">
+            <div>
+              quantity:{" "}
+              {this.props.quantity !== undefined ? this.props.quantity : 0}
+            </div>
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
@@ -202,21 +202,21 @@ export class ListProducts extends Component {
                 </button>
               </div>
             )}
-          </div>
-          <div>
-            <button
-              className="plusMinus btn btn-outline-primary"
-              onClick={this.handleAdd}
-            >
-              +1
-            </button>
-            <button
-              className="plusMinus btn btn-outline-primary"
-              onClick={this.handleSubtract}
-              disabled={this.state.quantity < 1}
-            >
-              -1
-            </button>
+            <div>
+              <button
+                className="plusMinus btn btn-outline-primary"
+                onClick={this.handleAdd}
+              >
+                +1
+              </button>
+              <button
+                className="plusMinus btn btn-outline-primary"
+                onClick={this.handleSubtract}
+                disabled={this.state.quantity < 1}
+              >
+                -1
+              </button>
+            </div>
           </div>
         </div>
         <hr />
