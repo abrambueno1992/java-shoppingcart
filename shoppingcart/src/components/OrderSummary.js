@@ -28,7 +28,7 @@ export class OrderSummary extends Component {
   render() {
     if (this.props.order_history !== null) {
       return (
-        <div>
+        <div className="order-wrapper">
           <h3>Order history</h3>
           {this.props.order_history.map((each, i) => {
             return (

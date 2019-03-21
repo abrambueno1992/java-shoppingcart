@@ -2,7 +2,7 @@ import React from "react";
 import "./OrderDetails.css";
 export default props => {
   return (
-    <div className="order-details">
+    <div className="order-details-content">
       <h3>
         Product: {props.product.name} Price: ${props.price}
       </h3>
