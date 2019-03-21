@@ -23,7 +23,6 @@ import {
 // } from "../actions/cart";
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
-import { Link } from "react-router-dom";
 export class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -56,11 +55,14 @@ export class Checkout extends Component {
     }
 
     if (
-      prevProps.shopper_cart !== this.props.shopper_cart ||
-      (prevState.fetchNewCartData === false &&
-        this.state.fetchNewCartData === true)
+      prevProps.shopper_cart !== this.props.shopper_cart
+      // (prevState.fetchNewCartData === false &&
+      //   this.state.fetchNewCartData === true)
     ) {
-      console.log("running calculations:");
+      console.log(
+        "running calculations:",
+        this.props.shopper_cart.cartitemquantity
+      );
 
       // if (this.props.shopper_cart.products[0] !== undefined) {
       const priceMap = productPriceMap(this.props.shopper_cart.products);
@@ -91,19 +93,36 @@ export class Checkout extends Component {
         this.props.set_user_info !== null
           ? this.props.set_user_info.shopperxyz.shopperid
           : this.props.set_shopper_id.id;
+      this.props.getUserInfo();
       this.props.createCart(localStorage.getItem("shopperid"));
-      this.setState({ newCart: true });
+      this.setState({
+        newCart: true
+        // calculate: !this.state.calculate
+      });
       // this.props.history.push("/productlist");
     }
     if (prevState.newCart === false && this.state.newCart === true) {
+      console.log("get new user info...");
+
       this.props.getUserInfo();
-      this.setState({ newCart: false });
+      this.setState({
+        newCart: false
+      });
     }
     if (prevState.newCart === true && this.state.newCart === false) {
+      console.log("get new cart info");
+      this.props.getUserInfo();
       this.props.getShopperCart(
         this.props.set_user_info.shopperxyz.currentcartid
       );
-      this.setState({ fetchNewCartData: true });
+      this.setState({
+        fetchNewCartData: true
+        // totalCosts: 0,
+        // costMap: new Map(),
+        // items: new Map(),
+        // calculate: !this.state.calculate
+      });
+      window.location.reload();
     }
   }
 
@@ -115,6 +134,12 @@ export class Checkout extends Component {
     const cartid = this.props.set_user_info.shopperxyz.currentcartid;
 
     this.props.addOrder(shopperid, cartid, this.state.totalCosts);
+    // this.setState({
+    //   totalCosts: 0,
+    //   costMap: new Map(),
+    //   items: new Map(),
+    //   calculate: !this.state.calculate
+    // });
 
     // this.props.getShopperCart(cartid);
     // this.props.getUserInfo();
@@ -148,9 +173,7 @@ export class Checkout extends Component {
             <div className="changeQuantity">Change quantity</div>
             <div className="itemPrice">Price</div>
           </div>
-          <Link to="/orders">
-            <button>Order History</button>
-          </Link>
+
           <Divider variant="middle" />
           {ordered.map((each, i) => {
             return (

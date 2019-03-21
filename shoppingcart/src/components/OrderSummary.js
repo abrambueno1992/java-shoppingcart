@@ -70,4 +70,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   { getOrdersByShopperId, getUserInfo, getShopperCart }
-)(OrderSummary);
+)(withAuth(OrderSummary));

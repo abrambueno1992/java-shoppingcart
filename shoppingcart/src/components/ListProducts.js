@@ -127,7 +127,7 @@ export class ListProducts extends Component {
       this.props.set_user_info !== null
         ? this.props.set_user_info.shopperxyz.shopperid
         : this.props.set_shopper_id.id;
-    // create cart if there's none
+    // crMyeate cart if there's none
     if (this.props.shopper_cart === null) {
       this.props.createCart(shopperid);
     }
@@ -156,6 +156,18 @@ export class ListProducts extends Component {
       });
     }
   };
+  handleToggle = () => {
+    const productid = this.props.productid;
+    const toggleState = this.state.toggle;
+    if (toggleState === false) {
+      // toggleState.set(shopperid, true);
+      this.setState({ toggle: true });
+      // this.setState({ toggle: toggleState });
+    } else {
+      // toggleState.set(shopperid, !toggleState.get(shopperid));
+      this.setState({ toggle: false });
+    }
+  };
   handleDelete = () => {
     const productid = this.props.productid;
     this.props.deleteProduct(this.props.shopper_cart.cartid, productid);
@@ -163,41 +175,35 @@ export class ListProducts extends Component {
   render() {
     return (
       <div key={this.props.productid} className="cards">
-        <div >
-          <div >
+        <div>
+          <div>
             <h4>
               {this.props.name} {this.props.description}: ${this.props.price}
             </h4>
           </div>
-          <div >
+          <div>
             quantity:{" "}
             {this.props.quantity !== undefined ? this.props.quantity : 0}
           </div>
         </div>
-        <div >
-          <div >
+        <div>
+          <div>
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
-                <button
-                  className="info buttonBlue"
-                  onClick={() => this.handleToggle(this.props.productid)}
-                >
+                <button className="info buttonBlue" onClick={this.handleToggle}>
                   hide info
                 </button>
               </div>
             ) : (
               <div>
-                <button
-                  className="info buttonBlue"
-                  onClick={() => this.handleToggle(this.props.productid)}
-                >
+                <button className="info buttonBlue" onClick={this.handleToggle}>
                   show info
                 </button>
               </div>
             )}
           </div>
-          <div >
+          <div>
             <button
               className="plusMinus btn btn-outline-primary"
               onClick={this.handleAdd}
