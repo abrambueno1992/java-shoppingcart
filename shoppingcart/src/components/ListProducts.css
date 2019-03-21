@@ -54,3 +54,14 @@
 .cards {
   /* border: 10px solid transparentize(black,0.7); */
 }
+
+.list-cards {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-around;
+}
+
+.card-item {
+  /* border: 2px solid blue; */
+  background-color: white;
+}

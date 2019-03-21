@@ -105,6 +105,7 @@ export class Product extends Component {
     //   : this.props.cart.cartid;
     this.props.addOrder(shopperid, cartid, this.state.totalCosts);
   };
+
   render() {
     if (this.props.product_list === null) {
       return <p>Loading...</p>;
@@ -114,10 +115,10 @@ export class Product extends Component {
       );
 
       return (
-        <div>
+        <div className="list-cards">
           {ordered.map((each, i) => {
             return (
-              <div key={each + i}>
+              <div key={each + i} className="card-item">
                 <ListProducts
                   productid={each.productid}
                   name={each.name}
