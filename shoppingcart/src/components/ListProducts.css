@@ -14,7 +14,7 @@
 }
 
 .buttonBlue {
-  background: #4a89dc;
+  background: black;
   text-shadow: 1px 1px 0 rgba(39, 110, 204, 0.5);
 }
 
@@ -22,8 +22,8 @@
   display: inline-block;
   width: 30%;
   min-width: 20%;
-  /* height: 330px;
-	border: 1px solid transparentize(grey,0.7); */
+  /* // height: 330px;
+	// border: 1px solid transparentize(grey,0.7); */
   box-sizing: border-box;
   box-shadow: 2px 2px 25px 0px transparentize(black, 0.3);
   border-radius: 3px;
@@ -52,7 +52,13 @@
 }
 
 .cards {
-  /* border: 10px solid transparentize(black,0.7); */
+  /* display: inline-block; */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  display: inline-block;
 }
 
 .list-cards {
@@ -63,5 +69,7 @@
 
 .card-item {
   /* border: 2px solid blue; */
-  background-color: white;
+  width: 15%;
+
+  background-color: #eeeeee;
 }

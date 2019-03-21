@@ -7,6 +7,7 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
+import "./OrderList.css";
 import OrderDetails from "./OrderDetails";
 export class OrderList extends Component {
   constructor(props) {
@@ -28,10 +29,18 @@ export class OrderList extends Component {
     if (this.state.showDetails === false) {
       return (
         <div className="order-list">
-          <span onClick={this.handleDetails}>{`
-        orderid: ${this.props.order.orderid} 
-        items: ${this.props.order.quantity} 
-        total cost: ${this.props.order.totalcost}`}</span>
+          <div className="order-details" onClick={this.handleDetails}>
+            <span className="order-orderid">
+              {`
+        orderid: ${this.props.order.orderid}`}{" "}
+            </span>
+            <span className="order-quantity">{`items: ${
+              this.props.order.quantity
+            }`}</span>
+            <span className="order-totalcost">{`total cost: $${
+              this.props.order.totalcost
+            }`}</span>
+          </div>
           {/* <h5>{this.props.order.quantity}</h5>
         <h5>{this.props.order.totalcost}</h5>
         <h5>{this.props.order.destinationaddress}</h5>
@@ -48,18 +57,28 @@ export class OrderList extends Component {
       const total = calculateTotalCosts(priceMap, quantityMap);
       return (
         <div className="order-list">
-          <span onClick={this.handleDetails}>{`
-        orderid: ${this.props.order.orderid} 
-        items: ${this.props.order.quantity} 
-        total cost: ${this.props.order.totalcost}`}</span>
+          <div className="order-details-enabled" onClick={this.handleDetails}>
+            <span className="order-orderid">
+              {`
+        orderid: ${this.props.order.orderid}`}{" "}
+            </span>
+            <span className="order-quantity">{`items: ${
+              this.props.order.quantity
+            }`}</span>
+            <span className="order-totalcost">{`total cost: $${
+              this.props.order.totalcost
+            }`}</span>
+          </div>
           {/* <h5>{this.props.order.quantity}</h5>
           <h5>{this.props.order.totalcost}</h5> */}
-          <h5>Destination Address: {this.props.order.destinationaddress}</h5>
-          <h5>Dispatch Address: {this.props.order.dispatchaddress}</h5>
-          <h5>Shipped Status: {this.props.order.shippedstatus}</h5>
+          <div className="order-status">
+            <h5>Destination Address: {this.props.order.destinationaddress}</h5>
+            <h5>Dispatch Address: {this.props.order.dispatchaddress}</h5>
+            <h5>Shipped Status: {this.props.order.shippedstatus}</h5>
+          </div>
           {this.props.order.cartstwo.products.map((each, i) => {
             return (
-              <div key={each + i}>
+              <div className="order-product" key={each + i}>
                 <OrderDetails
                   price={priceMap.get(each.productid)}
                   quantity={quantityMap.get(each.productid)}

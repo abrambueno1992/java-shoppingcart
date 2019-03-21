@@ -24,10 +24,10 @@ const styles = theme => ({
     display: "none"
   },
   navigate: {
-    width: "15%",
+    width: "12%",
     height: "3.5em",
-    marginLeft: "80%",
-    marginTop: "2em",
+    marginLeft: "83%",
+    marginTop: "0.5em",
     color: "beige",
     fontWeight: "bold",
     backgroundColor: "blue",
@@ -35,9 +35,9 @@ const styles = theme => ({
     transform: "scale(0.75)"
   },
   Logout: {
-    width: "15%",
+    width: "12%",
     height: "3em",
-    marginLeft: "80%",
+    marginLeft: "83%",
     backgroundColor: "black",
     color: "white",
     /* float: right; */

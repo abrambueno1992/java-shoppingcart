@@ -1,3 +1,39 @@
 .order-list {
-  /* margin-bottom: 2em; */
+  background-color: #eeeeee;
+}
+.order-details {
+  cursor: pointer;
+  width: 50%;
+  margin-left: 25%;
+}
+.order-details-enabled {
+  background: purple;
+  cursor: pointer;
+  width: 50%;
+  margin-left: 25%;
+}
+.order-orderid {
+  font-weight: bold;
+  margin-left: 2%;
+}
+.order-quantity {
+  background-color: white;
+  margin-left: 2%;
+}
+.order-totalcost {
+  background-color: orange;
+  font-weight: bold;
+  margin-left: 2%;
+}
+.order-status {
+  background-color: yellowgreen;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.order-product {
+  background: gold;
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 1em;
 }
