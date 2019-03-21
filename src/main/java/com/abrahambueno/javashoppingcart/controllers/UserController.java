@@ -27,6 +27,7 @@ public class UserController
 
     @Autowired
     private ShopperRepository shopperrepos;
+
     @ApiOperation(value = "Get the user by username.", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "successfully retreived userid"),
