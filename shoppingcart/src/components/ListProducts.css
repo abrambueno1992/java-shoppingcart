@@ -56,17 +56,23 @@
   width: 100%;
   box-sizing: border-box;
   height: 100%;
-  height: 12em;
+  height: 10em;
   text-align: left;
   padding-left: 20;
   border: 2px solid red;
 }
-.wrapp-product-buttons {
-  box-sizing: border-box;
+.wrap-product-info {
   height: 50%;
-  margin-top: 50%;
 }
-
+.wrapp-product-buttons {
+  /* box-sizing: border-box; */
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+  /* align-content: flex-end; */
+  height: 25%;
+  margin-top: 12.5%;
+}
 .form-group {
   display: inline-block;
 }
@@ -80,6 +86,6 @@
 .card-item {
   /* border: 2px solid blue; */
   width: 15%;
-  border: 2px solid lemonchiffon;
+  /* border: 2px solid lemonchiffon; */
   background-color: #eeeeee;
 }

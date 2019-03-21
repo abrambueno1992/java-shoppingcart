@@ -125,7 +125,7 @@ export class Product extends Component {
                   description={each.description}
                   price={this.state.costMap.get(each.productid)}
                   quantity={this.state.items.get(each.productid)}
-                  //   itemPrice={each.price}
+                  itemPrice={each.price}
                   //   quantity={this.state.items.get(each.productid)}
                 />
               </div>

@@ -52,11 +52,13 @@ export class ListProducts extends Component {
       //   this.state.items.get(this.state.key)
       // );
       // get shopper's updated cart
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      // const shopperid =
+      //   this.props.set_user_info !== null
+      //     ? this.props.set_user_info.shopperxyz.shopperid
+      //     : this.props.set_shopper_id.id;
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
     }
   }
   handleChange = e => {
@@ -175,19 +177,21 @@ export class ListProducts extends Component {
   render() {
     return (
       <div key={this.props.productid} className="cards">
-        <div>
+        <div className="wrap-product-info">
           <div>
-            <h4>
-              {this.props.name} {this.props.description}: ${this.props.price}
-            </h4>
+            <b>Name:</b>
+            {this.props.name}{" "}
+            <div>
+              <b>Item Price:</b> ${this.props.itemPrice}
+            </div>
+          </div>
+          <div>
+            <b>quantity:</b>
+            {this.props.quantity !== undefined ? this.props.quantity : 0}
           </div>
         </div>
         <div>
           <div className="wrapp-product-buttons">
-            <div>
-              quantity:{" "}
-              {this.props.quantity !== undefined ? this.props.quantity : 0}
-            </div>
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
