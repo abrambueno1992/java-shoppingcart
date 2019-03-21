@@ -35,6 +35,10 @@ public class Cart {
     @JsonIgnoreProperties("asdf")
     private Set<CartItems> cartitemquantity = new HashSet<>();
 
+//    @OneToOne(mappedBy = "cartstwo")
+//    @JsonIgnoreProperties({"cartstwo", "paymentdetails"})
+//    private Set<Cart> cartw;
+
 
     //    @OneToMany(mappedBy = "cartidtwo")
 //    @JsonIgnoreProperties("cartidtwo")
@@ -42,6 +46,7 @@ public class Cart {
     public Cart() {
 
     }
+
 
     public double getTotalcost() {
         return totalcost;

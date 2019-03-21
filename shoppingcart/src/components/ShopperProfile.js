@@ -9,6 +9,7 @@ import {
 } from "../actions/userCredentials";
 import { addShopper } from "../actions/shoppers";
 import withAuth from "../lib/withAuth";
+import { createCart } from "../actions/cart";
 export class ShopperProfile extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +45,7 @@ export class ShopperProfile extends Component {
     }
     if (prevProps.new_shopper !== this.props.new_shopper) {
       this.props.setShopperId();
+      this.props.createCart(localStorage.getItem("shopperid"));
       this.props.history.push("/productlist");
     }
   }
@@ -64,6 +66,7 @@ export class ShopperProfile extends Component {
       phonenumber: "",
       paymentmethod: ""
     });
+
     // this.props.setShopperId();
   };
 
@@ -119,5 +122,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  { createNewUser, setShopperId, addShopper, getUserInfo }
+  { createNewUser, setShopperId, addShopper, createCart, getUserInfo }
 )(withAuth(ShopperProfile));

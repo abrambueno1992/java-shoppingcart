@@ -34,13 +34,23 @@ public class Orders {
     @JsonIgnoreProperties("orders")
     private Shoppers paymentdetails;
 
-
-
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cartid")
+//    @JsonIgnoreProperties({})
+    private Cart cartstwo;
 //    private String paymentdetails;
 
     private String shippedstatus = "processing";
 
     public Orders() {
+    }
+
+    public Cart getCartstwo() {
+        return cartstwo;
+    }
+
+    public void setCartstwo(Cart cartstwo) {
+        this.cartstwo = cartstwo;
     }
 
     public long getOrderid() {

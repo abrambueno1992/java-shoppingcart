@@ -5,6 +5,7 @@ import Product from "./Product";
 import Checkout from "./Checkout";
 import Home from "./Home";
 import ShopperProfile from "./ShopperProfile";
+import OrderSummary from "./OrderSummary";
 const App = () => {
   return (
     <Router style={{ textAlign: "center" }}>
@@ -13,6 +14,7 @@ const App = () => {
         <Route exact path="/productlist" component={Product} />
         <Route exact path="/shopperprofile" component={ShopperProfile} />
         <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/orders" component={OrderSummary} />
       </div>
     </Router>
   );

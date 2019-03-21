@@ -1,7 +1,8 @@
-import { NEW_ORDER } from "../actions/orders";
+import { NEW_ORDER, GET_ORDER_BY_SHOPPER_ID } from "../actions/orders";
 const initialState = {
   new_order: null,
-  error: null
+  error: null,
+  order_history_shopper: null
 };
 
 const cartItems = (state = initialState, actions) => {
@@ -9,6 +10,10 @@ const cartItems = (state = initialState, actions) => {
     case NEW_ORDER:
       return Object.assign({}, state, {
         new_order: actions.payload
+      });
+    case GET_ORDER_BY_SHOPPER_ID:
+      return Object.assign({}, state, {
+        order_history_shopper: actions.payload
       });
     case "FAILURE":
       return Object.assign({}, state, {

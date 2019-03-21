@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
+// import classNames from "classnames";
 import {
   createNewUser,
   loginUser,
@@ -13,6 +15,35 @@ import { getShopperCart } from "../actions/cart";
 import { getProductList } from "../actions/productList";
 
 import "./withAuth.css";
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
+  },
+  navigate: {
+    width: "15%",
+    height: "3.5em",
+    marginLeft: "80%",
+    marginTop: "2em",
+    color: "beige",
+    fontWeight: "bold",
+    backgroundColor: "blue",
+    /* float: right; */
+    transform: "scale(0.75)"
+  },
+  Logout: {
+    width: "15%",
+    height: "3em",
+    marginLeft: "80%",
+    backgroundColor: "black",
+    color: "white",
+    /* float: right; */
+    transform: "scale(0.75)"
+  }
+});
 const WithAuth = Page => {
   class BaseComponent extends React.Component {
     constructor(props) {
@@ -87,7 +118,8 @@ const WithAuth = Page => {
           );
           if (
             this.props.match.path !== "/productlist" &&
-            this.props.match.path !== "/checkout"
+            this.props.match.path !== "/checkout" &&
+            this.props.match.path !== "/orders"
           ) {
             if (this.state.noShopperID === false) {
               this.props.history.push("/productlist");
@@ -122,7 +154,8 @@ const WithAuth = Page => {
         ) {
           if (
             this.props.match.path !== "/productlist" &&
-            this.props.match.path !== "/checkout"
+            this.props.match.path !== "/checkout" &&
+            this.props.match.path !== "/orders"
           ) {
             this.props.history.push("/productlist");
           }
@@ -142,7 +175,8 @@ const WithAuth = Page => {
         ) {
           if (
             this.props.match.path !== "/productlist" &&
-            this.props.match.path !== "/checkout"
+            this.props.match.path !== "/checkout" &&
+            this.props.match.path !== "/orders"
           ) {
             this.props.history.push("/productlist");
           }
@@ -178,6 +212,7 @@ const WithAuth = Page => {
     };
 
     render() {
+      const { children, classes, className, variant, ...other } = this.props;
       if (
         this.state.authenticated === true &&
         this.props.set_user_info !== null &&
@@ -186,17 +221,59 @@ const WithAuth = Page => {
       ) {
         return (
           <div className="parent">
-            <Button variant="contained" color="primary" className="Logout" onClick={this.handleClear}>
+            <Button
+              variant="contained"
+              color="primary"
+              // className="Logout"
+              className={classes.Logout}
+              onClick={this.handleClear}
+            >
               Log out
             </Button>
             {this.props.match.path === "/productlist" ? (
-              <Link to="/checkout">
-                <button variant="contained" color="primary" className="navigate">Checkout</button>
-              </Link>
+              <div>
+                <Link to="/checkout">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.navigate}
+                    // className="navigate"
+                  >
+                    Checkout
+                  </Button>
+                </Link>
+                <Link to="/orders">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.navigate}
+                  >
+                    Order History
+                  </Button>
+                </Link>
+              </div>
             ) : (
-              <Link to="/productlist">
-                <Button variant="contained" color="primary" className="navigate">ProductList</Button>
-              </Link>
+              <div>
+                <Link to="/productlist">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.navigate}
+                    // className="navigate"
+                  >
+                    ProductList
+                  </Button>
+                </Link>
+                {/* <Link to="/orders">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.navigate}
+                  >
+                    Order History
+                  </Button>
+                </Link> */}
+              </div>
             )}
             <Page {...this.props} />
           </div>
@@ -283,7 +360,7 @@ const WithAuth = Page => {
       setShopperId,
       getUserInfo
     }
-  )(BaseComponent);
+  )(withStyles(styles)(BaseComponent));
 };
 
 export default WithAuth;

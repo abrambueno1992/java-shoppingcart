@@ -26,6 +26,8 @@ public class Shoppers {
     @JsonIgnoreProperties("carts")
     private Set<Orders> orders;
 
+    private long currentcartid;
+
     public Shoppers() {
     }
 
@@ -35,6 +37,14 @@ public class Shoppers {
 
     public void setUserxyz(User userxyz) {
         this.userxyz = userxyz;
+    }
+
+    public long getCurrentcartid() {
+        return currentcartid;
+    }
+
+    public void setCurrentcartid(long currentcartid) {
+        this.currentcartid = currentcartid;
     }
 
     public long getShopperid() {

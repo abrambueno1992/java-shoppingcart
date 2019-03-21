@@ -5,7 +5,7 @@ export const DELETE_CART = "DELETE_CART";
 export const NEW_ORDER = "NEW_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
-
+export const GET_ORDER_BY_SHOPPER_ID = "GET_ORDER_BY_SHOPPER_ID";
 const url = "http://localhost:2019/orders/";
 
 function fetchRequest() {
@@ -40,6 +40,30 @@ export const getOrderByID = id => {
     })
       .then(res => res.json())
       .then(body => dispatch(fetchSuccess(body)))
+      .catch(ex => dispatch(failedAction(ex)));
+  };
+};
+function fetchSuccessOrdersByShopperId(body) {
+  console.log("orders: ", body);
+
+  return {
+    type: GET_ORDER_BY_SHOPPER_ID,
+    payload: body
+  };
+}
+export const getOrdersByShopperId = shopperid => {
+  const token = localStorage.getItem("token");
+  return dispatch => {
+    dispatch(fetchRequest());
+    return fetch(`${url}user/${shopperid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(res => res.json())
+      .then(body => dispatch(fetchSuccessOrdersByShopperId(body)))
       .catch(ex => dispatch(failedAction(ex)));
   };
 };

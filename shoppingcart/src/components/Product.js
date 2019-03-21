@@ -38,10 +38,22 @@ export class Product extends Component {
     //   this.props.history.push("/");
     // }
     // this.setState({ fetchShopperID: true });
+    if (this.props.set_user_info !== null) {
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.set_user_info !== this.props.set_user_info) {
-      this.props.getShopperCart(this.props.set_user_info.shopperxyz.shopperid);
+      console.log(
+        "get shoppercart",
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
+
+      this.props.getShopperCart(
+        this.props.set_user_info.shopperxyz.currentcartid
+      );
     }
 
     if (prevProps.shopper_cart !== this.props.shopper_cart) {
@@ -67,18 +79,18 @@ export class Product extends Component {
       prevProps.items_in_cart_added !== this.props.items_in_cart_added &&
       prevProps.deleted_item === this.props.deleted_item
     ) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      const currentcartid = this.props.set_user_info.shopperxyz.currentcartid;
+      // this.props.set_user_info !== null
+      //   ? this.props.set_user_info.shopperxyz.shopperid
+      //   : this.props.set_shopper_id.id;
+      this.props.getShopperCart(currentcartid);
     }
     if (prevProps.deleted_item !== this.props.deleted_item) {
-      const shopperid =
-        this.props.set_user_info !== null
-          ? this.props.set_user_info.shopperxyz.shopperid
-          : this.props.set_shopper_id.id;
-      this.props.getShopperCart(shopperid);
+      const currentcartid = this.props.set_user_info.shopperxyz.currentcartid;
+      // this.props.set_user_info !== null
+      //   ? this.props.set_user_info.shopperxyz.shopperid
+      //   : this.props.set_shopper_id.id;
+      this.props.getShopperCart(currentcartid);
     }
   }
 
@@ -87,12 +99,13 @@ export class Product extends Component {
       this.props.set_user_info !== null
         ? this.props.set_user_info.shopperxyz.shopperid
         : this.props.set_shopper_id.id;
-    const cartid =
-      this.props.shopper_cart !== null
-        ? this.props.shopper_cart.cartid
-        : this.props.cart.cartid;
+    const cartid = this.props.set_user_info.shopperxyz.currentcartid;
+    // this.props.shopper_cart !== null
+    //   ? this.props.shopper_cart.cartid
+    //   : this.props.cart.cartid;
     this.props.addOrder(shopperid, cartid, this.state.totalCosts);
   };
+
   render() {
     if (this.props.product_list === null) {
       return <p>Loading...</p>;
@@ -102,10 +115,10 @@ export class Product extends Component {
       );
 
       return (
-        <div>
+        <div className="list-cards">
           {ordered.map((each, i) => {
             return (
-              <div key={each + i}>
+              <div key={each + i} className="card-item">
                 <ListProducts
                   productid={each.productid}
                   name={each.name}

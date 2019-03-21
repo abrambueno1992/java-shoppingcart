@@ -3,8 +3,10 @@ package com.abrahambueno.javashoppingcart.controllers;
 import com.abrahambueno.javashoppingcart.models.Cart;
 import com.abrahambueno.javashoppingcart.models.CartItems;
 import com.abrahambueno.javashoppingcart.models.ProductList;
+import com.abrahambueno.javashoppingcart.models.Shoppers;
 import com.abrahambueno.javashoppingcart.repositories.CartItemsRepository;
 import com.abrahambueno.javashoppingcart.repositories.CartRepository;
+import com.abrahambueno.javashoppingcart.repositories.ShopperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class CartController {
     public CartRepository cartrepos;
     @Autowired
     public CartItemsRepository cartitems;
+
+    @Autowired
+    public ShopperRepository shopperrepos;
 
     // might not allow it
     @GetMapping("/items")
@@ -39,7 +44,13 @@ public class CartController {
     public Cart createCart(@PathVariable long shopperid) throws URISyntaxException {
         Cart newCart = new Cart();
         newCart.setShopperid(shopperid);
-        return cartrepos.save(newCart);
+        Shoppers updateShopper = shopperrepos.findById(shopperid).get();
+        cartrepos.save(newCart);
+        updateShopper.setCurrentcartid(newCart.getCartid());
+        shopperrepos.save(updateShopper);
+        System.out.println("new cartid: " + newCart.getCartid());
+        System.out.println("new cartid for shopper:" + updateShopper.getCurrentcartid());
+        return newCart;
     }
 //    @PostMapping("/add/{cartid}/{shopperid}/{productid}/{quantity}")
 //    public Set<ProductList> addProductToCart(@PathVariable long cartid, @PathVariable long shopperid, @PathVariable long productid, @PathVariable int quantity) throws URISyntaxException {
@@ -91,11 +102,13 @@ public class CartController {
         // check if the cart exists
         if (addToCart.isPresent()) {
             // check the productid to the database
-            var productPresent = cartitems.checkValuePair(productid, shopperid);
+            var productPresent = cartitems.checkValuePairCart(productid, cartid);
             // check if the product is present in the cart
+            System.out.println("checking if cart exists: true");
             if (productPresent != null) {
                 // get productid
-                long productidTwo = cartitems.returnCartItem(productid, shopperid).getCartitemsid();
+                System.out.println("Checking if product exists: true");
+                long productidTwo = cartitems.returnCartItem(productid, shopperid, cartid).getCartitemsid();
                 // get the cartitem
                 var updateCartItems = cartitems.findById(productidTwo);
                 // update quantity on CartItems
@@ -126,6 +139,7 @@ public class CartController {
 //                // save cart changes
 //                cartitems.save(updateCartItems.get());
             } else {
+                System.out.println("Checking if product exists: false");
                 // initiate new Object
                 CartItems newCartItem = new CartItems();
                 // set required variables, data
@@ -147,6 +161,7 @@ public class CartController {
             }
             return cartrepos.findById(cartid).get().getProducts();
         } else {
+            System.out.println("Cart does not exist, do nothing at all NOTHING");
             return null;
         }
     }
