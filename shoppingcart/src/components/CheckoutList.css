@@ -28,6 +28,23 @@
 
   display: inline-flex;
 }
+.deleteItem {
+  display: inline-flex;
+  position: absolute;
+  /* margin-top: 5em; */
+  width: 0%;
+  height: 4.5em;
+
+  margin-left: 90%;
+}
+.button-wrapper {
+  display: inline-flex;
+  /* padding: 1%; */
+  /* height: 4.5em; */
+  margin-left: 2%;
+  width: 20%;
+  /* border: 3px solid black; */
+}
 .quantityButtons {
   width: 50%;
   /* border: 3px solid black; */
@@ -54,10 +71,10 @@
 }
 
 .sendOrder {
- float: right;
- margin-right: 10%;
- margin-top: 2%;
- margin-bottom: 2%;
+  float: right;
+  margin-right: 10%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .checkoutElements {

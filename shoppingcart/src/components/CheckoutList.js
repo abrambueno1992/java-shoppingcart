@@ -166,9 +166,16 @@ export class CheckoutList extends Component {
           {this.state.inputQuantity !== 0 && this.props.quantity !== 0 ? (
             <div className="itemPrice">{this.props.price}</div>
           ) : (
-            <button onClick={this.handleDelete} className="itemPrice">
-              Delete Item
-            </button>
+            <div className="button-wrapper">
+              <Button
+                onClick={this.handleDelete}
+                className="deleteItem"
+                variant="contained"
+                color="primary"
+              >
+                Delete Item
+              </Button>
+            </div>
           )}
         </div>
         {/* <h3>{this.props.price}</h3> */}

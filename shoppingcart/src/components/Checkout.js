@@ -15,12 +15,7 @@ import {
   calculateTotalCosts,
   productCost
 } from "./calculateCosts";
-// import {
-//   getShopperCart,
-//   createCart,
-//   addItemToCart,
-//   deleteProduct
-// } from "../actions/cart";
+
 import withAuth from "../lib/withAuth";
 import "./CheckoutList.css";
 export class Checkout extends Component {
@@ -97,9 +92,7 @@ export class Checkout extends Component {
       this.props.createCart(localStorage.getItem("shopperid"));
       this.setState({
         newCart: true
-        // calculate: !this.state.calculate
       });
-      // this.props.history.push("/productlist");
     }
     if (prevState.newCart === false && this.state.newCart === true) {
       console.log("get new user info...");
@@ -117,10 +110,6 @@ export class Checkout extends Component {
       );
       this.setState({
         fetchNewCartData: true
-        // totalCosts: 0,
-        // costMap: new Map(),
-        // items: new Map(),
-        // calculate: !this.state.calculate
       });
       window.location.reload();
       this.props.history.push("/productlist");
@@ -135,15 +124,6 @@ export class Checkout extends Component {
     const cartid = this.props.set_user_info.shopperxyz.currentcartid;
 
     this.props.addOrder(shopperid, cartid, this.state.totalCosts);
-    // this.setState({
-    //   totalCosts: 0,
-    //   costMap: new Map(),
-    //   items: new Map(),
-    //   calculate: !this.state.calculate
-    // });
-
-    // this.props.getShopperCart(cartid);
-    // this.props.getUserInfo();
   };
   render() {
     if (this.props.product_list === null) {
