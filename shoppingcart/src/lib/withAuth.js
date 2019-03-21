@@ -25,7 +25,7 @@ const styles = theme => ({
   },
   navigate: {
     width: "15%",
-    height: "3em",
+    height: "3.5em",
     marginLeft: "80%",
     marginTop: "2em",
     color: "beige",

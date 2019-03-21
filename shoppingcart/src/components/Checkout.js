@@ -123,6 +123,7 @@ export class Checkout extends Component {
         // calculate: !this.state.calculate
       });
       window.location.reload();
+      this.props.history.push("/productlist");
     }
   }
 

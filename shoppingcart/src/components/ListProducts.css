@@ -58,16 +58,10 @@
 .list-cards {
   width: 100%;
   display: inline-flex;
-  /* border: 2px solid red; */
-  align-content: space-around;
-  align-items: flex-end;
+  justify-content: space-around;
 }
 
 .card-item {
-  /* margin-right: 5%;
-  margin-left: 5%; */
-  /* width: 25%; */
-  margin: auto;
-  border: 2px solid black;
+  /* border: 2px solid blue; */
   background-color: white;
 }
