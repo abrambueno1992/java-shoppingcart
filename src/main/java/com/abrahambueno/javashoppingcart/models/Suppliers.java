@@ -15,7 +15,7 @@ public class Suppliers {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "supplierproducts",
         joinColumns = {@JoinColumn(name = "supplierid")},
-            inverseJoinColumns = {@JoinColumn(name = "productid")})
+    inverseJoinColumns = {@JoinColumn(name = "productid")})
     private Set<ProductList> products;
 
     public long getSupplierid() {
