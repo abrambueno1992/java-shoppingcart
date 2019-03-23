@@ -39,19 +39,14 @@
 }
 .button-wrapper {
   display: inline-flex;
-  /* padding: 1%; */
-  /* height: 4.5em; */
   margin-left: 2%;
   width: 20%;
-  /* border: 3px solid black; */
 }
 .quantityButtons {
   width: 50%;
-  /* border: 3px solid black; */
 }
 .inputPrice {
   width: 50%;
-  /* border: 3px solid green; */
   transform: scale(0.55);
 }
 .addItem {
@@ -65,9 +60,7 @@
 .itemPrice {
   width: 10%;
   margin-left: 4%;
-  /* margin-right: 7%; */
   display: inline-flex;
-  /* font-weight: bold; */
 }
 
 .sendOrder {
@@ -81,7 +74,6 @@
   align-content: center;
   background: white;
   max-width: 80%;
-  /* margin-top: 5%; */
   margin: 4em auto;
   transform: scale(0.75);
 }
