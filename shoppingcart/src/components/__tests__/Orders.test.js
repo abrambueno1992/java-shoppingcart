@@ -31,7 +31,7 @@ afterEach(() => {
 })
 
 describe('Orders Component Testing', () => {
-    it("should contain the right number and type of buttons", () => {
-        expect(wrapped.find(".order-wrapper").length).toEqual(1);
+    it("should contain the right number and type of buttons which is 0 in this case, because the component is conditionally rendered.", () => {
+        expect(wrapped.find(".order-wrapper").length).toEqual(0);
     });
 });
