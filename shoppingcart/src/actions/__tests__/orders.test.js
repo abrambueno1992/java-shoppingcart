@@ -5,8 +5,6 @@ import {
   DELETE_CART,
   NEW_ORDER,
   DELETE_ORDER,
-  NEW_ORDER,
-  DELETE_ORDER,
   UPDATE_ORDER,
   GET_ORDER_BY_SHOPPER_ID
 } from "../orders";
