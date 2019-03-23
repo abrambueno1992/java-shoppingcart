@@ -115,22 +115,24 @@ export class Product extends Component {
       );
 
       return (
-        <div className="list-cards">
-          {ordered.map((each, i) => {
-            return (
-              <div key={each + i} className="card-item">
-                <ListProducts
-                  productid={each.productid}
-                  name={each.name}
-                  description={each.description}
-                  price={this.state.costMap.get(each.productid)}
-                  quantity={this.state.items.get(each.productid)}
-                  itemPrice={each.price}
-                  //   quantity={this.state.items.get(each.productid)}
-                />
-              </div>
-            );
-          })}
+        <div className="listCards">
+          <div className="list-cards">
+            {ordered.map((each, i) => {
+              return (
+                <div key={each + i} className="cardItem card-item">
+                  <ListProducts
+                    productid={each.productid}
+                    name={each.name}
+                    description={each.description}
+                    price={this.state.costMap.get(each.productid)}
+                    quantity={this.state.items.get(each.productid)}
+                    itemPrice={each.price}
+                    //   quantity={this.state.items.get(each.productid)}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       );
     }

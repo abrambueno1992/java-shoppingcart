@@ -64,7 +64,7 @@
 .wrap-product-info {
   height: 50%;
 }
-.wrapp-product-buttons {
+.wrap-product-buttons {
   /* box-sizing: border-box; */
   display: inline-flex;
   flex-direction: column;

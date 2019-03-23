@@ -191,7 +191,7 @@ export class ListProducts extends Component {
           </div>
         </div>
         <div>
-          <div className="wrapp-product-buttons">
+          <div className="wrap-product-buttons">
             {this.state.toggle === true ? (
               <div>
                 {this.props.description}
