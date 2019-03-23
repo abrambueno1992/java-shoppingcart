@@ -101,10 +101,10 @@ export class Home extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <button class="button buttonBlue" onClick={this.loginUser}>
+            <button data-testid='login-button' class="button buttonBlue" onClick={this.loginUser}>
               Login
             </button>
-            <button class="button buttonBlue" onClick={this.handleButton}>
+            <button data-testid='signup-button' class="button buttonBlue" onClick={this.handleButton}>
               Signup
             </button>
           </div>
