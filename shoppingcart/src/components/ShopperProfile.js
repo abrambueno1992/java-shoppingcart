@@ -78,24 +78,28 @@ export class ShopperProfile extends Component {
         <h3>Shopper Profile</h3>
         <div>
           <input
+            className="billing"
             name="billingaddres"
             placeholder="Enter billing address"
             value={this.state.billingaddres}
             onChange={this.handleChange}
           />
           <input
+            className="shipping"
             name="shippingaddress"
             placeholder="Please enter shipping address"
             value={this.state.shippingaddress}
             onChange={this.handleChange}
           />
           <input
+            className="phone"
             name="phonenumber"
             placeholder="Please enter a phone number"
             value={this.state.phonenumber}
             onChange={this.handleChange}
           />
           <input
+            className="payment"
             name="paymentmethod"
             placeholder="Please enter payment method"
             value={this.state.paymentmethod}

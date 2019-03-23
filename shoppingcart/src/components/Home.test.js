@@ -6,7 +6,6 @@ import Home from './Home';
 import { MemoryRouter } from "react-router";
 import Root from "../Root";
 import App from "./App";
-import { isMainThread } from 'worker_threads';
 
 let wrapped;
 beforeEach(() => {
