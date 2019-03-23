@@ -2,9 +2,9 @@ import React from 'react';
 import { cleanup, fireEvent, render } from 'react-testing-library';
 import { mount } from "enzyme";
 import { MemoryRouter } from "react-router";
-import ShopperProfile from "./ShopperProfile";
-import Root from "../Root";
-import App from "./App";
+import ShopperProfile from "../ShopperProfile";
+import Root from "../../Root";
+import App from "../App";
 import { isMainThread } from 'worker_threads';
 
 let wrapped;

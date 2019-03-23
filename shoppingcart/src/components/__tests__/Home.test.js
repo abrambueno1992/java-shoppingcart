@@ -2,10 +2,10 @@ import React from 'react';
 import { cleanup, fireEvent, render } from 'react-testing-library';
 import { mount } from "enzyme";
 // import 'jest-dom/extend-expect';
-import Home from './Home';
+import Home from '../Home';
 import { MemoryRouter } from "react-router";
-import Root from "../Root";
-import App from "./App";
+import Root from "../../Root";
+import App from "../App";
 
 let wrapped;
 beforeEach(() => {
