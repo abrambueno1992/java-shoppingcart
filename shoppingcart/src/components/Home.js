@@ -101,10 +101,10 @@ export class Home extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <button data-testid='login-button' class="button buttonBlue" onClick={this.loginUser}>
+            <button className="loginbutton" class="button buttonBlue" onClick={this.loginUser}>
               Login
             </button>
-            <button data-testid='signup-button' class="button buttonBlue" onClick={this.handleButton}>
+            <button className='signupbutton' class="button buttonBlue" onClick={this.handleButton}>
               Signup
             </button>
           </div>
@@ -134,11 +134,11 @@ export class Home extends Component {
               value={this.state.role}
               onChange={this.handleChange}
             />
-            <button class="button buttonBlue" onClick={this.createUser}>
+            <button className="signupCreate" class="button buttonBlue" onClick={this.createUser}>
               {" "}
               Create User
             </button>
-            <button class="button buttonBlue" onClick={this.handleButton}>
+            <button className="signupLogin" class="button buttonBlue" onClick={this.handleButton}>
               Login
             </button>
           </div>
