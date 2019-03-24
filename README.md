@@ -16,6 +16,10 @@ Runs the app in the development mode. Open http://localhost:3000 to view it in t
 The page will reload if you make edits.
 
 ## Endpoint Documentation
+
+###UserController
+Base endpoint: ```http://localhost:3000/users```
+
 Endpoint: ```/newuser```
 Type: POST
 This endpoint is for creating a new user. 
@@ -23,6 +27,21 @@ This endpoint is for creating a new user.
 Endpoint: ```/shopperid/{shopperid}/{userid}```
 Type: POST
 This endpoint is for adding a shopperId to a user. 
+
+###ShoppersController
+Base endpoint: ```http://localhost:3000/shoppers```
+
+Endpoint: ```/{shopperid}```
+Type: GET
+This endpoint retrieves any particular shopper by their shopperid. Protected endpoint.
+
+Endpoint: ```/add```
+Type: POST
+Updates the shopper by shopperid. Protected endpoint.
+
+Endpoint: ```/{shopperid}```
+Type: PUT
+Updates the shopper by shopperid. Protected endpoint.
 
 ## A Shopping Cart
 
