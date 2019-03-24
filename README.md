@@ -15,6 +15,15 @@ Runs the app in the development mode. Open http://localhost:3000 to view it in t
 
 The page will reload if you make edits.
 
+## Endpoint Documentation
+Endpoint: ```/newuser```
+Type: POST
+This endpoint is for creating a new user. 
+
+Endpoint: ```/shopperid/{shopperid}/{userid}```
+Type: POST
+This endpoint is for adding a shopperId to a user. 
+
 ## A Shopping Cart
 
 This project is a shopping cart, ordering system. No actual payments need to be implemented. You are to fully implement a REST API Web service system to support the shopping cart features. The REST API should be fully documented using Swagger. You should also develop a front-end client to use this REST API Web service. The idea for this project comes from the Depot Shopping Cart popular in the Ruby on Rails community and described in the book Agile Web Development with Rails (a free beta version can be found at http://peterhurford.com/tilde/files/ruby-textbook.pdf).
