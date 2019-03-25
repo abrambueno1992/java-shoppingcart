@@ -43,37 +43,76 @@ The redux store initial state is the following, default is null
 `cart` initial state:
 
 ```
+  items_in_cart_added: null,
+  cart: null,
+  shopper_cart: null,
+  error: null,
+  deleted_item: null
 
 ```
 
 <br>
 <br>
+
 `orders` initial state:
-```
 
 ```
+  new_order: null,
+  error: null,
+  order_history_shopper: null
+
+```
+
 <br>
 <br>
+
 `productList` initial state:
-```
 
 ```
+
+product_list: null,
+new_product: null,
+error: null
+
+```
+
 <br>
 <br>
+
 `shoppers` initial state:
-```
 
 ```
+
+new_shopper: null,
+error: null
+
+```
+
 <br>
 <br>
+
 `suppliers` initial state:
-```
 
 ```
-<br>
-<br>
-`userCredentials` initial state:
+
+No state used for the suppliers
+Functionality coming soon, for shop owners, business owners having their products on the store.
+
 ```
+
+<br>
+<br>
+
+`userCredentials` initial state:
+
+```
+
+user_token: null,
+new_user: null,
+set_shopper_id: null,
+set_user_info: null,
+error: null,
+error_user_info: null
 
 ```
 
@@ -85,6 +124,7 @@ The redux store state is populated with data after the following actions are dis
 ```
 
 ```
+
 <br>
 <br>
 `orders` Action methods
@@ -92,6 +132,7 @@ The redux store state is populated with data after the following actions are dis
 ```
 
 ```
+
 <br>
 <br>
 `productList` Action methods
@@ -99,6 +140,7 @@ The redux store state is populated with data after the following actions are dis
 ```
 
 ```
+
 <br>
 <br>
 `shoppers` Action methods
@@ -106,6 +148,7 @@ The redux store state is populated with data after the following actions are dis
 ```
 
 ```
+
 <br>
 <br>
 `suppliers` Action methods
@@ -113,9 +156,12 @@ The redux store state is populated with data after the following actions are dis
 ```
 
 ```
+
 <br>
 <br>
 `userCredentials` Action methods
+
+```
 
 ```
 
