@@ -34,3 +34,91 @@ The component located at the root path "/checkout" is the Checkout component, wh
 The component located at the root path "/orders" is the OrderSummary component, which launches the redux actions in the withAuth to check for authentication, which has actions that dispatch and return state to the component. Based on the data, it redirects to the proper component if there are credentials present, or redirects to the Home component at "/". If withAuth validates authentication, it will launch the actions `this.props.getShopperCart()`, `this.props.getUserInfo()` (actually launced from `withAut`), and `this.props.getProductList()` (actually launced from `withAut`) to get the products of the store and any items in the shopper's cart (if any). This component only renders data from the server, so there's no complex logic in the `componentDidUpdate()` React life cycle. It gets the data, and renders the proper view, based on user interaction.
 <br>
 <br>
+
+## Redux Actions, State, and tests
+
+The redux store initial state is the following, default is null
+<br>
+<br>
+`cart` initial state:
+
+```
+
+```
+
+<br>
+<br>
+`orders` initial state:
+```
+
+```
+<br>
+<br>
+`productList` initial state:
+```
+
+```
+<br>
+<br>
+`shoppers` initial state:
+```
+
+```
+<br>
+<br>
+`suppliers` initial state:
+```
+
+```
+<br>
+<br>
+`userCredentials` initial state:
+```
+
+```
+
+The redux store state is populated with data after the following actions are dispatched. Each of these actions are dipatched inside of the components that need the data, and they're only dispatched if there's no data (null).
+<br>
+<br>
+`cart` Action methods
+
+```
+
+```
+<br>
+<br>
+`orders` Action methods
+
+```
+
+```
+<br>
+<br>
+`productList` Action methods
+
+```
+
+```
+<br>
+<br>
+`shoppers` Action methods
+
+```
+
+```
+<br>
+<br>
+`suppliers` Action methods
+
+```
+
+```
+<br>
+<br>
+`userCredentials` Action methods
+
+```
+
+```
+
+```
