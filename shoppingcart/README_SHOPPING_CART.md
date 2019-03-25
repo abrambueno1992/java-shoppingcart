@@ -39,7 +39,6 @@ The component located at the root path "/orders" is the OrderSummary component, 
 
 The redux store initial state is the following, default is null
 <br>
-<br>
 `cart` initial state:
 
 ```
@@ -52,7 +51,6 @@ The redux store initial state is the following, default is null
 ```
 
 <br>
-<br>
 
 `orders` initial state:
 
@@ -63,7 +61,6 @@ The redux store initial state is the following, default is null
 
 ```
 
-<br>
 <br>
 
 `productList` initial state:
@@ -77,7 +74,6 @@ error: null
 ```
 
 <br>
-<br>
 
 `shoppers` initial state:
 
@@ -89,7 +85,6 @@ error: null
 ```
 
 <br>
-<br>
 
 `suppliers` initial state:
 
@@ -100,7 +95,6 @@ Functionality coming soon, for shop owners, business owners having their product
 
 ```
 
-<br>
 <br>
 
 `userCredentials` initial state:
@@ -122,49 +116,64 @@ The redux store state is populated with data after the following actions are dis
 `cart` Action methods
 
 ```
-
+getCartByID(cart id)
+createCart(shopper id)
+addItemToCart(url with the proper data passed in path)
+deleteProduct(cart id, product id)
+getShopperCart(shopper id)
+deleteCart(cart id)
+deleteItemFromCart(cart id, product id)
 ```
 
 <br>
-<br>
+
 `orders` Action methods
 
 ```
-
+getOrderByID(order id)
+getOrdersByShopperId(shopper id)
+addOrder(shopper id, cart id, total cost)
+updateOrder(order updated object, id)
+deleteOrder(id)
 ```
 
 <br>
-<br>
+
 `productList` Action methods
 
 ```
+getProductList()
+createNewProduct(product object)
 
 ```
 
 <br>
-<br>
+
 `shoppers` Action methods
 
 ```
-
+getShopperByID(shopper id)
+addShopper(shopper object)
+updateShopper(shopper object, id)
+deleteShopper(id)
 ```
 
 <br>
-<br>
+
 `suppliers` Action methods
 
 ```
+Coming soon, when extending features. Back end has the endpoints to use.
 
 ```
 
 <br>
-<br>
+
 `userCredentials` Action methods
 
 ```
-
-```
-
-```
-
+createNewUser(user object)
+loginUser(user object)
+getUserInfo()
+setShopperId()
 ```
