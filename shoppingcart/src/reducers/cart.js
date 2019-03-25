@@ -2,7 +2,6 @@ import {
   CREATE_CART,
   ADD_ITEM_TO_CART,
   GET_SHOPPER_CART,
-  UPDATE_ITEMS,
   DELETE_ITEM_CART
 } from "../actions/cart";
 
@@ -10,7 +9,6 @@ const initialState = {
   items_in_cart_added: null,
   cart: null,
   shopper_cart: null,
-  items: new Map(),
   error: null,
   deleted_item: null
 };
@@ -29,10 +27,7 @@ const cartItems = (state = initialState, actions) => {
       return Object.assign({}, state, {
         shopper_cart: actions.payload
       });
-    case UPDATE_ITEMS:
-      return Object.assign({}, state, {
-        items: actions.payload
-      });
+
     case DELETE_ITEM_CART:
       return Object.assign({}, state, {
         deleted_item: actions.payload
